@@ -1,0 +1,61 @@
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var countNegatives = function(grid) {
+    const m = grid.length;
+    const n = grid[0].length;
+    let negNum = 0
+
+    for(let i=0; i<m; i++) {
+        if(grid[i][n-1] >= 0) {
+            continue;
+        }
+        let low =0
+        let high = n-1;
+        while(low<=high) {
+            let mid = low + Math.floor((high-low)/2);
+            if(grid[i][mid] < 0) {
+                negNum += high -mid +1;
+                high = mid-1;
+            }else if(grid[i][mid] >=0) {
+                low = mid + 1;
+            };
+        }
+    }
+
+    return negNum;
+};
+
+Time Complexity -> O(N * LOGM);
+Space Complexity -> O(1);
+
+
+
+---> Two pointer approach
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var countNegatives = function(grid) {
+    const m = grid.length;
+    const n = grid[0].length;
+    let negNum = 0
+
+    let i = m-1
+    let j = 0;
+
+    while(i>=0 && j<n) {
+        if(grid[i][j] < 0) {
+            negNum += n-j;
+            i--;
+        }else{
+            j++;
+        }
+    }
+
+    return negNum;
+};
+
+Space Complexity -> O(1);
+Time Complexity -> O(m+n);
