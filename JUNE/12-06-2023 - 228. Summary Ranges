@@ -1,0 +1,32 @@
+/**
+ * @param {number[]} nums
+ * @return {string[]}
+ */
+var summaryRanges = function(nums) {
+    const ans = [];
+    if(nums.length === 0) return ans;
+    let a = nums[0];
+    for(var i=0; i<nums.length-1; i++) {
+        if((nums[i+1] - nums[i]) !==1) {
+            if(a === nums[i]) {
+                ans.push(`${nums[i]}`)
+            }else{
+                ans.push(`${a}->${nums[i]}`)
+            }
+            a = nums[i+1]
+        }
+    }
+
+    if(a === nums[i]) {
+        ans.push(`${nums[i]}`)
+    }else {
+        ans.push(`${a}->${nums[i]}`)
+    }
+
+    return ans;
+};
+
+/**
+[-2147483648,-2147483647,2147483647]
+[0,1,2,3,4,6]
+ */
