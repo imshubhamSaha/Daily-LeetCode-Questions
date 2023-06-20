@@ -1,0 +1,32 @@
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+var getAverages = function(nums, k) {
+    const n= nums.length;
+    const ans = Array.from(nums, (_) => 0)
+
+    const dist = k*2+1;
+
+    let sum = 0;
+
+    for(let i=0; i<dist; i++) {
+        sum += nums[i];
+    };
+
+    for(let i=0; i<n; i++) {
+        if(i<k || i>= n-k) {
+            ans[i] = -1;
+            continue;
+        }else if(i>k) {
+            sum += nums[k+i] - nums[i-k-1];
+        }
+        ans[i] = Math.floor(sum/dist);
+    };
+
+    return ans;
+};
+
+Time Complexity --> O(N);
+Space Complexity --> O(1), if we not consider the returned array
