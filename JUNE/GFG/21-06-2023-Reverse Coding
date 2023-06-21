@@ -1,0 +1,16 @@
+/**
+ * @param {number} n
+ * @param {number} m
+ * @return {number}
+ */
+class Solution {
+    revCoding(n, m) {
+        const mod = Math.pow(10,9) + 7
+       
+        
+        return Math.floor((n) * (n+1)/2)%mod;
+    }
+}
+
+Time Complexity --> O(1);
+Space Complexity --> O(1);
