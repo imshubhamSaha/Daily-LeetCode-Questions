@@ -1,0 +1,42 @@
+/**
+ * @param {number[]} nums
+ * @param {number[]} cost
+ * @return {number}
+ */
+var minCost = function(nums, cost) {
+    const helper = [];
+    const n = nums.length;
+    let totalCost = 0;
+
+    for(let i=0; i<n; i++) {
+        helper.push([nums[i], cost[i]]);
+        totalCost += cost[i];
+    }
+
+    helper.sort((a,b) => a[0]- b[0]);
+
+    let mid = Math.floor((totalCost+1)/2);
+    let curSum =0;
+    let target;
+
+    for(let i=0; i<n;i++){
+        curSum += helper[i][1];
+
+        if(curSum >= mid) {
+            target = helper[i][0];
+            break;
+        }
+    }
+
+    let total = 0
+
+    for(let i=0; i<n; i++) {
+        total += Math.abs(nums[i] - target) * cost[i]
+    }
+
+    return total;
+
+
+};
+Time Complexity --> O(N);
+Space Complexity --> O(N);
