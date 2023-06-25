@@ -1,0 +1,31 @@
+
+/**
+ * @param {number[]} arr
+ * @param {number} n
+ * @param {number} m
+ * @returns {number[][]} 
+ */
+ 
+class Solution {
+    uniqueRow(arr, n, m){
+        const set = new Set()
+        
+        const ans = []
+     
+       for(let i=0; i<n; i++) {
+           let str = ""
+           for(let j=0; j<m; j++) {
+               str += arr[i][j];
+           }
+           
+           if(!set.has(str)) {
+               set.add(str);
+               ans.push(arr[i])
+           }
+       }
+       
+       return ans;
+        
+       
+    }
+}
