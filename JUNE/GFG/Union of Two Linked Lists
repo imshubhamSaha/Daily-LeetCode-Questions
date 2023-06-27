@@ -1,0 +1,51 @@
+/**
+ * @param {Node} head1
+ * @param {Node} head2
+ * @returns {Node}
+*/
+
+/*
+class Node{
+    constructor(data){
+        this.data = data;
+        this.next = null;
+    }
+}
+*/
+
+class Solution {
+    
+    makeUnion(head1, head2)
+    {
+        const hashSet = new Set();
+        
+        let temp1 = head1;
+        let temp2 = head2;
+        
+        while(temp1 || temp2) {
+            if(temp1 &&  temp2){
+                hashSet.add(temp1.data)
+                hashSet.add(temp2.data)
+                temp1 = temp1.next
+                temp2 = temp2.next
+            }else if(temp1) {
+                hashSet.add(temp1.data)
+                temp1 = temp1.next
+            }else {
+                hashSet.add(temp2.data)
+                temp2 = temp2.next
+            }
+        }
+        const data = [...hashSet]
+        data.sort((a,b) => a-b);
+        const head = new Node(data[0]);
+        let pt = head
+        
+        for(let i=1; i< data.length; i++) {
+            pt.next = new Node(data[i])
+            pt = pt.next
+        }
+        
+        return head
+    }
+}
