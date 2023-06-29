@@ -1,0 +1,38 @@
+/**
+ * @param {number} N
+ * @return {number}
+ */
+class Solution {
+    
+    solve(n) {
+        if(n==1 || n==7) {
+            return true;
+        }
+        
+        if(n==2 || n==3 || n == 4 || n==5 ||n==6 || n==8 ||n==9) {
+            return false;
+        }
+        
+        let sq = 0;
+        
+        while(n>0) {
+            sq += ((n%10) * (n%10));
+            
+            n = Math.floor(n/10);
+        }
+        
+        return this.solve(sq);
+    }
+    
+    nextHappy(N) {
+        
+        
+        while(N <=(10**5)) {
+            N++;
+            
+            if(this.solve(N)) return N;
+        }
+        
+        return -1;
+    }
+}
