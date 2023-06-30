@@ -1,0 +1,19 @@
+/**
+ * @param {number} n
+ * @returns {number}
+*/
+
+class Solution {
+    
+    setBits(n)
+    {
+        let setBit = 0;
+        
+        while(n) {
+            if(n&1==1) setBit++;
+            n = n>>1
+        }
+        
+        return setBit
+    }
+}
