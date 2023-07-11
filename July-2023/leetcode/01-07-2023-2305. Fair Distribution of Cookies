@@ -1,0 +1,26 @@
+/**
+ * @param {number[]} cookies
+ * @param {number} k
+ * @return {number}
+ */
+var distributeCookies = function(cookies, k) {
+    const n = cookies.length;
+    const arr = new Array(k).fill(0);
+    let res = Infinity;
+
+    const solve = function(arr, idx) {
+        if(idx === n) {
+            res = Math.min(res, Math.max(...arr))
+            return
+        }
+
+        for(let i=0; i<k; i++) {
+            arr[i] += cookies[idx];
+            solve(arr, idx+1)
+            arr[i] -= cookies[idx]
+        }
+        return res;
+    }
+
+    return solve(arr, 0)
+};
