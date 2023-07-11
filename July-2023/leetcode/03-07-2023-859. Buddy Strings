@@ -1,0 +1,22 @@
+ /**
+ * @param {string} goal
+ * @return {boolean}
+ */
+var buddyStrings = function(s, goal) {
+    if(s.length !== goal.length || (s.length == 1 && goal.length ==1)) {
+        return false;
+    }
+
+   if(s === goal) {
+       const set = new Set(s);
+       return set.size < goal.length;
+   }
+   const diff = [];
+    for(let i=0; i<s.length; i++) {
+        if(s[i] !== goal[i]) {
+            diff.push([s[i], goal[i]])
+        }
+    }
+
+    return diff.length === 2 && diff[0][0] == diff[1][1] && diff[0][1] === diff[1][0]
+};
