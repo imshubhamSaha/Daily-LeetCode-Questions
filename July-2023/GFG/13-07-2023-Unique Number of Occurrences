@@ -1,0 +1,44 @@
+/**
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+var uniqueOccurrences = function(arr) {
+   const map = {};
+
+   arr.forEach(val => map[val] = (map[val] || 0) +1);
+
+   const val = Object.values(map).sort((a,b) => a-b);
+
+   for(let i=0; i<val.length-1; i++) {
+       if(val[i] === val[i+1]) {
+           return false;
+       }
+   }
+
+   return true;
+};
+
+Time Complexity -->O(NLOGN);
+Space Complexity -->O(N)
+
+
+
+
+/**
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+var uniqueOccurrences = function(arr) {
+   const map = {};
+
+   arr.forEach(val => map[val] = (map[val] || 0) +1);
+
+   const val = Object.values(map)
+
+   const set = new Set(val)
+
+   return set.size === val.length
+};
+
+Time Complexity -->O(N);
+Space Complexity -->O(N)
