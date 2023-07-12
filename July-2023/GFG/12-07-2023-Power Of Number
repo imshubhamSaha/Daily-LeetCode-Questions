@@ -1,0 +1,24 @@
+/**
+ * @param {number} N
+ * @param {number} R
+ * @returns {number}
+*/
+class Solution {
+  
+    power(N, R)
+    {
+        const mod = Math.pow(10,9) +7;
+        
+        let ans = 1
+        
+        for(let i=1; i<=R; i++) {
+            ans *= N
+            ans %= mod;
+        }
+        
+        return ans;
+    }
+}
+
+Time Complexity --> O(N)
+Space Complexity --> O(1);
