@@ -1,0 +1,35 @@
+const product = (arr, k) => {
+    let count = 0;
+    let product = 1;
+    
+    for(let i=0; i<arr.length; i++) {
+        for(let j=i; j<arr.length; j++) {
+            product *= arr[j]
+            if(product<k) {
+                count++;
+            }
+            else break;
+        }
+        product = 1
+    }
+    
+    return count
+}
+
+
+const product = (arr, k) => {
+    let i=0,start=0,product=1,count=0;
+        while(i<arr.length)
+        {
+            product*=a[i];
+            
+            while(start<=i && product>=k) {
+                product/=a[start];
+                start++;
+            }
+            
+            count+=1 + (i-start);
+            i++;
+        }
+        return count;
+}
