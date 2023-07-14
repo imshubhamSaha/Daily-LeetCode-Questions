@@ -1,0 +1,26 @@
+/**
+ * @param {Stack} s
+ * @param {number} sizeOfStack
+*/
+class Solution 
+{
+    //Function to delete middle element of a stack.
+    deleteMid(s, sizeOfStack)
+    {
+        let num = Math.floor(sizeOfStack/2)
+        const arr= []
+        
+        while(num) {
+            arr.push(s.a.pop())
+            num--;
+        }
+        
+        s.a.pop();
+        
+        while(arr.length) {
+            s.push(arr.pop())
+        }
+    
+        
+    }
+}
