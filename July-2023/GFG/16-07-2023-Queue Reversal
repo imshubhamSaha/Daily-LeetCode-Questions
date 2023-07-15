@@ -1,0 +1,18 @@
+class Solution {
+    //Function to reverse the queue.
+  
+    rev(q)
+    {
+       const stack = [];
+       
+       while(!q.empty()){
+           stack.push(q.pop());
+       }
+       
+       while(stack.length) {
+           q.push(stack.pop())
+       }
+       
+       return q
+    }
+}
