@@ -1,0 +1,46 @@
+
+const revList = function(head) {
+    let temp = head
+    let prev = null
+
+    while(temp) {
+        let nextNode = temp.next
+        temp.next = prev;
+        prev = temp
+
+        temp = nextNode
+    }
+
+    return prev
+}
+
+var addTwoNumbers = function(l1, l2) {
+    let revL1 = revList(l1)
+    let revL2 = revList(l2)
+    
+    let res = new ListNode(0)
+    
+    let carry = 0
+
+    while(carry !== 0  || revL1 !== null || revL2 !== null){
+        let digit1 = revL1 !== null ? revL1.val: 0
+        let digit2 = revL2 !== null ? revL2.val: 0
+
+        let sum = digit1 + digit2 + carry;
+        let num = sum%10
+        carry = Math.floor(sum/10);
+        res.val = num
+        let head = new ListNode(0);
+        head.next = res
+        res = head
+        if(revL1) {
+            revL1= revL1.next
+        }
+        if(revL2) {
+            revL2= revL2.next
+        }
+ 
+    }
+
+    return res.next
+};
