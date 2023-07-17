@@ -1,0 +1,113 @@
+class Solution {
+  FirstNonRepeating(a){
+    const map = new Array(26).fill(0)
+    let ans = ""
+    for(let i=0; i<a.length;i++) {
+        let idx = a.charCodeAt(i) -97
+        map[idx]++;
+        let str = a.slice(0,i+1);
+        let s=""
+        for(let j=0; j<str.length; j++) {
+            let id = str.charCodeAt(j)-97
+            if(map[id] === 1) {
+                s=str[j];
+                break;
+            }
+        }
+        ans += s ? s: "#";
+    }
+    return ans;
+  }
+}
+
+Time Complexity --> O(N*N)
+Space Complexity --> O(26)
+
+class Queue{
+    constructor() {
+        this.arr = [];
+        this.front = -1
+        this.last= 0
+    }
+    
+    push(el) {
+        if(this.front==-1 && this.last === 0) {
+            this.front++
+            this.arr[this.front] = el
+           
+        }else{
+            this.arr[this.last] = el;
+        }
+        this.last++;
+    }
+    
+    pop(){
+        if(this.rear === 0) {
+            return -1
+        }
+        let popped = this.arr[this.front]
+        
+        this.front++
+        
+        if(this.front===this.last) {
+            this.front=-1
+            this.last = 0
+          
+        }
+        
+        return popped;
+    }
+    
+    first() {
+        if(!this.isEmpty()) {
+            return this.arr[this.front];
+        }else{
+            return null
+        }
+    }
+    
+    isEmpty() {
+        if(this.front==-1 && this.last === 0) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
+
+
+class Solution {
+  FirstNonRepeating(a){
+    const map = new Array(26).fill(0)
+    let ans = "";
+    
+    const q = new Queue();
+    
+    for(let i=0; i<a.length; i++) {
+        let idx = a.charCodeAt(i) -97
+        map[idx]++;
+        
+        if(map[idx] === 1) {
+            q.push(a[i])
+        }
+        
+        while(q.isEmpty() === false && map[q.first().charCodeAt(0) -97] > 1) {
+            q.pop()
+        }
+        
+        if(q.isEmpty()) {
+            ans += "#"
+        }else{
+            ans += q.first()
+        }
+        
+    }
+    
+    
+    return ans;
+    
+  }
+}
+
+Time Complexity --> O(n*26)
+Space Complexity --> O(26)
