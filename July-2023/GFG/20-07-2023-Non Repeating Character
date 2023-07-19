@@ -1,0 +1,53 @@
+class Solution 
+{
+    //Function to find the first non-repeating character in a string.
+    nonrepeatingCharacter(s)
+    {
+        for(let i=0; i<s.length; i++) {
+            let count = 0
+            
+            for(let j=0; j<s.length; j++) {
+                if(s[i] === s[j]) {
+                    count++;
+                }
+            }
+            
+            if(count ===1) {
+                return s[i]
+            }
+        }
+        
+        return "$"
+    }
+}
+
+T.C --> O(n*n);
+T.C --> O(1);
+
+class Solution 
+{
+    //Function to find the first non-repeating character in a string.
+    nonrepeatingCharacter(s)
+    {
+        const map = new Map();
+        let str =""
+        for(const char of s) {
+            if(map.has(char)){
+                map.set(char, map.get(char)+1);
+            }else{
+                map.set(char,1)
+            }
+        }
+        
+        for(const char of s) {
+            if(map.get(char) === 1){
+                str += char;
+                break;
+            }
+        }
+        
+        return str == "" ? "$":str;
+    }
+
+    T.C --> O(N);
+    S.C --> O(26);
