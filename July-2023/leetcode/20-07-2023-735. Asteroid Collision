@@ -1,0 +1,44 @@
+/**
+ * @param {number[]} asteroids
+ * @return {number[]}
+ */
+var asteroidCollision = function(asteroids) {
+    const stack = [];
+    const n =  asteroids.length;
+    for(let i=0; i<n; i++) {
+        if (asteroids[i] > 0) {
+            stack.push(asteroids[i]);
+        }
+        else {
+            if(stack.length && stack[stack.length-1]>0){
+                let flag = true;
+                let val = Math.abs(asteroids[i])
+                let max = val;
+
+                while(stack.length && stack[stack.length-1]>0) {
+                    
+                    let popped = stack.pop()
+                    if((popped - val) === 0) {
+                        flag = false;
+                        break;
+                    }
+                    max = Math.max(max, popped);
+                    if(max !== val) {
+                        break;
+                    }
+                }
+
+                if(flag && (val === max)) {
+                    stack.push(-val)
+                }
+                else if(flag) {
+                    stack.push(max);
+                }
+            }else{
+                stack.push(asteroids[i])
+            }
+        }
+    }
+
+    return stack;
+};
