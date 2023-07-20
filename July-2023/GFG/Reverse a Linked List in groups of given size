@@ -1,0 +1,26 @@
+class Solution {
+    /* Should do this in-place without altering the nodes' values.*/
+    reverse(node, k)
+    {
+        
+        let cnt = 0;
+        let prev = null;
+        let cur = node;
+        let nextNode = null
+        
+        while(cur !== null && cnt <k) {
+            nextNode = cur.next
+            cur.next = prev;
+            prev = cur;
+            cur = nextNode;
+            cnt++;
+        }
+        
+        
+        if(nextNode !== null) {
+            node.next = this.reverse(nextNode, k)
+        }
+        
+        return prev
+    }
+}
