@@ -1,0 +1,24 @@
+class Solution {
+    //Function to remove duplicates from unsorted linked list.
+    removeDuplicates(head)
+    {
+       const hashSet = new Set();
+       let cur = head;
+       let prev = null;
+       
+       while(cur){
+           if(hashSet.has(cur.data)) {
+               let nextN = cur.next
+               prev.next = nextN;
+               cur = nextN
+           }else{
+               hashSet.add(cur.data);
+               prev = cur;
+               cur = cur.next
+           }
+           
+       }
+       
+       return head
+    }
+}
