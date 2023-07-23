@@ -1,0 +1,135 @@
+
+
+//User function Template for javascript
+
+/**
+ * @param {Node} head
+ * @returns {Node}
+*/
+
+/*
+class Node{
+    constructor(data){
+        this.data = data;
+        this.next = null;
+    }
+}
+*/
+
+class Solution {
+    //Function to sort a linked list of 0s, 1s and 2s.
+    segregate(head)
+    {
+        if(!head.next) {
+            return head;
+        }
+        
+        const count = new Array(3).fill(0);
+        
+        let cur = head;
+        
+        while(cur) {
+            let idx = cur.data;
+            count[idx]++;
+            cur = cur.next;
+        }
+        
+        let temp = head;
+        
+        for(let i=0; i<3; i++) {
+            while(count[i] >0 && temp) {
+                temp.data = i;
+                count[i]--;
+                temp = temp.next;
+            } 
+        }
+        
+        return head;
+    }
+}
+
+T.C --> O(n + n);
+S.C --> O(3);
+
+class Solution {
+    //Function to sort a linked list of 0s, 1s and 2s.
+    segregate(head)
+    {
+        if(!head.next) {
+            return head;
+        }
+        
+       let zero = null, one = null, two= null;
+       let zeroNext = null, oneNext = null, twoNext = null;
+       
+       while(head) {
+           if(head.data === 0) {
+               if(zero === null) {
+                   zero = head;
+                   zeroNext = head;
+               }else{
+                   zeroNext.next = head;
+                   zeroNext = head;
+               }
+           }else if(head.data === 1) {
+               if(one === null) {
+                   one = head;
+                   oneNext = head;
+               }else {
+                   oneNext.next = head
+                   oneNext = head;
+               }
+           }else{
+               if(two === null){
+                   two = head;
+                   twoNext = head;
+               }else{
+                   twoNext.next = head;
+                   twoNext = head;
+               }
+           }
+           
+           head = head.next;
+       }
+       
+       
+       if(zero !== null) {
+           if(one !== null) {
+               zeroNext.next = one;
+               if(two !== null) {
+                   oneNext.next = two
+                   twoNext.next = null;
+               }else{
+                   oneNext.next = null;
+               }
+           }else{
+               if(two !== null) {
+                   zeroNext.next = two;
+                   twoNext.next = null;
+               }else {
+                   zeroNext.next = null;
+               }
+           }
+           
+           return zero;
+       }else{
+           if(one !== null) {
+               if(two !== null) {
+                   oneNext.next = two;
+                   twoNext.next = null;
+               }else{
+                   oneNext.next = null
+               }
+               return one;
+           }else if(two !== null) {
+               twoNext.next = null;
+               return two;
+           }
+       }
+       
+       return head;
+    }
+}
+
+T.C --> O(n);
+S.C --> O(1);
