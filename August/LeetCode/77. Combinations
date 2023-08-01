@@ -1,0 +1,19 @@
+var generateCombination = function(start, n, k, arr,result) {
+    if(k===0) {
+        result.push([...arr]);
+        return;
+    }
+
+    for(let i=start; i<=n; i++) {
+        arr.push(i);
+        generateCombination(i+1, n, k-1,arr, result);
+        arr.pop()
+    }
+}
+var combine = function(n, k) {
+    const result = [];
+
+    generateCombination(1,n,k, [], result)
+
+    return result;
+};
