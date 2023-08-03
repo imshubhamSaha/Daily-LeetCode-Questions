@@ -1,0 +1,17 @@
+class Solution{
+public:
+    void solve(stack<int> &st, vector<int> &v, int start) {
+        if(st.size() == 0)
+        {
+            return;
+        }
+        v.push_back(st.top());
+        st.pop();
+        solve(st, v,start+1);
+        st.push(v[v.size()-start]);
+    }
+    void Reverse(stack<int> &st){
+        vector<int>v;
+        solve(st, v, 1);
+    }
+};
