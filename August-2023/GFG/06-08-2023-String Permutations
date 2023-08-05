@@ -1,0 +1,22 @@
+class Solution {
+    permute(s, ans, arr) {
+        if(s.length === 0) {
+            arr.push(ans)
+            return;
+        }
+        
+        for(let i=0; i<s.length; i++) {
+            let char = s[i];
+            let left = s.slice(0,i);
+            let right = s.slice(i+1);
+            
+            this.permute((left+right), ans + char, arr);
+        }
+    }
+    
+    permutation(str){
+        const ans = [];
+        
+        this.permute(str, "", ans)
+        return ans.sort()
+    }
