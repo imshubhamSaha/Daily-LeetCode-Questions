@@ -1,0 +1,27 @@
+class Solution {
+    checkPrime(n) {
+        if(n==2) {
+            return true;
+        }
+        
+        for(let i=2; i<=Math.sqrt(n); i++) {
+            if(n%i === 0) {
+                return false;
+            }
+        }
+        
+        return true
+    }
+    largestPrimeFactor(N){
+        let ans = 1;
+        let temp = N
+        for(let i=2; i<=temp; i++) {
+            if(temp%i === 0 && this.checkPrime(i)) {
+                ans = i;
+                temp = temp/i;
+            }
+        }
+        
+        return ans;
+    }
+}
