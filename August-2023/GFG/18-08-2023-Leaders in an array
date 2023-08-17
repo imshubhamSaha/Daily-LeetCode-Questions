@@ -1,0 +1,17 @@
+class Solution {
+    //Function to find the leaders in the array.
+    leaders(arr, n){
+        const stk = [];
+        
+        for(let i=0; i<n; i++) {
+            if(stk.length) {
+                while(stk.length && stk[stk.length-1] <arr[i]) {
+                    stk.pop()
+                }
+            }
+            stk.push(arr[i])
+        }
+        
+        return stk;
+    }
+}
