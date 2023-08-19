@@ -1,0 +1,57 @@
+class Solution 
+{
+    //Function to find a continuous sub-array which adds up to a given number.
+    subarraySum(arr, n, s)
+    {
+        let strt =0;
+        let sum =0;
+        
+        for(let i=0; i<n; i++) {
+            sum += arr[i]
+            
+            while(sum > s && strt<i) {
+                sum -= arr[strt++];
+            }
+            
+            if(sum === s) {
+                return [strt+1, i+1];
+            }
+        }
+        
+        
+        return [-1]
+    }
+}
+
+
+class Solution 
+{
+    //Function to find a continuous sub-array which adds up to a given number.
+    subarraySum(arr, n, s)
+    {
+        let strt =0,
+        end = 0;
+        let sum =0;
+        if(s === 0) {
+            return [-1]
+        }
+        
+        while(end<=n) {
+            if(sum === s) {
+                return [strt +1, end];
+            }
+            else if(sum >s) {
+                sum = sum - arr[strt]
+                ++strt
+            }
+            
+            else{
+                sum += arr[end];
+                ++end;
+            }
+        }
+        
+        
+        return [-1]
+    }
+}
