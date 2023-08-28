@@ -1,0 +1,27 @@
+class Solution {
+    //Function to remove duplicates from sorted linked list.
+    removeDuplicates(head)
+    {
+        if(!head || !head.next) {
+            return head;
+        }
+        
+        let forward = head;
+        let prev = null;
+        
+        while(forward) {
+            let nextNode = forward.next;
+            
+            if( prev && prev.data === forward.data) {
+                prev.next = nextNode;
+                forward = nextNode
+                continue;
+            }
+            
+            prev = forward;
+            forward = nextNode;
+        }
+        
+        return head;
+    }
+}
