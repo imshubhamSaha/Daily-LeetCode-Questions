@@ -1,0 +1,38 @@
+class Solution {
+    
+    compute(head)
+    {
+        if(!head || !head.next) {
+            return head;
+        }
+        const arr = [];
+        
+        let temp = head;
+        
+        while(temp) {
+            if(!arr.length) {
+                arr.push(temp.data);
+            }else{
+                
+                while(arr.length && arr[arr.length-1] < temp.data) {
+                    arr.pop();
+                }
+                
+                arr.push(temp.data)
+                
+            }
+            temp = temp.next
+        }
+        
+        let cur = new Node(arr[0]);
+        let prev =cur; 
+        
+        for(let i=1; i< arr.length; i++) {
+            let newNode = new Node(arr[i]);
+            prev.next = newNode;
+            prev = newNode;
+        }
+        
+        return cur;
+    }
+}
