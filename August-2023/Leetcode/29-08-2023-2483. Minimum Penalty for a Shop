@@ -1,0 +1,105 @@
+/**
+ * @param {string} customers
+ * @return {number}
+ */
+var bestClosingTime = function(cust) {
+    let minHr = 0, min = Number.MAX_SAFE_INTEGER;
+    const len = cust.length;
+    for(let i=0; i<= len; i++) {
+        let pen = 0;
+        for(let j=0; j<len; j++) {
+            if(i===j) {
+                if(cust[j] === "Y") {
+                    pen++;
+                }
+            }else if(j<i) {
+                if(cust[j] === "N") {
+                    pen++;
+                }
+            }else{
+                if(cust[j] === "Y") {
+                    pen++;
+                }
+            }
+        }
+
+        if(pen < min) {
+            min = pen;
+            minHr = i;
+        }
+    }
+
+    return minHr;
+};
+
+T.C --> O(n**2);
+S>C -->O(1);
+
+/**
+ * @param {string} customers
+ * @return {number}
+ */
+var bestClosingTime = function(cust) {
+    let minHr = 0, min = Number.MAX_SAFE_INTEGER;
+    const len = cust.length;
+    const pre = new Array(len+1).fill(0);
+    const suff = new Array(len+1).fill(0);
+    
+
+    for(let i=len-1; i>=0; i--) {
+        if(cust[i] === "Y") {
+            pre[i]  = 1 + pre[i+1];
+        }else{
+            pre[i] = pre[i+1];
+        }
+    }
+
+    for(let i=1; i<=len; i++) {
+        if(cust[i-1] === "N") {
+            suff[i] = 1 + suff[i-1];
+        }else{
+            suff[i] = suff[i-1];
+        }
+    }
+
+    for(let i=0; i<=len; i++) {
+        let s = pre[i] + suff[i];
+
+        if(min > s) {
+            min = s;
+            minHr = i
+        }
+    }
+    return minHr;
+};
+
+T.C --> O(3n)
+S.C --> O(2n)
+
+/**
+ * @param {string} customers
+ * @return {number}
+ */
+var bestClosingTime = function(cust) {
+    let minHr = -1, pnt = 0, max =0;
+
+    for(let i=0; i<cust.length; i++) {
+        if(cust[i] === "Y") {
+            pnt++;
+        }else{
+            pnt--;
+        }
+
+        if(pnt > max){
+            max=pnt;
+            minHr = i;
+        }
+    }
+
+    return minHr +1;
+};
+T.C --> O(n)
+S.C --> O(1)
+
+
+
