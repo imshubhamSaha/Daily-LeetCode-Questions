@@ -1,0 +1,124 @@
+class MyQueue{
+    constructor(){
+        this.queue = [];
+        this.front = -1;
+        this.rear = -1;
+        this.len = 0
+    }
+
+    isEmpty() {
+        if(this.front === -1 && this.rear === -1) {
+            return true;
+        }
+
+        return false;
+    }
+
+    get size() {
+        return this.len;
+    }
+
+    eneque(elm) {
+        if(this.front === -1 && this.rear === -1) {
+            this.front = this.front + 1;
+        }
+        this.rear = this.rear + 1
+        this.queue[this.rear] = elm;
+        this.len = this.len+1;
+        
+    }
+
+    deque() {
+        if(this.isEmpty()) {
+            return -1;
+        }
+        let popped = this.queue[this.front]
+        if(this.front === this.rear) {
+            this.front = -1;
+            this.rear = -1;
+        }else{
+            this.front = this.front + 1
+        }
+
+        this.len = this.len -1;
+        return popped;
+    }
+
+    peek() {
+        if(this.isEmpty()) {
+            return -1;
+        }
+
+        return this.queue[this.front];
+    }
+}
+
+var MyStack = function() {
+    this.q1 = new MyQueue
+    this.q2 = new MyQueue
+};
+
+/** 
+ * @param {number} x
+ * @return {void}
+ */
+MyStack.prototype.push = function(x) {
+    if(this.q1.len === 0) {
+        this.q1.eneque(x);
+    }else {
+        this.q2.eneque(this.q1.deque());
+        this.q1.eneque(x)
+        let el = this.q2.queue[this.q2.rear]
+        for(let i= this.q2.rear; i>this.q2.front; i--) {
+            this.q2.queue[i] = this.q2.queue[i-1]
+        }
+        this.q2.queue[this.q2.front] = el;
+    }
+};
+
+/**
+ * @return {number}
+ */
+MyStack.prototype.pop = function() {
+    if(this.q1.isEmpty()) {
+        return -1;
+    }
+    let popped = this.q1.deque();
+
+    if(!this.q2.isEmpty()) {
+        this.q1.eneque(this.q2.deque());
+    }
+
+    return popped;
+};
+
+/**
+ * @return {number}
+ */
+MyStack.prototype.top = function() {
+    if(this.q1.isEmpty()) {
+        return -1;
+    }
+
+    return this.q1.peek();
+};
+
+/**
+ * @return {boolean}
+ */
+MyStack.prototype.empty = function() {
+    if(this.q1.isEmpty()) {
+        return true;
+    } 
+
+    return false;
+};
+
+/** 
+ * Your MyStack object will be instantiated and called as such:
+ * var obj = new MyStack()
+ * obj.push(x)
+ * var param_2 = obj.pop()
+ * var param_3 = obj.top()
+ * var param_4 = obj.empty()
+ */
