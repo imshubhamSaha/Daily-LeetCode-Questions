@@ -1,0 +1,21 @@
+    deleteNode(head,x){
+        if(x == 1) {
+            return head.next;
+        }
+        
+        let prev = null, cur = head, c =0;
+        
+        while(cur) {
+            c++;
+            if(c === x) {
+                break;
+            }
+            
+            prev = cur;
+            cur = cur.next;
+        }
+        
+        prev.next = cur.next;
+        
+        return  head;
+    }
