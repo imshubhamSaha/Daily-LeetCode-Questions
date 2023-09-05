@@ -1,0 +1,29 @@
+var copyRandomList = function(head) {
+    if(!head) {
+        return head
+    }
+    const hashMap = new Map();
+    let newHead = new Node(head.val);
+    hashMap.set(head, newHead)
+    let prev = newHead;
+    let cur =  head.next;
+
+    while(cur) {
+        let newNode = new Node(cur.val)
+        hashMap.set(cur, newNode)
+        prev.next = newNode;
+        prev = newNode;
+        cur = cur.next;
+    }
+
+    prev.next = cur
+
+    cur = head;
+    while(cur) {
+        let copy = hashMap.get(cur);
+        copy.random = hashMap.get(cur.random) || null
+        cur = cur.next
+    }
+
+    return newHead;
+};
