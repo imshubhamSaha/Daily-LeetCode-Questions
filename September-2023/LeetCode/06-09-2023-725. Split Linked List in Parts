@@ -1,0 +1,47 @@
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode[]}
+ */
+var splitListToParts = function(head, k) {
+    const parts = [];
+    let current = head, len = 0;
+
+    while(current) {
+        len++;
+        current  = current.next;
+    }
+
+    current = head;
+    let totalDivision = Math.floor(len/k), extra = len%k, total = 0;
+
+    while(total < k) {
+
+        let size = totalDivision + (extra > 0 ? 1 : 0);
+        let newHead = null, prev = null;
+
+        for(let i=0; i<size; i++) {
+            if(!newHead) {
+                newHead = prev = current;
+            }else {
+                prev.next = current;
+                prev = current;
+            }
+
+            if(current) {
+                current = current.next;
+            }
+        }
+
+        if(prev) {
+            prev.next = null;
+        }
+
+        parts.push(newHead);
+
+        extra = Math.max(extra-1, 0);
+
+        total++;
+    }
+
+    return parts;
+};
