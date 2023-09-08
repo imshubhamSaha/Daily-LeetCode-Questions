@@ -1,0 +1,17 @@
+var generate = function(numRows) {
+    const pasTri = [[1]];
+
+    for(let i=1; i<numRows; i++) {
+        const arr = [];
+        for(let j=0; j<=i; j++) {
+            if(j===0 || j === i) {
+                arr.push(1)
+            }else{
+                arr.push(pasTri[i-1][j-1] + pasTri[i-1][j]);
+            }
+        }
+        pasTri.push(arr)
+    }
+
+    return pasTri;
+};
