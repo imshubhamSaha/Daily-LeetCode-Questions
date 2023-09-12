@@ -1,0 +1,36 @@
+var minDeletions = function(s) {
+    const n = s.length;
+
+    if(n === 1) return 0;
+
+    let del = 0;
+    const hashMap = new Map() , hashSet = new Set();
+
+    for(let i=0; i<n; i++) {
+        if(hashMap.has(s[i])) {
+            hashMap.set(s[i], hashMap.get(s[i])+1)
+        }else{
+            hashMap.set(s[i], 1)
+        }
+    }
+    
+    for(let [key, val] of hashMap.entries()) {
+        if(hashSet.has(val)) {
+            let tot = val
+            while(hashSet.has(tot) && tot !== 0) {
+                del++;
+                tot = tot-1
+                hashMap.set(key, tot)
+            }
+            if(tot !== 0) {
+                hashSet.add(tot)
+            }
+            if(hashMap.get(key) === 0) hashMap.delete(key)
+        }else{
+            hashSet.add(val)
+        }
+    }
+
+
+    return del
+};
