@@ -1,0 +1,18 @@
+class Solution 
+{
+    //Function to count the number of ways in which frog can reach the top.
+    countWays(n)
+    {
+        let prev1 = BigInt(1), prev2 = BigInt(0), prev3 = BigInt(0);
+        const mod = BigInt(1000000007)
+        for(let i=0; i<n; i++) {
+            let temp = (prev1 + prev2 + prev3) % mod;
+            
+            prev3 = prev2;
+            prev2 = prev1;
+            prev1 = temp;
+        }
+        
+        return prev1;
+    }
+}
