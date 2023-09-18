@@ -1,0 +1,35 @@
+const BS = (rows) => {
+    let low = 0;
+    let high = rows.length-1
+    let idx = rows.length;
+
+    while(low<=high) {
+        let mid = low + Math.floor((high-low)/2);
+
+        if(rows[mid] === 0) {
+            idx = mid;
+            high = mid-1
+        }else{
+            low = mid+1
+        }
+    }
+
+    return idx;
+}
+
+var kWeakestRows = function(mat, k) {
+    const ans = [];
+    const rows = [];
+
+    for(let i=0; i<mat.length; i++) {
+        rows.push([BS(mat[i]), i])
+    }
+   
+    rows.sort((a,b) => a[0] === b[0] ? a[1] - b[1] : a[0] -b[0]);
+   
+    for(let i=0; i<k; i++) {
+        ans.push(rows[i][1]);
+    }
+
+    return ans;
+};
