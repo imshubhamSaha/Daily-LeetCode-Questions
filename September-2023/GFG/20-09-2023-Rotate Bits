@@ -1,0 +1,9 @@
+class Solution{
+    rotate(n,d){
+        d = d%16
+        let left_shift =  ((n<<d)|(n>>(16-d))) & 65535;
+        let right_shift = ((n>>d)| (n<<(16-d))) & 65535;
+        
+        return [left_shift, right_shift]
+    }
+}
