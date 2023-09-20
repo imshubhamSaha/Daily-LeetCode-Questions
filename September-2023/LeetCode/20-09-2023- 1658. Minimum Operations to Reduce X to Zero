@@ -1,0 +1,25 @@
+var minOperations = function(nums, x) {
+    const targetedSum = nums.reduce((cur, acc) => acc+cur, 0) - x, n = nums.length;
+
+    if(targetedSum === 0) {
+        return n;
+    }
+
+    let subArrLen = 0, cur_sum = 0, i =0;
+
+    for(let j=0; j<n; j++) {
+        cur_sum += nums[j];
+
+        while(i<=j && cur_sum > targetedSum) {
+            cur_sum -= nums[i];
+            i++;
+        } 
+
+        if(cur_sum === targetedSum) {
+            subArrLen = Math.max(subArrLen, (j-i)+1);
+        }
+    }
+
+
+    return subArrLen > 0 ? n-subArrLen : -1;
+};
