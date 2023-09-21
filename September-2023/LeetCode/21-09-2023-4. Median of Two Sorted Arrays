@@ -1,0 +1,50 @@
+var findMedianSortedArrays = function(nums1, nums2) {
+    const m = nums1.length, n = nums2.length, arr = [];
+
+    for(i=0; i<m || i<n; i++) {
+        if(i<m){
+            arr.push(nums1[i])
+        }
+        if(i<n) {
+            arr.push(nums2[i])
+        }
+    }
+
+    arr.sort((a,b) => a-b);
+
+    const total = arr.length;
+
+    if(total % 2 !== 0) {
+        return arr[Math.floor(total/2)];
+    }
+    return (arr[Math.floor(total/2)-1] + arr[Math.floor(total/2)])/2;
+};
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+var findMedianSortedArrays = function(nums1, nums2) {
+    const m = nums1.length, n = nums2.length;
+
+    let i=0, j=0, val1 =0, val2= 0;
+
+    for(let cnt =0; cnt<=Math.floor((n+m)/2); cnt++) {
+        val2 = val1;
+
+        if(i!==m && j !== n) {
+            if(nums1[i] > nums2[j]) {
+                val1 = nums2[j++]
+            }else{
+                val1 = nums1[i++]
+            }
+        }else if(i <m) {
+            val1 = nums1[i++]
+        }else{
+            val1 = nums2[j++];
+        }
+    }
+
+    if((m+n)%2 !== 0) {
+        return val1;
+    }
+
+    return (val1+val2)/2
+};
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
