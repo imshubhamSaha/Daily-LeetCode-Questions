@@ -1,0 +1,19 @@
+class Solution {
+    // Function to find equilibrium point in the array.
+    equilibriumPoint(a, n)
+    {
+        if(n === 1) {
+            return 1;
+        }
+        
+        let totalSum = a.reduce((acc,cur) => acc + cur, 0), fordSum =0;
+        
+        for(let i=0; i<n; i++) {
+            if((totalSum- a[i]- fordSum) === fordSum) {
+                return i+1
+            }
+            fordSum += a[i];
+        }
+        return -1;
+    }
+}
