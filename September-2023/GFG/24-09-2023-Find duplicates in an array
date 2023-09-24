@@ -1,0 +1,17 @@
+class Solution {
+    
+    duplicates(arr, n)
+    {
+        const ans = [];
+        
+        for(let i=0; i<n; i++) {
+            arr[arr[i]%n] += n;
+        }
+        
+        for(let i=0; i<n; i++) {
+            if(Math.floor(arr[i]/n) >1) ans.push(i);
+        }
+        
+        return ans.length ? ans : [-1];
+    }
+}
