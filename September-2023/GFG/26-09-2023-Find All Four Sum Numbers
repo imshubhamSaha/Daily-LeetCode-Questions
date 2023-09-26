@@ -1,0 +1,40 @@
+class Solution {
+    fourSum(arr, n, k){
+        const ans = [];
+        const hashSet = new Set();
+        
+        arr.sort((a,b) => a-b);
+        
+        for(let i=0; i<=n-4; i++) {
+            for(let j=i+1; j<=n-3; j++) {
+                let l = j+1;
+                let r = n-1;
+                
+                while(l<r) {
+                    let sum = arr[i] + arr[j] + arr[l] +arr[r];
+                    
+                    if(sum === k) {
+                        let str = "" +arr[i] + arr[j] + arr[l] +arr[r];
+                        if(!hashSet.has(str)) {
+                            // console.log(str)
+                            ans.push([arr[i] , arr[j] ,arr[l] ,arr[r]]);
+                            hashSet.add(str);
+                        }
+                        l++;
+                        r--;
+                    }else if(sum < k) {
+                        l++;
+                    }else{
+                        r--;
+                    }
+                }
+            }
+        }
+        
+        // for(const key of hashSet) {
+        //     ans.push(key)
+        // }
+        
+        return ans;
+    }
+}
