@@ -1,0 +1,35 @@
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {string}
+ */
+var decodeAtIndex = function(s, k) {
+    const n = s.length;
+    let len = 0, i=0;
+
+    while(len<k) {
+        
+        if(s[i].charCodeAt(0) >=48 && s[i].charCodeAt(0) <=57) {
+            len *= Number(s[i]);
+        }else{
+            len++;
+        }
+        i++;
+    }
+
+    i--;
+
+    while(i>=0) {
+        if(s[i].charCodeAt(0) >=48 && s[i].charCodeAt(0) <=57) {
+            len = Math.floor(len/Number(s[i]));
+            k %= len
+        }else{
+            if(k==0 || k ===len) {
+                return s[i]
+            }
+            len--;
+        }
+        i--;
+    }
+
+};
