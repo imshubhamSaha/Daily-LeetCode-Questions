@@ -1,0 +1,24 @@
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var reverseWords = function(s) {
+    let str = "", ans = "";
+
+    for(let i=0; i<s.length; i++) {
+        str = s[i] +str;
+    }
+    let j = str.length,i =str.length-1;
+
+    while(i>=0) {
+        if(str[i] === " ") {
+            ans += str.slice(i+1, j) + " ";
+            j=i;
+        }
+        i--;
+    }
+
+    ans += str.slice(i+1, j);
+    return ans;
+    
+};
