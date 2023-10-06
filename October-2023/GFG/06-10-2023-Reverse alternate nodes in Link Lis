@@ -1,0 +1,33 @@
+class Solution {
+    
+    rearrange(head)
+    {
+        if(!head.next || !head.next.next) {
+            return head;
+        }
+        
+        let forward = head, forwrdNext = forward;
+        let last = head.next, lastNext = null;
+        let cur = head.next.next;
+        
+        while(cur && cur.next) {
+            forwrdNext.next = cur;
+            forwrdNext = cur;
+            last.next = lastNext;
+            lastNext = last;
+            last = cur.next;
+            
+            cur = cur.next.next;
+        }
+        
+        if(cur) {
+            forwrdNext.next = cur;
+            forwrdNext = cur;
+        }
+        
+        last.next = lastNext;
+        forwrdNext.next = last;
+        
+        return forward;
+    }
+}
