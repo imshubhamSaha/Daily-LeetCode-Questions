@@ -1,0 +1,32 @@
+var integerBreak = function(n) {
+    if(n<=3) {
+        return n-1;
+    }
+    let res = 1;
+    while(n > 4) {
+        res *=3;
+        n -= 3;
+    }
+
+    res *= n;
+    return res;
+};
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ar integerBreak = function(n) {
+    if(n <= 3) {
+        return n-1;
+    }
+
+    let quotient = Math.floor(n/3), rem = n%3;
+
+    if( rem ===0 ) {
+        return 3**quotient;
+    }
+    if( rem === 1) {
+        
+        return ((3**(quotient-1)) *4);
+    }
+
+    return (3**quotient)*2;
+};
