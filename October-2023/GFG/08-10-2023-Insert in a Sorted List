@@ -1,0 +1,27 @@
+class Solution {
+    sortedInsert(node, data)
+    {
+        let prev = null, cur = node;
+        
+        while(cur) {
+            if(data <cur.data) {
+                let newNode = new Node(data);
+                
+                if(!prev) {
+                    newNode.next = cur;
+                    head = newNode;
+                }else {
+                    prev.next = newNode;
+                    newNode.next = cur;
+                }
+                return head;
+            }
+            
+            prev = cur;
+            cur = cur.next;
+        }
+        const newNode = new Node(data)
+        prev.next = newNode;
+        return head;
+    }
+}
