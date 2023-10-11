@@ -1,0 +1,21 @@
+class Solution {
+    height(node) {
+        if(!node) 
+            return 0;
+        
+        return 1 +Math.max(this.height(node.left), this.height(node.right));
+    }
+    
+    //Function to check whether a binary tree is balanced or not.
+    isBalanced(root)
+    {
+        //your code here
+        if(!root) 
+            return true;
+            
+        if(Math.abs(this.height(root.left) - this.height(root.right)) > 1) 
+            return false;
+            
+        return this.isBalanced(root.left) && this.isBalanced(root.right);
+    }
+}
