@@ -1,0 +1,54 @@
+class Solution
+{ 
+    construct(arr, root, low, high,left) {
+        let mid = low + Math.floor((high-low)/2);
+        
+        if(low<high && root) {
+            if(left) {
+                root.left = arr[mid];
+                this.construct(arr,root.left,low, mid-1,true);
+                this.construct(arr,root.left,mid+1, high,false);
+            }
+            else{
+                root.right = arr[mid];
+                this.construct(arr,root.right,low, mid-1,true);
+                this.construct(arr,root.right,mid+1,high,false);
+            }
+        }
+        else if(low === high && root) {
+            if(left) 
+                root.left = arr[mid];
+            else
+                root.right = arr[mid];
+            
+            arr[mid].left = null;
+            arr[mid].right = null;
+        }
+        else {
+            root.left = null;
+            root.right = null;
+        }
+    }
+    
+    inOrder(root,arr) {
+        if(!root) return;
+        this.inOrder(root.left, arr);
+        arr.push(root);
+        this.inOrder(root.right, arr);
+    }
+    
+    buildBalancedTree(root){
+        //code here
+        if(root) {
+            const result = [];
+            this.inOrder(root, result);
+            let low =0, high = result.length-1;
+            let mid = low + Math.floor((high-low)/2);
+            root = result[mid];
+            this.construct(result, root, low, mid-1, true);
+            this.construct(result, root, mid+1, high, false);
+        }
+        
+        return root;
+    }
+}  
