@@ -1,0 +1,17 @@
+/**
+ * @param {number} rowIndex
+ * @return {number[]}
+ */
+var getRow = function(rI) {
+    const pasTri = new Array(rI+1);
+
+    let calc = 1;
+
+    for(let i=0; i<=rI; i++) {
+        pasTri[i] = calc;
+
+        calc *= (rI-i)/(i+1);
+    }
+
+    return pasTri;
+};
