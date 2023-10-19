@@ -1,0 +1,7 @@
+class Solution {
+    isPossible(N, arr) {
+        const sum = arr.reduce((acc, cur) => acc +cur, 0);
+        
+        return sum%3===0 ? 1 : 0;
+    }
+}
