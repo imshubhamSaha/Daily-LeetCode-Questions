@@ -1,0 +1,39 @@
+ * @constructor
+ * @param {NestedInteger[]} nestedList
+ */
+var NestedIterator = function(nestedList) {
+    this.list = [];
+    this.idx = 0;
+    this.flattenList(nestedList);
+};
+
+NestedIterator.prototype.flattenList = function(nestedList) {
+    for(const elm of nestedList) {
+        if(elm.isInteger()) {
+            this.list.push(elm.getInteger());
+        }else{
+            this.flattenList(elm.getList())
+        }
+    }
+}
+/**
+ * @this NestedIterator
+ * @returns {boolean}
+ */
+NestedIterator.prototype.hasNext = function() {
+    return this.idx < this.list.length;
+};
+
+/**
+ * @this NestedIterator
+ * @returns {integer}
+ */
+NestedIterator.prototype.next = function() {
+    return this.list[this.idx++];
+};
+
+/**
+ * Your NestedIterator will be called like this:
+ * var i = new NestedIterator(nestedList), a = [];
+ * while (i.hasNext()) a.push(i.next());
+*/
