@@ -1,0 +1,10 @@
+class Solution {
+    numberOfPaths(m,n){
+        m = m%1000000009;
+        n = n%1000000009;
+        if(m==1 || n ===1)
+            return 1;
+        
+        return this.numberOfPaths((m-1),n) + this.numberOfPaths(m,n-1);
+    }
+}
