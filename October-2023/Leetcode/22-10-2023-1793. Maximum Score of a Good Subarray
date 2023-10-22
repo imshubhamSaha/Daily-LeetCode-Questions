@@ -1,0 +1,20 @@
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var maximumScore = function(nums, k) {
+    let min_val = nums[k], max_val = min_val;
+    let lft = k, rght= k;
+
+    while(lft>0 || rght<nums.length-1) {
+        if(lft === 0 || (rght<nums.length-1 && nums[lft-1] < nums[rght+1]))
+            rght++;
+        else
+            lft--;
+        min_val = Math.min(min_val, nums[lft], nums[rght]);
+        max_val = Math.max(max_val, (min_val) * ((rght - lft) +1));
+    }
+
+    return max_val;
+};
