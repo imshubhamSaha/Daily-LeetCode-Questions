@@ -1,0 +1,12 @@
+var getLastMoment = function(n, left, right) {
+    let time =0;
+
+    for(const position of left)
+        time = Math.max(position, time);
+    
+    for(const position of right)
+        time= Math.max(time, (n-position));
+    
+
+    return time;
+};
