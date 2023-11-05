@@ -1,0 +1,24 @@
+class Solution {
+    topK(nums, k) {
+        const mp = {};
+        for(let i=0; i<nums.length; i++) 
+            mp[nums[i]] = (mp[nums[i]] || 0) +1;
+            
+        const sorted = Object.entries(mp).sort((a,b) => {
+            if(a[1] === b[1]) 
+                return b[0]-a[0];
+            else
+                return b[1] - a[1];
+        })
+        
+        const ans = [];
+        let i=0;
+        
+        while(i<k) {
+            ans.push(sorted[i][0]);
+            i++;
+        }
+        
+        return ans;
+    }
+}
