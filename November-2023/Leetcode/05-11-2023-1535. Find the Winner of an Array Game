@@ -1,0 +1,64 @@
+/**
+ * @param {number[]} arr
+ * @param {number} k
+ * @return {number}
+ */
+var getWinner = function(arr, k) {
+    const len = arr.length;
+    if(k >= len) 
+        return Math.max(...arr);
+    
+    let winner = null , times =0;
+
+    let i=0, j=1;
+
+    while(i<len && j < len) {
+        let num1 = arr[i]
+        let num2 = arr[j]
+        if(num1 > num2) {
+            if(!winner) {
+                winner = num1
+                times = 1;
+            }else {
+                if(winner === num1) {
+                    times++;
+                }else {
+                    winner = num1;
+                    times=1;
+                }
+
+            }
+            if(i < j) {
+                    j =j+1
+            }else{
+                    j = i+1;
+            }
+        }else{
+            if(!winner) {
+                winner = num2;
+                times =1;
+            }else {
+                if(winner === num2) {
+                    times++;
+                }else{
+                    winner = num2;
+                    times = 1;
+                }
+            }
+            if(j > i) {
+                i = j+1;
+            }else {
+                i = i+1;
+            }
+        }
+
+        if(times === k) {
+            
+            return winner;
+        }
+    }
+
+    if(i < len) {
+        return arr[i]
+    }else return arr[j];
+};
