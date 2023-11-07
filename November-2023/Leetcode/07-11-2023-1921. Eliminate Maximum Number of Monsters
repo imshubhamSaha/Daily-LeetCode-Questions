@@ -1,0 +1,16 @@
+/**
+ * @param {number[]} dist
+ * @param {number[]} speed
+ * @return {number}
+ */
+var eliminateMaximum = function(dist, speed) {
+    const len = dist.length;
+    const timeToEnter = dist.map((pos, i) => pos/speed[i]);
+    timeToEnter.sort((a,b) =>a-b);
+
+    for(let i=0; i<len; i++) 
+        if(timeToEnter[i] <= i)
+            return i;
+    
+    return len;
+};
