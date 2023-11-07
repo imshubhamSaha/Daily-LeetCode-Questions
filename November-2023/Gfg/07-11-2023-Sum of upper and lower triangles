@@ -1,0 +1,26 @@
+class Solution 
+{
+    //Function to return sum of upper and lower triangles of a matrix.
+    sumTriangles(mat, n)
+    {
+        if(n === 1)
+            return [mat[0], mat[0]];
+            
+        let upper = 0, lower = 0;
+        
+        for(let i=0; i<n; i++) {
+            for(let j=0; j<n; j++) {
+                if(i === j) {
+                    upper += mat[i][j];
+                    lower += mat[i][j];
+                }
+                else if(j>i)
+                    upper += mat[i][j];
+                else 
+                    lower += mat[i][j];
+            }
+        }
+        
+        return [upper, lower];
+    } 
+}
