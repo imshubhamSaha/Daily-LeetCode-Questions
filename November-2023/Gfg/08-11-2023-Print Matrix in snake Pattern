@@ -1,0 +1,21 @@
+class Solution 
+{
+   
+    //Function to return list of integers visited in snake pattern in matrix.
+    snakePattern(matrix)
+    {
+        const len = matrix.length, ans =[];
+        
+        for(let i=0; i<matrix.length; i++) {
+            if((i%2) === 1) {
+                for(let j=matrix.length-1; j>=0; j--)
+                    ans.push(matrix[i][j])
+            }else {
+                for(let j=0; j<matrix.length; j++)
+                    ans.push(matrix[i][j]);
+            }
+        }
+        
+        return ans;
+    } 
+}
