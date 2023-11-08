@@ -1,0 +1,16 @@
+/**
+ * @param {number} sx
+ * @param {number} sy
+ * @param {number} fx
+ * @param {number} fy
+ * @param {number} t
+ * @return {boolean}
+ */
+var isReachableAtTime = function(sx, sy, fx, fy, t) {
+    const x_dist = Math.abs(sx-fx), y_dist = Math.abs(sy-fy);
+
+    if(x_dist === 0  && y_dist === 0)
+        return t !== 1;
+
+    return (x_dist <= t  && y_dist <= t);
+};
