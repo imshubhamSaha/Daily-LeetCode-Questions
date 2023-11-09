@@ -1,0 +1,48 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var countHomogenous = function(s) {
+    const strHash = new Array(26).fill(0);
+
+    let total = 0, lastCode = s[0].charCodeAt(0);
+
+    for(let i=0; i<s.length; i++) {
+        const chCode = s[i].charCodeAt(0) -97;
+        
+        if(chCode === lastCode) {
+            strHash[chCode] = strHash[chCode] + 1;
+            total += (strHash[chCode])
+        }else {
+            strHash[lastCode] = 0;
+            strHash[chCode] = strHash[chCode] + 1;
+            total += (strHash[chCode])
+            lastCode = chCode;
+        }
+    }
+
+    return total%1000000007;
+};
+
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var countHomogenous = function(s) {
+    const len = s.length, mod = 1000000007;
+    let start =0, pointer =0, total =0;
+
+    while(start < len) {
+        if(s[start] === s[pointer]) 
+            total += 1 + (start - pointer);
+        else {
+            total += 1;
+            pointer = start;
+        }
+
+        start++;
+    }
+
+    return total%mod;
+};
