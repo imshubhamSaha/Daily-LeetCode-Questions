@@ -1,0 +1,30 @@
+class Solution {
+  printMinNumberForPattern(s){
+    //code here
+    const stk = [];
+    let num = 1;
+    let ans = ""
+    let i=0;
+    
+    while(i<s.length) {
+        if(s[i] === "D") {
+            stk.push(num);
+            num++;
+        }else{
+            stk.push(num);
+            while(stk.length) {
+                ans += stk.pop();
+            }
+            num++;
+        }
+        i++;
+    }
+    
+    stk.push(num);
+    while(stk.length) {
+        ans += stk.pop();
+    }
+    
+    return ans;
+  }
+}
