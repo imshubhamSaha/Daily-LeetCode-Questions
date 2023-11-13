@@ -1,0 +1,26 @@
+class Solution
+{
+    //Function to find length of shortest common supersequence of two strings.
+    shortestCommonSupersequence(x, y, m, n)
+    {
+        let i=1;
+        const dp = Array.from({length:m+1}, (_, i) => new Array(n+1).fill(0));
+       
+        while(i<=m) {
+            let j =1;
+            while(j<=n) {
+                if(x[i-1] === y[j-1]) {
+                    dp[i][j] = dp[i-1][j-1] + 1;
+                }else {
+                    let len1 = dp[i][j-1], len2 = dp[i-1][j];
+                    let totalLen = (len1 > len2 ) ? len1 : len2;
+                    dp[i][j] = totalLen;
+                }
+                j++;
+            }
+            i++;
+        }
+        
+        return (m+n) - dp[m][n];
+    }
+}
