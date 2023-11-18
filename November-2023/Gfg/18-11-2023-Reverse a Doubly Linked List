@@ -1,0 +1,28 @@
+/**
+ * @param {Node} head
+ * @return {Node}
+*/
+
+class Solution {
+    reverseDLL(head){
+       let curr = head;
+       let revNode = null;
+       
+        while(curr) {
+            let nextNode = curr.next;
+            if(!revNode) {
+                curr.next = revNode;
+                revNode = curr
+            }else {
+                revNode.prev = curr;
+                curr.next = revNode;
+                curr.prev = null;
+                revNode = curr;
+            }
+            curr = nextNode;
+        } 
+        
+        
+        return revNode;
+    }
+}
