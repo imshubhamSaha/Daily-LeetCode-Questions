@@ -1,0 +1,31 @@
+/**
+ * @param {string} num
+ * @return {string}
+ */
+var largestGoodInteger = function(num) {
+    let goodInt = "";
+    let maxNum =-1;
+
+    for(let i=0; i<num.length; i++) {
+        let shrtNum = num.slice(i, i+3);
+
+        if(shrtNum.length< 3) continue;
+
+        let flag = true; 
+
+        for(let j=1; j<shrtNum.length; j++)
+            if(shrtNum[j-1] !== shrtNum[j]){
+                flag = false;
+                break;
+            }
+
+        if(flag) {
+            if((+shrtNum) >= maxNum) {
+                maxNum = +shrtNum;
+                goodInt = shrtNum;
+            }
+        }
+    }
+
+    return goodInt;
+};
