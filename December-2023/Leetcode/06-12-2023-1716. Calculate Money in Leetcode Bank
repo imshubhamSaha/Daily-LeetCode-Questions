@@ -1,0 +1,26 @@
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var totalMoney = function(n) {
+    let grandTotal = 0;
+
+    for(let i=0;i<n; i++)
+        grandTotal += Math.floor(i/7) + 1 + i%7;
+
+    return grandTotal;
+};
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var totalMoney = function(n) {
+    const weeks = Math.floor(n/7), remDays = n%7;
+
+    let grandTotal = ((weeks * (weeks-1)) /2) * 7 + (weeks * 28) + ((remDays * (remDays + 1))/2  + (weeks * remDays));
+
+    return grandTotal;
+};
