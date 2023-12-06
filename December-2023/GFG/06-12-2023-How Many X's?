@@ -1,0 +1,26 @@
+class Solution {
+    //Function to count numbers from 1 to N that have 4 as a digit.
+    countX(l,r,x)
+    {
+        if(r<10) {
+            if(x>l && x<r)
+                return 1;
+            else
+                return 0;
+        }
+        
+        let numOfX = 0;
+        
+        for(let i=l+1; i<r; i++) {
+            let num = i;
+            while(num > 0) {
+                if((num%10) === x) 
+                    numOfX++;
+                
+                num = Math.floor(num/10);    
+            }
+        }
+        
+        return numOfX;
+    }
+}
