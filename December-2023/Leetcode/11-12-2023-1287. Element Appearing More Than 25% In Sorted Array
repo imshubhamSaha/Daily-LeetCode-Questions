@@ -1,0 +1,24 @@
+/**
+ * @param {number[]} arr
+ * @return {number}
+ */
+var findSpecialInteger = function(arr) {
+    let i=0, j=0;
+    let maxTimes = 1;
+    let maxInt = -1;
+    const n = arr.length;
+
+    while(j<n) {
+        if(arr[j] !== arr[i])
+            i = j;
+
+        if((((j-i)+1) >= maxTimes) && ((j-i)+1) >= (n*0.25)) {
+            maxTimes = ((j-i)+1)
+            maxInt = arr[j];
+        }
+
+        j++;
+    }
+
+    return maxInt;
+};
