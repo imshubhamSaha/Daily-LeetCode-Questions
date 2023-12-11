@@ -1,0 +1,24 @@
+class Solution {
+  maximumSumSubarray(k,arr,n) {
+    
+    let maxSum = -1;
+    
+    let i=0, j=0;
+    let sum =0
+    while(j<n) {
+        if(((j-i) + 1) > k) {
+            sum  -= arr[i];
+            i++;
+        }
+        
+        sum += arr[j];
+        
+        if(((j-i) + 1) === k) 
+            maxSum = Math.max(maxSum, sum)
+            
+        j++;
+    }
+    
+    return maxSum;
+  }
+}
