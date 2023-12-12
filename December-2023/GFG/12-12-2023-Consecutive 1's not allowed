@@ -1,0 +1,16 @@
+class Solution{
+    countStrings(n){
+        const M = 1000000007;
+        
+        let prev = 0, cur = 1;
+        
+        while(n--) {
+            let temp = (prev + cur) % M;
+            prev = cur;
+            cur = temp;
+        }
+        
+        return (cur + prev)%M;
+    }
+}
+
