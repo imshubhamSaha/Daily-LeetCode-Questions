@@ -1,0 +1,16 @@
+/**
+ * @param {string[][]} paths
+ * @return {string}
+ */
+var destCity = function(paths) {
+    const cities = new Set();
+
+    for(const [start,dest] of paths)
+        cities.add(start);
+
+    for(const [strt,dest] of paths)
+        if(!cities.has(dest))
+            return dest;
+
+    return "";
+};
