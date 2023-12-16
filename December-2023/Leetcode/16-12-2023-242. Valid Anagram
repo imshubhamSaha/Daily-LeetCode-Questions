@@ -1,0 +1,26 @@
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isAnagram = function(s, t) {
+    if(s.length !== t.length)
+        return false;
+    
+    const strTab = {};
+
+    for(const char of s){
+        if(strTab[char])
+            strTab[char] = strTab[char] + 1;
+        else
+            strTab[char] = 1;
+    }
+
+    for(const char of t){
+        if(!strTab[char] || strTab[char] === 0)
+            return false;
+        strTab[char] = strTab[char] - 1;
+    }
+
+    return true;
+};
