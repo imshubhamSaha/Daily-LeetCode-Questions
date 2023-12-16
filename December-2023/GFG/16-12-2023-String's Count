@@ -1,0 +1,8 @@
+class Solution {
+    //Function to count strings of n length such that each string can be formed from a, b and c
+    countStr(n) {
+        const a =1, one_b = n, one_c = n;
+        const b_and_c = n*(n-1), b_and_two_c = (n*(n-1)*(n-2))/2, two_c = (n*(n-1))/2;
+        return (a+one_b + one_c + b_and_c + two_c + b_and_two_c);
+    }
+}
