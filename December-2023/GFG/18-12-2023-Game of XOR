@@ -1,0 +1,32 @@
+class Solution {
+    gameOfXor(arr, n) {
+        let xor = 0;
+        let cnt = 1;
+        for(let i=0; i<n; i++) {
+            let step = ((n-1-i) +1)*cnt;
+            
+            while(step > 0) {
+                xor ^= arr[i];
+                step--
+            }
+            cnt++;
+        }
+        
+        return xor;
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+class Solution {
+    gameOfXor(arr, n) {
+        if(n%2 ===0)
+            return 0;
+        let xor = 0;
+        
+        for(let i=0; i<n; i += 2) 
+            xor ^= arr[i];
+        
+        return xor;
+    }
+}
