@@ -1,0 +1,26 @@
+/**
+ * @param {number[]} prices
+ * @param {number} money
+ * @return {number}
+ */
+var buyChoco = function(prices, money) {
+    let ans = Infinity;
+        let fin;
+
+        for (let i = 0; i < prices.length; ++i) {
+            for (let j = 0; j < prices.length; ++j) {
+                if (i !== j) {
+                    const sum = prices[i] + prices[j];
+                    ans = Math.min(ans, sum);
+                }
+            }
+        }
+
+        fin = money - ans;
+        if(fin>=0){
+        return fin;
+        }
+        else{
+            return money;
+        }
+};
