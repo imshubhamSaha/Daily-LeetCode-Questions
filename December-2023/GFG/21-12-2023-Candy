@@ -1,0 +1,22 @@
+class Solution {
+    //Function to find minimum number of candies to be distributed among the students.
+    minCandy(N, ratings){
+        if (N === 0) return 0;
+
+        const candies = new Array(N).fill(1);
+
+        for (let i = 1; i < N; i++) 
+            if (ratings[i] > ratings[i - 1]) 
+                candies[i] = candies[i - 1] + 1;
+
+        for (let i = N - 2; i >= 0; i--) 
+            if (ratings[i] > ratings[i + 1]) 
+                candies[i] = Math.max(candies[i], candies[i + 1] + 1);
+
+        let ans = 0;
+        for (let i = 0; i < N; i++) 
+            ans += candies[i];
+
+        return ans;
+    }
+}
