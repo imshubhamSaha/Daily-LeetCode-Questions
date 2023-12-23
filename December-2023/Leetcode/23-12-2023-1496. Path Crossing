@@ -1,0 +1,25 @@
+/**
+ * @param {string} path
+ * @return {boolean}
+ */
+var isPathCrossing = function(path) {
+    const visitedPoints = new Set();
+    let currentX = 0, currentY = 0;
+    visitedPoints.add(`${currentX},${currentY}`);
+
+    for (const direction of path) {
+        if (direction === 'N') currentY++;
+        else if (direction === 'S') currentY--;
+        else if (direction === 'E') currentX++;
+        else currentX--;
+
+        const point = `${currentX},${currentY}`;
+        if (visitedPoints.has(point)) {
+            return true;
+        }
+
+        visitedPoints.add(point);
+    }
+
+    return false;
+};
