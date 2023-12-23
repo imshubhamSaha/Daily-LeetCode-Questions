@@ -1,0 +1,24 @@
+class Solution
+{
+    //Function to find all elements in array that appear more than n/k times.
+    countOccurence(arr, n, k)
+    {
+        const numHash = {};
+        
+        let occur = 0;
+        for(const num of arr) {
+            if(numHash[num] && numHash[num] !=="done")
+                numHash[num] +=1;
+            else if(!numHash[num])
+                numHash[num] = 1;
+            
+            if((numHash[num] > (n/k))){
+                numHash[num] = "done";
+                occur++;
+            }
+        }
+        
+        
+        return occur;
+    }
+}
