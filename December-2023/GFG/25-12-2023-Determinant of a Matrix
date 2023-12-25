@@ -1,0 +1,27 @@
+class Solution 
+{
+    //Function for finding determinant of matrix.
+    determinantOfMatrix(matrix, n)
+    {
+        if (n===1)
+            return matrix[0][0];
+        if (n===2)
+            return matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0];
+            
+        let total=0;
+        
+        const mat=Array.from({length:(n-1)}, () => new Array(n-1));
+        
+        for(let i=0;i<n;i++){
+            for(let row=1;row<n;row++){
+                let col_i=0;
+                for(let col=0;col<n;col++){
+                    if(col==i) continue;
+                    mat[row-1][col_i++]=matrix[row][col];
+                }
+            }
+            total += ((i%2==0)?1:-1)*matrix[0][i]*this.determinantOfMatrix(mat,n-1);
+        }
+        return total;
+    }
+}
