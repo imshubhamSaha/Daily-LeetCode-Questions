@@ -1,0 +1,28 @@
+/**
+ * @param {number[]} g
+ * @param {number[]} s
+ * @return {number}
+ */
+var findContentChildren = function(g, s) {
+    g.sort((a,b) => a-b);
+    s.sort((a,b) => a-b);
+
+    const n = s.length, m = g.length
+    let content = 0;
+
+    let i =0, j=0
+
+    while(i<m && j<n) {
+        if(s[j] >= g[i]) {
+            content++;
+            i++;
+            j++;
+        }
+        else if(s[j] < g[i]) {
+            j++
+        }
+    }
+
+    return content;
+
+}; 
