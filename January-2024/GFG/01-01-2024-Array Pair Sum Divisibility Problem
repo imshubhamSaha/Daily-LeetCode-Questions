@@ -1,0 +1,22 @@
+class Solution {
+    public boolean canPair(int[] nums, int k) {
+        int n = nums.length, count = 0;
+        ArrayList <Integer> temp = new ArrayList<Integer>(n);
+        for(int i=0; i<n; i++){
+            if(nums[i]%k == 0)count++;
+            else temp.add(nums[i]%k);
+        }
+        if(count % 2 == 1)return false;
+        Collections.sort(temp);
+        int start = 0;
+        int end = temp.size()-1;
+        while(start <= end){
+            if(temp.get(start) + temp.get(end) == k){
+                start++;
+                end--;
+            }
+            else return false;
+        }
+        return true;
+    }
+}
