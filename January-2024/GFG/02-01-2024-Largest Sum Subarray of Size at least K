@@ -1,0 +1,28 @@
+class Solution
+{
+    //Function to find maximum sum subarray by removing at most k elements.
+    maxSumWithK(a, n, k)
+    {
+        let j = 0;
+        let sum = 0;
+        let last = 0;
+        let maxsum = Number.MIN_SAFE_INTEGER;
+        for(let i= 0;i<n;i++){
+            sum = sum + a[i];
+            if((i-j+1) == k){
+                maxsum = Math.max(maxsum,sum);
+            }
+            else if((i-j+1)>k){
+                maxsum = Math.max(maxsum,sum);
+                last += a[j];
+                j++;
+                if(last<0){
+                    sum -= last;
+                    maxsum = Math.max(maxsum,sum);
+                    last = 0;
+                }
+            }
+        }
+        return maxsum;
+    }
+}
