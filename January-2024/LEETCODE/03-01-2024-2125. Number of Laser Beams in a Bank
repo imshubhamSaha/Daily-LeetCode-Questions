@@ -1,0 +1,23 @@
+/**
+ * @param {string[]} bank
+ * @return {number}
+ */
+const find = (str) => str.split('').reduce((acc,cur) => acc + +cur, 0);
+
+var numberOfBeams = function(bank) {
+    const n = bank.length; 
+    let totalBeam = 0, prevBeamCnt = 0;
+
+    for(const floor of bank) {
+        let currBeamCnt = find(floor);
+
+        if(currBeamCnt === 0)
+            continue;
+        
+        totalBeam += currBeamCnt * prevBeamCnt;
+        prevBeamCnt = currBeamCnt;
+    }
+
+    return totalBeam;
+
+};
