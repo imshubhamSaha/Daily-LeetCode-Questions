@@ -1,0 +1,43 @@
+class Solution {
+    //Function to check whether the list is palindrome.
+    calc( a,b,c,action = 'largest') {
+        if(action !== 'largest')
+            return Math.min(a, Math.min(b,c));
+        return Math.max(a,Math.max(b,c));
+    }
+    
+    smallestSubstring(s)
+    {
+        const n = s.length;
+        if(n < 3)
+            return -1;
+        
+        let lastZeroPos = -1, lastOnePos = -1, lastTwoPos = -1;
+        let maxLen = Infinity, curLen = 0, ansFlg = false;
+        
+        let i=0;
+        
+        while(i<n) {
+            if(s[i] === '0')
+                lastZeroPos = i;
+            else if(s[i] === '1')
+                lastOnePos = i;
+            else if(s[i] === '2')
+                lastTwoPos = i;
+                
+            if(lastZeroPos !== -1 && lastOnePos !== -1 && lastTwoPos !== -1) {
+                curLen = 1 + (this.calc(lastZeroPos, lastOnePos, lastTwoPos) - this.calc(lastZeroPos, lastOnePos, lastTwoPos, 'smallest'));
+                if(curLen < maxLen) 
+                    maxLen = curLen;
+                    
+                ansFlg = true;
+            }
+            i++;
+        }
+        
+        if(!ansFlg)
+            return -1;
+            
+        return maxLen;
+    }
+}
