@@ -1,0 +1,15 @@
+/**
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+var uniqueOccurrences = function(arr) {
+    const n = arr.length;
+    if(n === 1)
+        return true;
+
+    const freqMap = new Map();
+
+    arr.forEach(val => freqMap.set(val, (freqMap.get(val) || 0) +1));
+
+    return freqMap.size === new Set(freqMap.values()).size;
+};
