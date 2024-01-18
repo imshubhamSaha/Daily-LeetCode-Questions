@@ -1,0 +1,42 @@
+/**
+ * @param {number} n
+ * @return {number}
+ */
+const solve = (n, dp) => {
+    if(n < 0)
+        return 0;
+    if(n === 0)
+        return 1;
+    
+    if(dp[n] !== -1)
+        return dp[n];
+    dp[n] = solve(n-1, dp) + solve(n-2, dp);
+
+    return dp[n];
+}
+
+var climbStairs = function(n) {
+    const dp = new Array(n+1).fill(-1);
+
+    return solve(n, dp);
+};
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var climbStairs = function(n) {
+    if(n <= 3)
+        return n;
+    
+    let firstStep = 1, secondStep = 2;
+
+    for(let i=3; i<=n; i++) {
+        let temp = firstStep + secondStep;
+        firstStep = secondStep;
+        secondStep = temp;
+    }
+
+    return secondStep;
+};
