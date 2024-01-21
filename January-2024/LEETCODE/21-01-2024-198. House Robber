@@ -1,0 +1,20 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function(nums) {
+    const n = nums.length;
+    if ( n === 1 )
+        return nums[0];
+    
+    let robbedSum = 0, noRobbing = 0;
+
+    for(let i=0; i<n; i++) {
+        let temp = robbedSum;
+        robbedSum = noRobbing + nums[i];
+        noRobbing = Math.max(noRobbing, temp);
+    }
+
+    return Math.max(robbedSum, noRobbing);
+
+};
