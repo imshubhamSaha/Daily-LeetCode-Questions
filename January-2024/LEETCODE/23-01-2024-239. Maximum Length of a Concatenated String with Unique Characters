@@ -1,0 +1,41 @@
+/**
+ * @param {string[]} arr
+ * @return {number}
+ */
+const uniqueCharacterString = function(str) {
+    if(str.length > 26) 
+        return false;
+    const freq = new Array(26).fill(0);
+
+    for(const char of str){
+        let ch = char.charCodeAt(0);
+        freq[ch-97]++;
+        if(freq[ch-97] > 1)
+            return false;
+    }
+    return true;
+}
+
+var maxLength = function(arr) {
+    let ansList = [];
+    let ans = 0;
+
+    ansList.push("");
+
+    for(const str of arr) {
+        if(!uniqueCharacterString(str))
+            continue;
+        const curStr = [];
+        for(const candidate of ansList) {
+            let temp = candidate+str;
+            if(uniqueCharacterString(temp)) {
+                curStr.push(temp);
+                ans = Math.max(ans,temp.length);
+            }
+        }
+        ansList = [...ansList, ...curStr];
+    }
+    return ans;
+};
+
+
