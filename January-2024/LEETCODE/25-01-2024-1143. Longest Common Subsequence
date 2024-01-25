@@ -1,0 +1,30 @@
+/**
+ * @param {string} text1
+ * @param {string} text2
+ * @return {number}
+ */
+const LCS = (s1, s2) => {
+    const dp = new Array(s1.length+1).fill(0);
+
+    for (let i=1; i<=s2.length; i++) {
+        let prev = 0;
+        for (let j=1; j<=s1.length; j++) {
+            let curr = dp[j];
+            if (s1[j-1] === s2[i-1])
+                dp[j] = prev + 1;
+            else 
+                dp[j] = Math.max(dp[j-1], dp[j]);
+
+            prev = curr;
+        }
+    } 
+    return dp[s1.length];
+}
+var longestCommonSubsequence = function(t1, t2) {
+    const m = t1.length, n = t2.length;
+
+    if (m < n)
+        return LCS(t1, t2);
+    
+    return LCS(t2, t1);
+};
