@@ -1,0 +1,38 @@
+/**
+ * @param {number} m
+ * @param {number} n
+ * @param {number} maxMove
+ * @param {number} startRow
+ * @param {number} startColumn
+ * @return {number}
+ */
+var findPaths = function(m, n, mV, x, y) {
+    const MODULO = 1000000007;
+    let dp = Array.from({length:m}, () => new Array(n).fill(0));
+    dp[x][y] = 1;
+    let path = 0;
+
+    for (let move =1; move <=mV; move++) {
+        let arr = Array.from({length:m}, ()=> new Array(n).fill(0));
+
+        for (let i=0; i< m; i++) {
+            for (let j=0; j<n; j++) {
+                if (i === m-1)
+                    path = (path + dp[i][j]) % MODULO;
+                if(j === n-1)
+                    path = (path + dp[i][j]) % MODULO;
+                if(i === 0)
+                    path = (path + dp[i][j]) % MODULO;
+                if(j === 0)
+                    path = (path + dp[i][j]) % MODULO;
+
+                let s1 = ((i > 0 ? dp[i-1][j] : 0) + (i < m - 1 ? dp[i+1][j] : 0)) % MODULO;
+                let s2 = ((j > 0 ? dp[i][j - 1] : 0) + (j < n - 1 ? dp[i][j+1] : 0)) % MODULO;
+                arr[i][j] = (s1 + s2) % MODULO;
+            }
+        }
+        dp = arr;
+    }
+
+    return path;
+};
