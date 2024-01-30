@@ -1,0 +1,32 @@
+const solve = function(value1,value2, operator) {
+    if (operator === "+")
+        return value2 + value1;
+    else if (operator === "-")
+        return value2 - value1;
+    else if (operator === "*")
+        return value2 * value1;
+    else 
+        return Math.trunc(value2/value1);
+}
+
+/**
+* @param {string[]} tokens
+* @return {number}
+*/
+var evalRPN = function(tokens) {
+    const n = tokens.length;
+    const stack = [];
+
+    const [stk] = tokens.reduce((acc,cur) => {
+        if ((cur !== "+") && (cur !== "-") && (cur !== "/") && (cur !== "*")) {
+            acc[0].push(parseInt(cur));
+            return acc;
+        }else {
+            let result = acc[1](acc[0].pop(), acc[0].pop(), cur);
+            acc[0].push(result);
+            return acc;
+        }
+    },[stack, solve]);
+
+    return stk.pop();
+};
