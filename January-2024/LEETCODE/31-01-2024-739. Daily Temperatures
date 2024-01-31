@@ -1,0 +1,26 @@
+/**
+ * @param {number[]} temperatures
+ * @return {number[]}
+ */
+const myReducer = (inp, accumulator) => {
+    return inp.reduceRight((acc, curr, i, arr) => {
+        while (acc[0].length && curr >= arr[acc[0][acc[0].length -1]]) {
+            acc[0].pop();
+        }
+        if(acc[0].length) {
+            acc[1][i] = acc[0][acc[0].length -1]- i;
+            
+        }
+        acc[0].push(i);
+        
+        return acc;
+    },accumulator);
+}
+
+var dailyTemperatures = function(t) {
+    const n = t.length
+    const stack = [];
+    const answer = new Array(n).fill(0);
+    return myReducer(t, [stack, answer])[1];
+    
+};
