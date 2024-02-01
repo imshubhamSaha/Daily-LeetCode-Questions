@@ -1,0 +1,21 @@
+/**
+ * @param {string} str
+ * @returns {boolean}
+*/
+
+class Solution
+{
+    //Function to check if a string is Pangram or not.
+    checkPangram(s)
+    {
+        const hashSet = new Set();
+        
+        return s.split("").reduce((acc,cur) => {
+            if((cur.charCodeAt(0) >=65 && cur.charCodeAt(0) <= 90) || (cur.charCodeAt(0) >=97 && cur.charCodeAt(0) <= 122)) {
+                acc.add(cur.toLowerCase());
+            }
+            
+            return acc;
+        },hashSet).size === 26;
+    }
+}
