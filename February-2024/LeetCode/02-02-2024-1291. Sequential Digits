@@ -1,0 +1,23 @@
+/**
+ * @param {number} low
+ * @param {number} high
+ * @return {number[]}
+ */
+var sequentialDigits = function(low, high) {
+    const ans = [];
+    let i =1;
+    while(i<=9) {
+        let  num = i;
+        let nextNum = i + 1;
+        while(num <= high && nextNum <=9) {
+            num = num * 10 + nextNum
+
+            if ((num) >= low && (num) <= high) 
+                ans.push(num) ;
+
+            nextNum++;    
+        }
+        i++
+    }
+    return ans.sort((a,b) => a-b);
+};
