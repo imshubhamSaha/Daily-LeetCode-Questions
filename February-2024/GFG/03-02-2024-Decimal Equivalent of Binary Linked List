@@ -1,0 +1,14 @@
+class Solution {
+  decimalValue(head){
+    
+    const MOD = 1000000007;
+    let temp = head;
+    let ans = 0
+    while(temp) {
+        ans = ((ans << 1) + temp.data) % MOD;
+        temp = temp.next;
+    }
+    
+    return ans;
+  }
+}
