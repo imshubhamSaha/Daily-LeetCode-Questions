@@ -1,0 +1,52 @@
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {string}
+ */
+const checkFormation = (val1, val2) => val1 === val2;
+
+var minWindow = function(s, t) {
+    const n = s.length, m = t.length;
+    if (n < m ) 
+        return "";
+    
+    const hashMap = t.split("").reduce((acc,curr) => {
+        if (acc.has(curr))
+            acc.set(curr,acc.get(curr)+1);
+        else 
+            acc.set(curr, 1);
+        return acc;    
+    },new Map());
+
+    let l=0,r =0;
+    const requiredSize = hashMap.size;
+    let forms = 0;
+    const wndMap = new Map();
+    let minLen = Number.MAX_SAFE_INTEGER, strt = 0, end = 0;
+
+    while (r < n) {
+        let ch = s[r];
+        wndMap.set(ch, (wndMap.get(ch) || 0) +1);
+
+        if(hashMap.has(ch) && wndMap.get(ch) === hashMap.get(ch))
+            forms++;
+        
+        while(l<=r && forms === requiredSize) {
+            let char = s[l]
+            if ((r-l + 1) < minLen){
+                minLen = r-l+1;
+                strt = l;
+                end = r;
+            }
+
+            wndMap.set(char, wndMap.get(char) - 1);
+            if (hashMap.has(char) && wndMap.get(char) < hashMap.get(char)) {
+                forms--;
+            }
+            l++;
+        } 
+        r++; 
+    }
+
+    return minLen === Number.MAX_SAFE_INTEGER ? "" :s.slice(strt, (end+1));
+};
