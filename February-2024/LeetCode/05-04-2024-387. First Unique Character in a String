@@ -1,0 +1,16 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var firstUniqChar = function(s) {
+    const charHash = new Array(26).fill(0);
+
+    for (char of s) 
+        charHash[char.charCodeAt(0)- 97]++;
+
+    for (let i=0; i<s.length; i++) 
+        if(charHash[s[i].charCodeAt(0)-97] === 1)
+            return i;
+    
+    return -1;
+};
