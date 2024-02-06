@@ -1,0 +1,28 @@
+/**
+ * @param {string[]} strs
+ * @return {string[][]}
+ */
+var groupAnagrams = function(strs) {
+    if (strs.length === 1) 
+        return [[strs[0]]];
+    
+    const hashMap = new Map();
+    const ans = [];
+    for(let i=0; i<strs.length;i++) {
+        const word = strs[i]; 
+        strs[i] = strs[i].split("").sort().join("");
+        if (!hashMap.has(strs[i])) 
+            hashMap.set(strs[i], []);
+        hashMap.get(strs[i]).push(word)
+    }
+
+    
+    for(let i=0; i<strs.length; i++) 
+        if(hashMap.has(strs[i])) {
+            ans.push(hashMap.get(strs[i]));
+            hashMap.delete(strs[i])
+        }
+    
+    return ans;
+
+};
