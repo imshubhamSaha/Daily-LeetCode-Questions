@@ -1,0 +1,20 @@
+class Solution:
+    #Function to return count of nodes at a given distance from leaf nodes.
+    def printKDistantfromLeaf(self, root, k):
+        def dfs(node, path):
+            if not node:
+                return
+            
+            path.append(node)
+            if not node.left and not node.right:
+                if len(path) > k:
+                    res.add(path[-(k+1)])
+                return
+            
+            dfs(node.left, path.copy())
+            dfs(node.right, path.copy())
+
+        res = set()
+        dfs(root, [])
+        return len(res)
+
