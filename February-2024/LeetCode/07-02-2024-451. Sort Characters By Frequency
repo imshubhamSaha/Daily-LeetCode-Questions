@@ -1,0 +1,20 @@
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var frequencySort = function(s) {
+    const freqHash = {};
+
+    for (const char of s) 
+        freqHash[char] = (freqHash[char] || 0) + 1;
+    
+    const pq = Array.from(Object.entries(freqHash));
+    pq.sort((a,b) => b[1] - [a[1]]);
+
+    let res = "";
+
+    for(let i=0; i<pq.length; i++) 
+        res += pq[i][0].repeat(pq[i][1]);
+    
+    return res;
+};
