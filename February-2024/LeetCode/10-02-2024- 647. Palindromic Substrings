@@ -1,0 +1,25 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+const isPalindrome = (s, left, right)  => {
+    let count = 0;
+    while ((left >=0 && right < s.length) && (s[left--] === s[right++]))
+        count++;
+
+    return count;     
+}
+
+const countSubstrings = function(s) {
+    const n = s.length;
+    let len = 0;
+
+    for (let i=0; i<n; i++) {
+        const even = isPalindrome(s,i, i+1);
+        const odd = isPalindrome(s, i-1, i+1);
+        len += (even + odd) +1;
+    }
+
+    return len;
+
+};
