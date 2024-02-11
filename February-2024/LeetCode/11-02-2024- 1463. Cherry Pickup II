@@ -1,0 +1,38 @@
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var cherryPickup = function(grid) {
+    const ROWS = grid.length, COLS = grid[0].length;
+    const direction = [0,-1,1];
+
+    const cache = new Array(71).fill(null).map(() => {
+        return new Array(71).fill(null).map(() => {
+            return new Array(71).fill(-1);
+        })
+    });
+
+    const dfs = (r, c1, c2) => {
+
+        if (c1 === c2  || Math.min(c1,c2) < 0  || Math.max(c1, c2) === COLS) 
+            return 0;
+
+        if (cache[r][c1][c2] !== -1) 
+            return cache[r][c1][c2];
+        
+        if (r === ROWS -1)
+            return grid[r][c1] + grid[r][c2];
+
+        let ans = 0;
+        for (let i = 0; i<3; i++) {
+            for (let j=0; j<3; j++) {
+                ans = Math.max(ans, dfs(r+1, c1 + direction[i], c2 + direction[j]));
+            }
+        }
+
+        cache[r][c1][c2] = ans + grid[r][c1] + grid[r][c2];
+        return cache[r][c1][c2];
+    }
+
+    return dfs(0,0, COLS-1);
+};
