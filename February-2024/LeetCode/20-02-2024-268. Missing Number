@@ -1,0 +1,15 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var missingNumber = function(nums) {
+    const len = nums.length;
+    let missingNum = 0
+    for (const num of nums) 
+        missingNum ^= num;
+
+    for (let i = 1; i <= len; i++)
+        missingNum ^= i;
+    
+    return missingNum;
+};
