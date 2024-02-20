@@ -1,0 +1,22 @@
+lass Solution {
+    
+  wordBreak(n, s,dict){
+        const len = s.length
+        const dp = new Array(len + 1).fill(false);
+        const dictionary = new Set([...dict])
+        
+        dp[0] = true;
+     
+        for (let i = 1; i <= len; i++) {
+            for (let j = 0; j < i; j++) {
+                if (dp[j] && dictionary.has(s.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        
+      
+        return dp[len] ? 1 : 0;
+  }
+}
