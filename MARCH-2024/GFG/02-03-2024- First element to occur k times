@@ -1,0 +1,19 @@
+class Solution{
+    
+    firstElementKTime(n, k, arr){
+        
+        if ( k > n ) return -1;
+        
+        const occuranceMap = {};
+        
+        for ( const num of arr) {
+            occuranceMap[num] = (occuranceMap[num] || 0) + 1;
+            
+            if ( occuranceMap[num] === k )
+                return num;
+        }
+        
+        
+        return -1;
+    }
+}
