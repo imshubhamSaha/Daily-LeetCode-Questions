@@ -1,0 +1,22 @@
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var sortedSquares = function(nums) {
+  const MOD = 1000000007;
+  const squaredArr = new Array(nums.length).fill(0)
+
+  let forward = 0, backward = nums.length-1, pointer = nums.length-1;
+
+  while( forward <= backward ) {
+    if ( Math.abs(nums[forward]) > Math.abs(nums[backward])) {
+      squaredArr[pointer--] = (nums[forward] * nums[forward])%MOD
+      forward++;
+    }else {
+      squaredArr[pointer--] = (nums[backward]*nums[backward])%MOD;
+      backward--;
+    }
+  }
+
+  return squaredArr;
+};
