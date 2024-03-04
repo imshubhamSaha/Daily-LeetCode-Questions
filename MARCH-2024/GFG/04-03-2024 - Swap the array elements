@@ -1,0 +1,16 @@
+class Solution {
+
+    swapElements(n, arr) {
+        if ( n <3 ) 
+            return arr;
+            
+        let start = 0;
+        let pointer = 2;
+        
+        while ( pointer < n ) {
+            [arr[start], arr[pointer]] = [arr[pointer], arr[start]];
+            start++;
+            pointer += 1;
+        }
+    }
+}
