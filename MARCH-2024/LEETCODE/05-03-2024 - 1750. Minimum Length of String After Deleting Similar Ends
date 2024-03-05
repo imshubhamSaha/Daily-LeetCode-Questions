@@ -1,0 +1,23 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var minimumLength = function(s) {
+  const len = s.length;
+
+  if ( len === 1 )
+    return 1;
+  
+  let prefixPnt = 0, suffixPnt = len-1;
+
+  while ( prefixPnt < suffixPnt && s[prefixPnt] === s[suffixPnt] ) {
+    let character = s[prefixPnt];
+    while ( prefixPnt <= suffixPnt && s[prefixPnt] === character )  
+      prefixPnt++;   
+    
+    while ( suffixPnt >= prefixPnt && s[suffixPnt] === character )
+      suffixPnt--;
+  }
+
+  return suffixPnt - prefixPnt + 1;
+};
