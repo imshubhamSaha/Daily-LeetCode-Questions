@@ -1,0 +1,21 @@
+class Solution {
+    
+    search(pattern, txt)
+    {
+        const n = txt.length, m = pattern.length;
+        
+        const idx = [];
+        
+        let i = 0;
+        
+        while ( i < n ) {
+            let sub = txt.slice(i, i+m);
+            
+            if ( sub === pattern ) 
+                idx.push(i+1);
+            i++;
+        }
+        
+        return idx;
+    }
+}
