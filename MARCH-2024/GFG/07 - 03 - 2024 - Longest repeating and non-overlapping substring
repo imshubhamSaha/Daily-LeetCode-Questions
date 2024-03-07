@@ -1,0 +1,27 @@
+class Solution {
+    //Function to find the length of longest substring without repeating characters.
+    longestSubstring(s , n)
+    {
+        let maxLen = -1;
+        let str = "-1";
+        
+        let i = 0;
+        let j = 0;
+        
+        while ( i < n && j < n ) {
+            const subString = s.substring(i, j+1);
+            if ( s.indexOf(subString, j+1) !== -1) {
+                let len = subString.length
+                if ( len > maxLen ) {
+                    maxLen = len;
+                    str = subString;
+                }
+            }
+            else i++;
+            
+            j++;
+        }
+        
+        return str;
+    }
+}
