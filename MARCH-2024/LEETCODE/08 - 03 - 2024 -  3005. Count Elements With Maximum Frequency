@@ -1,0 +1,74 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxFrequencyElements = function(nums) {
+    nums.sort((a,b) => a - b);
+
+    const len = nums.length;
+    let maxCnt = 1;
+    let cnt = 1;
+    let i = 1;
+
+    while ( i < len ) {
+      if ( nums[i] === nums[i-1] ) {
+        cnt++;
+      }else {
+        cnt = 1;
+      }
+      if ( cnt > maxCnt) 
+        maxCnt = cnt;
+
+      i++;
+    }
+
+    let maxFreqEl = 0;
+    i = 0;
+     
+    while ( i < len  ) {
+      let j = i;
+      let cnt = 0;
+      while ( j < len ) {
+        if ( nums[i] === nums[j] ) {
+          cnt++;
+        } else {
+          break;
+        }
+        j++;
+      } 
+      if ( cnt === maxCnt ) {
+        maxFreqEl += cnt;
+      }
+      i = j;
+    }
+    return maxFreqEl === 0 ? 1 : maxFreqEl;
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxFrequencyElements = function(nums) {
+    
+    const freqMap = new Map();
+    let maxCnt = 0;
+
+    nums.forEach((elem) => {
+      freqMap.set(elem, (freqMap.get(elem) || 0) + 1);
+      maxCnt = Math.max(maxCnt, freqMap.get(elem));
+    });
+    
+    const [maxFreq] = nums.reduce((acc, curr) => {
+      if ( acc[1].has(curr) ) {
+        if ( acc[1].get(curr) === acc[2] ) {
+          acc[0] = acc[0] + acc[1].get(curr);
+        }
+         acc[1].delete(curr);
+      }
+      return acc;
+    }, [0, freqMap, maxCnt]);
+
+    return maxFreq;
+};
