@@ -1,0 +1,42 @@
+class Solution {
+    check(frequency) {
+        let freq = -1;
+        const len = frequency.length;
+        for (let i = 0; i < len; i++) {
+            if ( frequency[i] !== 0 ) {
+                if ( freq === -1 ) {
+                    freq = frequency[i];
+                }else if ( frequency[i] !== freq ) {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }
+    
+    sameFreq(s){
+        const len = s.length;
+        if ( len === 1 )
+            return true;
+        const charArr = new Array(26).fill(0);
+        
+        for ( let i = 0; i < len; i++ ) {
+            charArr[s[i].charCodeAt(0) - 97]++;
+        }
+        
+        if ( this.check(charArr) )
+            return true;
+            
+        for (let i = 0; i < 26; i++) {
+            if (charArr[i] !== 0) {
+                charArr[i]--;
+                if ( this.check(charArr) )
+                    return true;
+                
+                charArr[i]++;
+            }
+        }
+        return false;
+    }
+}
