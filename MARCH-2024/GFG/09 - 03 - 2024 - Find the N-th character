@@ -1,0 +1,14 @@
+class Solution {
+    //Function to find the nth character in the given string with given values of R and N.
+    nthCharacter(s, r, n) {
+        //your code here
+        if ( n === 0  || r === 0)
+            return s[n];
+            
+        let x = this.nthCharacter(s,r-1,Math.floor(n/2));
+        if ( n % 2 === 1 )
+            return ("1" - x) + "";
+        
+        return x;
+    }
+}
