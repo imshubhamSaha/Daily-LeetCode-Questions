@@ -1,0 +1,26 @@
+class Solution {
+    removeDuplicates(str){
+       const chFreq = new Array(52).fill(false);
+       
+       let result = "";
+       for (const ch of str) {
+           const charCode = ch.charCodeAt(0);
+           
+           if ( charCode >= 65 && charCode <= 90 ) {
+               const idx = (charCode - 65) + 26;
+               if ( !chFreq[idx] ) {
+                   chFreq[idx] = true;
+                   result += ch;
+               }
+           }else {
+               const idx = (charCode - 97);
+               if ( !chFreq[idx] ) {
+                   chFreq[idx] = true;
+                   result += ch;
+               }
+           }
+       }
+       
+       return result;
+    }
+}
