@@ -1,0 +1,27 @@
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersection = function(nums1, nums2) {
+    const m = nums1.length;
+    const n = nums2.length;
+
+    if ( n > m ) {
+      return intersection(nums2, nums1)
+    }
+
+    const unique = new Set(nums2);
+    const result = [];
+
+    for(let  i = 0; i < m; i++) {
+      if ( unique.has(nums1[i]) ) {
+        result.push(nums1[i]);
+        unique.delete(nums1[i]);
+      }
+    }
+
+    return result;
+
+
+};
