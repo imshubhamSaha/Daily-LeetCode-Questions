@@ -1,0 +1,42 @@
+class Solution {
+/**
+* @param number n
+* @param number x
+* @param number[][] mat1
+* @param number[][] mat2
+
+* @returns number
+*/
+    countPairs(n, x, m1, m2) {
+        let len1 = n - 1;
+        let len2 = n - 1;
+        let cnt = 0;
+        let i = 0;
+        let j = 0;
+        
+        while ( i < n && len1 >= 0 ) {
+            if ( m1[i][j] + m2[len1][len2] === x ) {
+                cnt++;
+                j++;
+                len2--;
+            }
+            else if ( m1[i][j] + m2[len1][len2] > x ) {
+                len2--;
+            }else {
+                j++;
+            }
+            
+            if ( len2 < 0 ) {
+                len1--;
+                len2 = n - 1;
+            }
+            
+            if ( j === n ) {
+                i++;
+                j = 0;
+            }
+        }
+        
+        return cnt;
+    }
+}
