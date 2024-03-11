@@ -1,0 +1,35 @@
+/**
+ * @param {string} order
+ * @param {string} s
+ * @return {string}
+ */
+var customSortString = function(order, s) {
+    const orderCh = new Array(26).fill(0);
+    const chArr = new Array(26).fill(0);
+    const n = order.length;
+    const m = s.length;
+    
+    for (let i = 0; i < n; i++) 
+      orderCh[order[i].charCodeAt(0)-97]++;
+    
+    for ( let i = 0; i < m; i++ )
+      chArr[s[i].charCodeAt(0) - 97]++;
+
+    let permute = "";
+
+    for (let i = 0; i < n; i++) {
+      if (chArr[order[i].charCodeAt(0)-97]) {
+        permute += order[i].repeat(chArr[order[i].charCodeAt(0)-97]);
+        chArr[order[i].charCodeAt(0)-97] = 0;
+      }
+    }
+
+    for(let i = 0; i < m; i++) {
+      if (chArr[s[i].charCodeAt(0) - 97]) {
+        permute += s[i].repeat(chArr[s[i].charCodeAt(0) - 97]);
+        chArr[s[i].charCodeAt(0) - 97] = 0;
+      }
+    }
+
+    return permute;
+};
