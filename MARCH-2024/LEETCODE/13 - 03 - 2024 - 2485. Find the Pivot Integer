@@ -1,0 +1,112 @@
+var pivotInteger = function(n) {
+    let prefixSum = 0;
+
+    for (let i = 1; i <= n; i++) {
+      prefixSum += i;
+      let sum = 0;
+      for (let j = n; j >= i ; j--) {
+        sum += j;
+
+        if (sum === prefixSum && i === j)
+          return i;
+        if (sum > prefixSum)
+          break;
+      }
+    }
+    return -1;
+};
+T.C - O(n*n)
+
+*********************************************************************************************************************************************
+
+var pivotInteger = function(n) {
+    let prefixSum = new Array(n).fill(0);
+    let suffixSum = new Array(n).fill(0);
+    prefixSum[0] = 1;
+    suffixSum[n-1] = n;
+
+    for ( let i=1; i<n; i++) {
+      prefixSum[i] = prefixSum[i-1] + i+1;
+      suffixSum[n-1-i] = suffixSum[n-i] + n-i
+    }
+
+    for (let i = 0; i<n; i++) {
+      if (prefixSum[i] === suffixSum[i])
+        return i+1;
+    }
+
+    
+    return -1;
+};
+s.c -> O(n)
+t.c -> O(n)
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {number} n
+ * @return {number}
+ */
+
+var pivotInteger = function(n) {
+    const totalSum = Math.floor(n* (n+1)/2);
+    let leftSum = 0;
+
+    for (let i = 1; i <= n; i++) {
+      const rightSum = totalSum - leftSum - i;
+
+      if ( leftSum === rightSum )
+        return i;
+      
+      leftSum += i;
+    }
+
+    return -1;
+};
+t.c -> O(n)
+*********************************************************************************************************************************************
+
+/**
+ * @param {number} n
+ * @return {number}
+ */
+
+var pivotInteger = function(n) {
+    let left = 0;
+    let right = n;
+    let totalSum = Math.floor(n * (n+1)/2);
+    while ( left <= right ) {
+      let mid = left + Math.floor((right - left)/2);
+      let leftSum = Math.floor(mid * (mid + 1)/2);
+      let rightSum = totalSum - leftSum + mid;
+
+      if (leftSum === rightSum)
+        return mid;
+      else if (leftSum < rightSum)
+        left = mid + 1;
+      else
+        right = mid - 1;
+    }
+
+    return -1;
+};
+tc -> O(log n)
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {number} n
+ * @return {number}
+ */
+
+var pivotInteger = function(n) {
+    const pivotIdx = Math.sqrt(n * (n+1)/2);
+    
+    if ( (pivotIdx % 1) !== 0 )
+      return -1;
+
+    return pivotIdx;
+};
+
+tc - O(1);
+*********************************************************************************************************************************************
