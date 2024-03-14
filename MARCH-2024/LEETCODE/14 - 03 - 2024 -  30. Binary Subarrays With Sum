@@ -1,0 +1,52 @@
+/**
+ * @param {number[]} nums
+ * @param {number} goal
+ * @return {number}
+ */
+var numSubarraysWithSum = function(nums, goal) {
+  const len = nums.length;
+  const freqMap = {0:1};
+  let sum = 0;
+  let cnt = 0;
+
+  for (let i = 0; i < len; i++) {
+    sum += nums[i];
+
+    let remaining = sum - goal;
+    if ( freqMap[remaining] )
+      cnt += freqMap[remaining];
+
+    freqMap[sum] = (freqMap[sum] || 0) + 1;
+  }
+
+  return cnt;
+
+};
+
+*******************************************************************************************************************************************
+
+
+/**
+ * @param {number[]} nums
+ * @param {number} goal
+ * @return {number}
+ */
+var numSubarraysWithSum = function(nums, goal) {
+    let totalCnt = 0;
+    let sum = 0;
+    const len = nums.length;
+    let prefixSum = new Array(len + 1 ).fill(0);
+
+    prefixSum[0] = 1;
+
+    for (let i= 0; i < len; i++) {
+      sum += nums[i];
+
+      if (sum >= goal) 
+        totalCnt += prefixSum[sum - goal];
+      
+      prefixSum[sum]++;
+    }
+
+    return totalCnt;
+};
