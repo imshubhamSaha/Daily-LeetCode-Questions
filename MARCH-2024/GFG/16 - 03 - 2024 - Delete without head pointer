@@ -1,0 +1,17 @@
+class Solution {
+    
+    deleteNode(del_node)
+    {
+        if (!del_node || del_node.next === null) 
+            return;
+            
+        while (del_node.next !== null) {
+            del_node.data = del_node.next.data;
+            if (del_node.next.next === null) {
+                del_node.next = null;
+                break;
+            }
+            del_node = del_node.next;
+        } 
+    }
+}
