@@ -1,0 +1,46 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findMaxLength = function(nums) {
+    let lngest = 0;
+    const len = nums.length;
+    for (let i = 0; i < len; i++) {
+      let zeroCnt = 0;
+      let oneCnt = 0;
+      for (let j = i; j < len; j++) {
+        if (nums[j] === 0)
+          zeroCnt++;
+        else oneCnt++;
+
+        if (zeroCnt === oneCnt) {
+          lngest = Math.max(lngest, (j- i + 1))
+        }
+      }
+    }
+
+    return lngest;
+};
+*********************************************************************************************************************************************
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findMaxLength = function(nums) {
+    const len = nums.length;
+    let lngest = 0;
+    let sum = 0;
+    const mp = new Map();
+
+    for (let i = 0; i < len; i++) {
+      sum += nums[i] === 0 ? -1 : 1;
+
+      if ( sum === 0 )
+        lngest = i + 1;
+      else if (mp.has(sum))
+        lngest = Math.max(lngest, (i - mp.get(sum)));
+      else mp.set(sum, i);
+    }
+    return lngest;
+};
