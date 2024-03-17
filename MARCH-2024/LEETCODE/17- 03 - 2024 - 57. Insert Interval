@@ -1,0 +1,69 @@
+/**
+ * @param {number[][]} intervals
+ * @param {number[]} newInterval
+ * @return {number[][]}
+ */
+var insert = function(int, newInt) {
+    const len = int.length;
+
+    const result = [];
+    let i = 0; 
+    let isDone = false;
+
+    while ( i < len ) {
+      let strt = int[i][0];
+      let end = int[i][1];
+      if (!isDone && newInt[1] < int[i][0]) {
+        result.push(newInt);
+        isDone = true;
+        continue;
+      }
+      else if (!isDone && end < newInt[0]) {
+        i++;
+      }
+      else if (!isDone) {
+        let j = i;
+        while ( j < len && newInt[1] >= int[j][0]) {
+          j++;
+        }
+        strt = Math.min(int[i][0], newInt[0])
+        end = Math.max(int[j-1][1], newInt[1]);
+        isDone = true;
+        i = j;
+      }else {
+        i++;
+      }
+      result.push([strt, end]);
+    }
+
+    if ( !isDone ) {
+      result.push(newInt);
+    }
+
+    return result;
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {number[][]} intervals
+ * @param {number[]} newInterval
+ * @return {number[][]}
+ */
+var insert = function(int, newInt) {
+    const result = [];
+
+    for (const currInt of int) {
+        if ( currInt[1] < newInt[0] )
+            result.push(currInt);
+        else if ( newInt[1] < currInt[0] ) {
+            result.push(newInt);
+            newInt = currInt;
+        }else {
+            newInt[0] = Math.min(currInt[0], newInt[0]);
+            newInt[1] = Math.max(currInt[1], newInt[1]);
+        }
+    }
+    result.push(newInt);
+    return result;
+};
