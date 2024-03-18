@@ -1,0 +1,19 @@
+/**
+ * @param {number[][]} points
+ * @return {number}
+ */
+var findMinArrowShots = function(pnts) {
+    const len  = pnts.length;
+    pnts.sort((a,b) => a[1] - b[1]);
+    let cnt = 1;
+    let prev = 0;
+
+    for (let i = 1; i < len; i++) {
+      if ( pnts[i][0] > pnts[prev][1]) {
+        cnt++;
+        prev = i;
+      }
+    }
+
+    return cnt;
+};
