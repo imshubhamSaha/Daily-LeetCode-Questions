@@ -1,0 +1,17 @@
+class Solution {
+/**
+* @param number n
+
+* @returns number[]
+*/
+    Series(n) {
+        const MOD = 1000000007;
+        const arr = [0,1];
+        for ( let i = 2; i<=n; i++) {
+            const num = ((arr[i-1] % MOD) + (arr[i-2] % MOD)) % MOD;
+            arr.push(num);
+        }
+        
+        return arr;
+    }
+}
