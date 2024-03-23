@@ -1,0 +1,86 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {void} Do not return anything, modify head in-place instead.
+ */
+var reorderList = function(head) {
+    const stack = [];
+
+    let curr = head;
+
+    while (curr) {
+      stack.push(curr);
+      curr = curr.next;
+    }
+
+    curr = head;
+
+    while (curr && curr.next && curr.next.next && stack.length > 2) {
+      let nextNode = curr.next;
+      let popped = stack.pop();
+      stack[stack.length - 1].next = popped.next;
+      curr.next = popped;
+      popped.next = nextNode;
+      curr = nextNode;
+    }
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {void} Do not return anything, modify head in-place instead.
+ */
+const reverse = function(head) {
+  let curr = head;
+  let prev = null;
+
+  while(curr) {
+    let nextNode = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = nextNode;
+  }
+
+  return prev;
+}
+
+var reorderList = function(head) {
+  let slow = head;
+  let fast = head.next;
+
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+
+  let even = slow.next;
+  slow.next = null;
+
+  even = reverse(even);
+
+  let odd = head;
+
+  while (even) {
+    let oddNext = odd.next;
+    let evenNext = even.next;
+
+    odd.next = even;
+    even.next = oddNext;
+    odd = oddNext;
+    even = evenNext;
+  }
+};
