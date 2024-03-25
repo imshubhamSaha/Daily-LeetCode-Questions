@@ -1,0 +1,79 @@
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var findDuplicates = function(nums) {
+    const len = nums.length;
+    const result = [];
+    for (let i = 0; i < len-1; i++) {
+      let cnt = 1;
+      for (let j = i+1; j < len; j++) {
+        if (nums[j] === nums[i])
+          cnt++;
+      }
+      if (cnt === 2)
+        result.push(nums[i]);
+    }
+    return result;
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var findDuplicates = function(nums) {
+    const len = nums.length;
+    const result = [];
+    nums.sort((a,b) => a-b);
+    let i = 0
+    while ( i < len -1) {
+      let j = i + 1;
+      while ( j < len && nums[j] === nums[i]) {
+        j++
+      }
+      if ((j-i) === 2)
+        result.push(nums[i]);
+      
+      i = j;
+    }
+    return result;
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var findDuplicates = function(nums) {
+    const len = nums.length;
+    const result = [];
+    const unique = new Set();
+
+    for (const num of nums) 
+      (unique.has(num)) ? result.push(num) : unique.add(num);
+    return result;
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var findDuplicates = function(nums) {
+    const len = nums.length;
+    const result = [];
+    for (let i = 0; i < len; i++) {
+      const n = Math.abs(nums[i]);
+      if ( nums[n - 1] < 0) 
+        result.push(n);
+      
+      nums[n - 1] = - nums[n - 1]
+    }
+    return result;
+};
+
+*********************************************************************************************************************************************
