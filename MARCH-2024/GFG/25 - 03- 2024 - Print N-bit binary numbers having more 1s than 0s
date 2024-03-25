@@ -1,0 +1,22 @@
+class Solution {
+    solve (res, curr, one , zero, n) {
+        if (one < zero) {
+            return;
+        }
+        
+        if (curr.length === n) {
+            res.push(curr);
+            return;
+        }
+        this.solve(res,curr+"1", one+1,zero, n);
+        this.solve(res,curr+"0", one, zero+1,n);
+        return;
+    }
+    NBitBinary(n){
+       //code here
+       const res = [];
+       let curr = "";
+       this.solve(res,curr, 0,0,n);
+       return res;
+    }
+}
