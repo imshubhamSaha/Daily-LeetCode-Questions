@@ -1,0 +1,52 @@
+class Solution {
+    isAdditiveSequence(n) {
+        let a = 0;
+        let b = 0;
+        let t = 0;
+        const len = n.length
+        for (let i = 0; i < len; i++) {
+            a *= 10;
+            a += (n[i] - 0);
+            b = 0;
+            for (let j =i+1; j < len; j++) {
+                b *= 10;
+                b += (n[j] - 0);
+                let c = j + 1;
+                let ax = a;
+                let bx = b;
+                
+                while ( c < len) {
+                    let x = a + b;
+                    let l = 0;
+                    let y = x;
+                    
+                    while ( y) {
+                        y = Math.floor(y/10);
+                        l++;
+                    }
+                    
+                    if ((c + l) > len) {
+                        break;
+                    }
+                    let z = 0;
+                    while (l--) {
+                        z *=10;
+                        z += (n[c] - 0);
+                        c++;
+                    }
+                    if (z != x) {
+                        break;
+                    }
+                    a = b;
+                    b = z;
+                    if (c === len) {
+                        return true;
+                    }
+                }
+                 a= ax;
+                 b = bx
+            }
+        }
+        return false;
+        
+    }
