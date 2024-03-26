@@ -1,0 +1,94 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var firstMissingPositive = function(nums) {
+    const len = nums.length;
+    nums.sort((a,b) => a-b);
+    let smallest = 1;
+
+    for(let i = 0; i < len; i++) {
+      if (nums[i] > 0 && nums[i] === smallest) 
+        smallest++; 
+    }
+    return smallest;
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var firstMissingPositive = function(nums) {
+    const len = nums.length;
+    const hashTab = new Array(len).fill(false);
+
+    for (let i = 0; i < len; i++) {
+      if (nums[i] > 0 && nums[i] <= len) {
+        hashTab[nums[i] - 1] = true;
+      }
+    }
+    for (let i =0; i < len; i++) {
+      if (!hashTab[i])
+        return i + 1;
+    }
+    return len + 1;
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var firstMissingPositive = function(nums) {
+    const len = nums.length;
+    let one = false;
+
+    for (let i = 0; i < len; i++) {
+      if (nums[i] === 1) one = true;
+      if (nums[i] <=0 || nums[i] > len) 
+        nums[i] = 1;
+    }
+
+    if (!one) return 1;
+
+    for (let i= 0; i < len; i++) {
+      let idx = Math.abs(nums[i]) - 1;
+      if (nums[idx] > 0) 
+        nums[idx] *= -1;
+    }
+
+    for (let i = 0; i < len; i++) {
+      if ( nums[i] > 0) 
+        return i + 1;
+    }
+    return len + 1;
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+const swapped = (arr, currIdx, swapIdx) => [arr[currIdx],arr[swapIdx]] = [arr[swapIdx], arr[currIdx]]
+var firstMissingPositive = function(nums) {
+  const len = nums.length;
+
+  for (let i = 0; i < len; i++) {
+    while (nums[i] > 0 && nums[i] < (len+1) && nums[i] !== nums[nums[i]-1]) {
+      swapped(nums, i, nums[i]-1);
+    }
+  }
+
+  for (let i =0; i < len; i++) {
+    if (nums[i] !== i +1) 
+      return i +1;
+  }
+  return len + 1;
+  
+};
+
+*********************************************************************************************************************************************
