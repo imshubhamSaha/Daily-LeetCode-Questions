@@ -1,0 +1,27 @@
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var numSubarrayProductLessThanK = function(nums, k) {
+  const len = nums.length;
+  let prod = 1;
+  let curr = 0;
+  let slider = 0;
+  let result = 0;
+  const MOD = 1000000007;
+  while (curr < len) {
+    prod =(prod * nums[curr]) % MOD;
+
+    while (slider <= curr && prod >= k ) {
+      prod /= nums[slider];
+      slider++;
+    }
+    result += (curr - slider) + 1;
+    if (prod === 0) 
+      prod = 1;
+    curr++;
+  }
+
+  return result;
+};
