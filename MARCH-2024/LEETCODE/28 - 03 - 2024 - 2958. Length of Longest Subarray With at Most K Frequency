@@ -1,0 +1,67 @@
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var maxSubarrayLength = function(nums, k) {
+    const len = nums.length;
+
+    let i = 0;
+    let maxLen = 0;
+    while ( i < len) {
+      let j = i;
+      const hashMap = {};
+      while (j < len)  {
+        if (hashMap[nums[j]]) {
+          if (hashMap[nums[j]] < k) {
+            hashMap[nums[j]] = hashMap[nums[j]] + 1;
+          }else break;
+        }else {
+          hashMap[nums[j]] = 1;
+        }
+        j++;
+      }
+      maxLen = Math.max(maxLen, (j-i));
+
+      i++;
+    }
+
+    return maxLen;
+};
+
+//T.L.E
+//T.C -> O(N*N)
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var maxSubarrayLength = function(nums, k) {
+  const len = nums.length;
+  const hashMap = new Map();
+  let window = 0;
+  let pnter= 0;
+  let maxLen = 0;
+
+  while (pnter < len) {
+    const cnt = (hashMap.get(nums[pnter]) || 0); 
+    hashMap.set(nums[pnter], cnt + 1);
+    while (window <= pnter && hashMap.has(nums[pnter]) && hashMap.get(nums[pnter]) > k) {
+      maxLen = Math.max(maxLen, (pnter - window));
+      hashMap.set(nums[window], hashMap.get(nums[window]) - 1);
+      if (hashMap.get(nums[window]) === 0)
+        hashMap.delete(nums[window]);
+      window++;
+      
+    } 
+    
+    pnter++;
+  }
+  maxLen = Math.max(maxLen, (pnter - window))
+  return maxLen;
+};
+
+*********************************************************************************************************************************************
