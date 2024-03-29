@@ -1,0 +1,86 @@
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var countSubarrays = function(nums, k) {
+    let cnt = 0;
+    const maxEl = Math.max(...nums);
+    let window = 0;
+    let slider = 0;
+    const len = nums.length;
+    let result = 0;
+
+    while ( slider < len ) {
+      if (nums[slider] === maxEl) 
+        cnt++;
+
+      while (window <= slider && cnt >= k) {
+        result += 1 + (len-1-slider);
+        if (nums[window++] === maxEl)
+          cnt--;
+      } 
+      slider++;
+    }
+
+    return result;
+};
+
+********************************************************************************************************************************************
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var countSubarrays = function(nums, k) {
+    const maxEl = Math.max(...nums);
+    let result = 0;
+    let window = 0;
+    let pnter = 0;
+    const len = nums.length;
+
+    while (pnter < len) {
+      k -= nums[pnter] === maxEl ? 1 : 0;
+      pnter++;
+      while (k===0) {
+        k += nums[window] === maxEl ? 1 : 0;
+        window++;
+      }
+      result += window;
+    }
+
+    return result;
+};
+
+********************************************************************************************************************************************
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var countSubarrays = function(nums, k) {
+    const maxEl = Math.max(...nums);
+    let result = 0;
+    const maxIdx = [-1];
+    const len = nums.length;
+
+    for (let i = 0; i < len; i++) {
+      if (nums[i] === maxEl)
+        maxIdx.push(i);
+    }
+
+    const maxLen = maxIdx.length;
+
+    for (let i = 1; i <= maxLen - k; i++) {
+      let left = maxIdx[i] - maxIdx[i - 1] - 1;
+      let right = len - 1 - maxIdx[i + k - 1];
+
+      result += 1 + left + right + (left * right);
+    }
+
+    return result;
+};
+
+********************************************************************************************************************************************
