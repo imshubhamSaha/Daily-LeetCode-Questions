@@ -1,0 +1,11 @@
+class Solution {
+    // Function to find the minimum element in the given BST.
+    minValue(root) {
+        if ( !root )
+            return -1;
+        if (!root.left) {
+            return root.data;
+        }
+        return this.minValue(root.left)
+    }
+}
