@@ -1,0 +1,29 @@
+const saveYourLife = function  (w,x,b,n) {
+  const newCode = new Map();
+  const xLen = x.length
+  for (let i = 0; i < xLen; i++) {
+    newCode.set(x[i],b[i]);
+  }
+  let start = 0;
+  let end = w.length;
+  const len = w.length;
+  let maxSum = Number.MIN_SAFE_INTEGER;
+  let currSum = 0;
+  let pnter= 0;
+  for (let i = 0; i < len; i++) {
+    let charCode = newCode.get(w[i]) || w[i].charCodeAt(0);
+    currSum += charCode;
+    if (currSum  > maxSum) {
+      maxSum = currSum;
+      start = pnter;
+      end = i +1
+    }
+    if (currSum < 0) {
+      pnter = i +1;
+      currSum = 0
+    }
+  }
+  return w.substring(start, end);
+}
+
+console.log(saveYourLife('dbfbsdbf', ['b','s'], [-100, 45], 2))
