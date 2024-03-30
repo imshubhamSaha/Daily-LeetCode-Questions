@@ -1,0 +1,67 @@
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var subarraysWithKDistinct = function(nums, k) {
+    const len = nums.length;
+    if (len < k) 
+      return 0;
+    let cnt = 0;
+    for (let i = 0; i <= len - k; i++) {
+      const diff = new Set();
+      for (let j=i; j < len; j++) {
+        diff.add(nums[j]);
+        if (diff.size > k) 
+          break;
+        if (diff.size === k)
+          cnt++;
+      }
+    }
+
+    return cnt;
+};
+T.C -> O(N *N)
+S.C -> O(N);
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+const findAtMostK = function(nums, k, n = nums.length) {
+  let window = 0;
+  let slider = 0;
+  const freqK = new Map();
+  let cnt = 0;
+  
+  while ( slider < n ) {
+    freqK.set(nums[slider], (freqK.get(nums[slider]) || 0)  + 1);
+
+    while ( window <= slider && freqK.size > k ) {
+      freqK.set(nums[window], freqK.get(nums[window]) - 1);
+
+      if (freqK.get(nums[window]) === 0 )
+        freqK.delete(nums[window]);
+      
+      window++;
+    } 
+
+    cnt += (slider - window) + 1;
+    slider++; 
+  }
+
+  return cnt;
+
+}
+
+const subarraysWithKDistinct = function(nums, k , n = nums.length) {
+    if (n < k) 
+      return 0;
+
+    return findAtMostK(nums, k, n) - findAtMostK(nums, k-1, n);
+};
+
+*********************************************************************************************************************************************
