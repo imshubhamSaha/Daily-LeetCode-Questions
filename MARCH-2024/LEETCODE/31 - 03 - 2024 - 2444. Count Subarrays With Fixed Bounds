@@ -1,0 +1,27 @@
+/**
+ * @param {number[]} nums
+ * @param {number} minK
+ * @param {number} maxK
+ * @return {number}
+ */
+var countSubarrays = function(nums, minK, maxK) {
+    let result = 0;
+    let leftIdx = -1;
+    let rightIdx = -1;
+    let noRes = -1;
+
+    for (let i = 0; i < nums.length; i++) {
+      if (!(minK <= nums[i] && nums[i] <= maxK))
+        noRes = i;
+      
+      if (nums[i] === minK)
+        leftIdx = i;
+      
+      if (nums[i] === maxK)
+        rightIdx = i;
+
+      result += Math.max(0, Math.min(leftIdx,rightIdx) - noRes); 
+    }
+
+    return result;
+};
