@@ -1,0 +1,19 @@
+class Solution {
+    
+    findMaxForN(root, n) {
+        // code here
+        let res = -1;
+        while (root) {
+            if (root.data === n)
+                return n;
+            else if (root.data < n) {
+                res = root.data;
+                root = root.right;
+            }
+            else
+                root = root.left;
+        }
+        
+        return res;
+    }
+}
