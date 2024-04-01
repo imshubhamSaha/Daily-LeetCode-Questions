@@ -1,0 +1,19 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLastWord = function(s) {
+  const len = s.length;
+  let suffix = len - 1;
+ 
+  while (suffix >= 0 && s[suffix] === " ") {
+     suffix--;
+  }
+
+  const end = suffix;
+  while (suffix >=0 && s[suffix] !== " ") {
+    suffix--;
+  }
+  
+  return end - suffix;
+};
