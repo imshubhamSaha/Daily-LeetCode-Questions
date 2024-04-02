@@ -1,0 +1,55 @@
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isIsomorphic = function(s, t) {
+    const stMap = {};
+    const tsMap = {};
+    const len = s.length;
+    for (let i = 0; i < len; i++) {
+      let sCh = s[i];
+      let tCh = t[i];
+
+      if (!stMap[sCh] && !tsMap[tCh]) {
+        stMap[sCh] = tCh;
+        tsMap[tCh] = sCh;
+      }
+      else {
+        if (stMap[sCh] && stMap[sCh] !== tCh) 
+          return false;
+        else if (tsMap[tCh] && tsMap[tCh] !== sCh) 
+          return false;
+      }
+    }
+
+    return true;
+};
+
+********************************************************************************************************************************************
+
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isIsomorphic = function(s, t) {
+    const len = s.length;
+    const seen = new Array(128).fill(false);
+    for (let i = 0; i < len; i++) {
+      const idx = s[i].charCodeAt(0);
+      if(!seen[idx]) {
+        for (let j = 0; j < 128; j++) {
+          if (seen[j] === t[i]) return false;
+        }
+        seen[idx] = t[i]
+      }
+      else if (seen[idx] !== t[i]) return false;
+
+
+    }
+
+    return true;
+};
+
+********************************************************************************************************************************************
