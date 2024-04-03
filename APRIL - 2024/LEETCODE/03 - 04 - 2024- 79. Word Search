@@ -1,0 +1,47 @@
+const isValidRow = (row, board) => row >= 0 && row < board.length;
+
+const isValidCol = (col,board) => col >= 0 && col < board[0].length;
+
+const search = function (row,col, maze,word,idx) {
+    if (!isValidRow(row,maze) || !isValidCol(col,maze))
+        return false;
+    
+    const dir = [[0,1], [ 0, -1], [1, 0], [-1, 0]];
+
+    const char = maze[row][col];
+
+    if (char !== word[idx])
+        return false;
+    
+    maze[row][col] = "*";
+
+    if (word.length - 1 === idx) 
+        return true;
+    
+    for (let  i = 0; i < dir.length; i++) {
+        if (search(row + dir[i][0], col + dir[i][1], maze, word,idx+1))
+            return true;
+    }
+
+    maze[row][col] = char;
+
+    return false;
+}
+/**
+ * @param {character[][]} board
+ * @param {string} word
+ * @return {boolean}
+ */
+var exist = function(board, word) {
+    const rows = board.length;
+    const cols = board[0].length;
+
+    for (let row  = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+            if (search(row,col,board,word,0))
+                return true;
+        }
+    } 
+
+    return false;
+};
