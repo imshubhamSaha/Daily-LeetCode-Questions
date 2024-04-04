@@ -1,0 +1,44 @@
+class Solution
+{
+    //Function to find sum of all possible substrings of the given string.
+    sumSubstrings(s)
+    {
+        const len = s.length;
+        let sum = 0;
+        const MOD = 1000000007;
+        const dp = new Array(len).fill(0);
+        dp[0] = (s[0] - "0");
+        let ans = dp[0];
+        
+        for (let i = 1; i < len; i++) {
+            dp[i] = ((dp[i-1] * 10) % MOD + ((s[i] - "0") * (i+1)) % MOD) % MOD;
+            ans = (ans + dp[i]) % MOD;
+        }
+        
+        return ans;
+    }
+}
+
+*********************************************************************************************************************************************
+
+class Solution
+{
+    //Function to find sum of all possible substrings of the given string.
+    sumSubstrings(s)
+    {
+        const len = s.length;
+        let sum = 0;
+        const MOD = 1000000007;
+        
+        let prev = (s[0] - "0");
+        let ans = prev;
+        
+        for (let i = 1; i < len; i++) {
+            let curr = ((prev * 10) % MOD + ((s[i] - "0") * (i+1)) % MOD) % MOD;
+            ans = (ans + curr) % MOD;
+            prev = curr;
+        }
+        
+        return ans;
+    }
+}
