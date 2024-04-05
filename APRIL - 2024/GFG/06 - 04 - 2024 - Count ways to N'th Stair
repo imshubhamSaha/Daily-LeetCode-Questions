@@ -1,0 +1,45 @@
+class Solution {
+    // Function to count number of ways to reach the nth stair
+    // when order does not matter.
+    countWays(n) {
+        if (n === 1) 
+            return 1;
+        
+        let m1 = 1;
+        let m2 = 2;
+        const MOD = 1000000007;
+        for (let i = 3; i <= n; i++) {
+            let temp = m2;
+            m2 = (m1 + 1) % MOD;
+            m1 = temp;
+        }
+        
+        return m2;
+    }
+}
+
+*********************************************************************************************************************************************
+
+class Solution {
+    // Function to count number of ways to reach the nth stair
+    // when order does not matter.
+    countWays(n) {
+        let ans = 1;
+        n--;
+        ans += Math.ceil((n/2));
+        return ans;
+    }
+}
+
+*********************************************************************************************************************************************
+
+
+class Solution {
+    // Function to count number of ways to reach the nth stair
+    // when order does not matter.
+    countWays(n) {
+        return (n>>1)+ 1;
+    }
+}
+
+*********************************************************************************************************************************************
