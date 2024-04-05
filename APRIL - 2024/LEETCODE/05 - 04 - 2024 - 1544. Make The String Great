@@ -1,0 +1,30 @@
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var makeGood = function(s) {
+    const len = s.length;
+    const stack = [];
+    let result = "";
+    for (let i =0; i < len; i++) {
+      let char = s[i].charCodeAt(0);
+
+      if (!stack.length)
+        stack.push(s[i]);
+      else {
+        if(Math.abs(stack[stack.length-1].charCodeAt(0) - char) === 32) {
+          stack.pop()
+        }
+        else {
+          stack.push(s[i])
+        }
+      }
+     
+    }
+    
+    while(stack.length) {
+      result = stack.pop() + result;
+    }
+
+    return result;
+};
