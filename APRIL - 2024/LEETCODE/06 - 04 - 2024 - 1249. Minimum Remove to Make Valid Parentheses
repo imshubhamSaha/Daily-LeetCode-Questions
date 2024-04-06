@@ -1,0 +1,111 @@
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var minRemoveToMakeValid = function(s) {
+    const len = s.length;
+    const arr = s.split("");
+
+    let openParren = 0;
+    
+    for(let i = 0; i < len; i++) {
+      let char = arr[i];
+
+      if(char === "(") {
+        openParren++
+      }
+      else if (char === ")") {
+        if(openParren === 0) 
+          arr[i] = "*";
+        else openParren--;
+      }
+    }
+
+    for (let i = len - 1; i >=0; i--) {
+      if(openParren > 0 && arr[i] === "(") {
+        arr[i] = "*";
+        openParren--;
+      }
+    }
+
+    const result = arr.filter(elm => elm !== "*").join("");
+
+    return result;
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var minRemoveToMakeValid = function(s) {
+    const len = s.length;
+    const arr = s.split("");
+    const stack = [];
+    const notValid = [];
+
+    for(let i = 0; i < len; i++) {
+      const char = s[i];
+
+      if(char === '(') {
+        stack.push(char);
+        notValid.push(i);
+      }
+      else if (char === ')') {
+        if(stack[stack.length - 1] === '(') {
+          stack.pop();
+          notValid.pop();
+        }else {
+          stack.push(char);
+          notValid.push(i);
+        }
+      }
+    }
+
+    for (let sign of notValid) {
+      arr[sign] = "*";
+    }
+
+    return arr.filter(elm => elm !== "*").join("");
+    
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var minRemoveToMakeValid = function(s) {
+    const len = s.length;
+    const stack = [];
+    let leftCnt = 0;
+    let rightCnt = 0;
+    for(let i = 0; i < len; i++) {
+      const char = s[i];
+
+      if(char === '(') 
+        leftCnt++;
+      else if (char === ')') 
+        rightCnt++;
+
+      if(rightCnt > leftCnt) 
+        rightCnt--;
+      else
+        stack.push(char);
+    }
+    const result = [];
+    while(stack.length) {
+      const char = stack.pop();
+
+      if(leftCnt > rightCnt && char === "(") 
+        leftCnt--;
+      else result.push(char);
+    }
+
+    return result.reverse().join("");
+    
+};
+
+*********************************************************************************************************************************************
