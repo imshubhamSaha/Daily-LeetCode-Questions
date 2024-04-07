@@ -1,0 +1,64 @@
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var checkValidString = function(s) {
+    const len = s.length;
+    const stack = [];
+    const starStk = [];
+    for (let i = 0; i < len ; i++) {
+      let char = s[i];
+      if(char === ")") {
+        if(!stack.length && !starStk.length) 
+          return false;
+        if(stack.length)
+          stack.pop()
+        else starStk.pop()
+      }else if (char === '('){
+        stack.push(i);
+      }else {
+        starStk.push(i)
+      }
+    }
+
+    if(!stack.length)
+      return true;
+    
+    while(stack.length && starStk.length) {
+      if (stack.pop() > starStk.pop())
+        return false;
+    }
+
+    return stack.length === 0;
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var checkValidString = function(s) {
+    let minParen = 0;
+    let maxParen = 0;
+
+    for (const ch of s) {
+      if(ch === '(') {
+        minParen++;
+        maxParen++;
+      }else if (ch === ')') {
+        maxParen--;
+        minParen = Math.max(minParen-1, 0);
+      }else {
+        maxParen++;
+        minParen = Math.max(minParen-1, 0);
+      }
+
+      if (maxParen < 0) 
+        return false;
+    }
+
+    return minParen === 0;
+};
+
+*********************************************************************************************************************************************
