@@ -1,0 +1,157 @@
+/**
+ * @param {number[]} students
+ * @param {number[]} sandwiches
+ * @return {number}
+ */
+class MyStack {
+  constructor() {
+    this.arr = [];
+    this.front = -1;
+    this.end = -1;
+  }
+
+  push(data) {
+    if (this.isEmpty()) {
+      this.front++;
+    }
+    this.end++;
+    this.arr[this.end] = data;
+  }
+
+  pop() {
+    if(this.isEmpty()) {
+      return -1;
+    }
+
+    let popped = this.arr[this.end--];
+    if ( this.front > this.end ) {
+      this.front = -1;
+      this.end = -1;
+    }
+
+    return popped;
+  }
+
+  peek() {
+    if (!this.isEmpty()) {
+      return this.arr[this.end];
+    }
+
+    return -1;
+  }
+
+  isEmpty() {
+    if (this.front === -1 && this.end === -1) 
+      return true;
+
+    return false;
+  }
+}
+
+class MyQueue {
+  constructor() {
+    this.arr = [];
+    this.front = -1;
+    this.end = -1;
+    this.size = 0;
+  }
+
+  enqueue (data) {
+    if(this.isEmpty()) {
+      this.front++;
+      this.end++;
+    }
+    this.arr[this.end++] = data;
+    this.size++;
+  }
+
+  dequeue () {
+    if (this.isEmpty()) {
+      return -1;
+    }
+
+    let popped = this.arr[this.front++];
+
+    if (this.front === this.end) {
+      this.front = -1;
+      this.end = -1;
+    }
+    this.size--;
+    return popped;
+  }
+
+  peek() {
+    if(!this.isEmpty()) 
+      return this.arr[this.front];
+    
+    return -1;
+  }
+
+  isEmpty() {
+    if(this.front === -1 && this.end === -1) {
+      return true;
+    }
+
+    return false;
+  }
+}
+var countStudents = function(students, sandwiches) {
+    const stdntQueue = new MyQueue();
+    const sndStk = new MyStack();
+
+    for (let child of students) 
+      stdntQueue.enqueue(child);
+
+    for(let i = sandwiches.length -1; i>=0; i--) 
+      sndStk.push(sandwiches[i]);
+
+    let rearrange = 0;
+
+    while(!stdntQueue.isEmpty() && rearrange < stdntQueue.size) {
+      if ((sndStk.peek() !== -1 &&  stdntQueue.peek() !== -1) && (sndStk.peek() === stdntQueue.peek())) {
+        sndStk.pop();
+        stdntQueue.dequeue();
+        rearrange = 0;
+      }else {
+        stdntQueue.enqueue(stdntQueue.peek());
+        stdntQueue.dequeue();
+        rearrange++;
+      }
+    }
+
+    return stdntQueue.size;
+};
+
+*******************************************************************************************************************************************
+
+/**
+ * @param {number[]} students
+ * @param {number[]} sandwiches
+ * @return {number}
+ */
+
+var countStudents = function(students, sandwiches) {
+  let len = students.length;
+  let circularSnd = 0;
+  let squareSnd = 0;
+
+  for(let child of students) {
+    if (child === 0) 
+      circularSnd++;
+    else 
+      squareSnd++;
+  }
+
+  for (let i =0; i < len; i++) {
+    if (sandwiches[i] === 1 && squareSnd > 0) 
+      squareSnd--;
+    else if (sandwiches[i] === 0 && circularSnd > 0)
+      circularSnd--;
+    else break;
+  }
+
+  return Math.abs(circularSnd - squareSnd);
+};
+
+*******************************************************************************************************************************************
+
