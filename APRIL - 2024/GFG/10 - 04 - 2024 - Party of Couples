@@ -1,0 +1,6 @@
+
+class Solution{
+    findSingle(n, arr){
+        return arr.reduce((acc,elm) => acc ^ elm , 0);
+    }
+}
