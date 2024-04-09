@@ -1,0 +1,51 @@
+/**
+ * @param {number[]} tickets
+ * @param {number} k
+ * @return {number}
+ */
+var timeRequiredToBuy = function(tickets, k) {
+    let time = 0;
+    const len = tickets.length;
+    while(true){
+      for (let j =0; j < len; j++) {
+        if(tickets[j] > 0) {
+          tickets[j] = tickets[j] - 1;
+          time++;
+        }
+        if (tickets[k] === 0) {
+          return time;
+        }
+      }
+      
+    }
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {number[]} tickets
+ * @param {number} k
+ * @return {number}
+ */
+var timeRequiredToBuy = function(tickets, k) {
+    let time = 0;
+    const len = tickets.length;
+    for(let i = 0; i < len; i++) {
+      if(i < k) {
+        time = time + Math.min(tickets[i], tickets[k]);
+      }
+      else if (i === k) {
+        time = time + tickets[i];
+      }else {
+        if(tickets[i] < tickets[k]) {
+          time = time + tickets[i];
+        }else {
+          time = time + tickets[k]-1;
+        }
+      }
+    }
+
+    return time;
+};
+
+*********************************************************************************************************************************************
