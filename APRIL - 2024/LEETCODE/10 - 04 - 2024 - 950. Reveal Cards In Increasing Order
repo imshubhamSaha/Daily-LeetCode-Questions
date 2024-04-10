@@ -1,0 +1,20 @@
+/**
+ * @param {number[]} deck
+ * @return {number[]}
+ */
+
+var deckRevealedIncreasing = function(deck) {
+  deck.sort((a,b) => a - b);
+
+  const len = deck.length;
+  if (len  <= 1) 
+    return deck;
+  const result = [deck[len-1]];
+
+  for (let i = len - 2; i >= 0; i--) {
+    result.unshift(result.pop());
+    result.unshift(deck[i]);
+  }
+
+  return result;
+};
