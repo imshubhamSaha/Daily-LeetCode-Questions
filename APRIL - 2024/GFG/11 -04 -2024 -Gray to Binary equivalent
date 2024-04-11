@@ -1,0 +1,53 @@
+class Solution {
+    // function to convert a given Gray equivalent n to Binary equivalent.
+    grayToBinary(n)
+    {
+        let greyCode = ""
+        while (n) {
+            if (n & 1 === 1)
+                greyCode = "1" + greyCode;
+            else 
+                greyCode = "0" + greyCode;
+                
+            n = n >> 1;
+        }
+        
+        let binaryCode = greyCode[0];
+        
+        for (let i =1; i<greyCode.length; i++) {
+            binaryCode += binaryCode[i-1] ^ greyCode[i];
+        }
+        
+        let res = 0;
+        
+        let power = 0;
+        
+        while(binaryCode) {
+            if(binaryCode % 10 === 1) {
+                res += (1 << power);
+            }
+            power++;
+            binaryCode = Math.floor(binaryCode/10);
+        }
+        
+        return res;
+    }
+}
+
+********************************************************************************************************************************************
+
+
+class Solution {
+    // function to convert a given Gray equivalent n to Binary equivalent.
+    grayToBinary(n)
+    {
+        let res = 0;
+        
+        while (n) {
+            res ^= n;
+            n >>= 1;
+        }
+        
+        return res;
+    }
+}
