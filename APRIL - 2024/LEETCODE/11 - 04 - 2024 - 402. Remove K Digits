@@ -1,0 +1,46 @@
+/**
+ * @param {string} num
+ * @param {number} k
+ * @return {string}
+ */
+var removeKdigits = function(num, k) {
+    const len = num.length;
+
+    if (len === k) 
+      return "0";
+
+    const stack = [];
+
+    // Traversing through num string
+    for (let i = 0; i < len; i++) {
+      let curr = +num[i];
+
+      // Maintaining bottom of the stack should be less
+      while (k > 0 && stack.length && stack[stack.length-1] > curr) {
+        stack.pop();
+        k--;
+      }
+
+      stack.push(curr);
+    }
+    
+    //  Checking if removal of digit left
+    while (k > 0 && stack.length) {
+      stack.pop();
+      k--;
+    }
+  
+    let result = "";
+    // creating result num
+    while (stack.length) 
+      result = stack.pop() + result;
+    
+    let i =0;
+    // removing leading zeros
+    while (i < result.length && result[i] === "0") 
+      i++;
+
+    result =  result.slice(i);
+
+    return result === "" ? "0" : result;
+};
