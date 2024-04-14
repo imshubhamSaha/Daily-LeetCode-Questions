@@ -1,0 +1,20 @@
+class Solution {
+    printArr(n, arr) {
+        // Your code for printing array here
+        console.log(arr.join(" "));
+    }
+
+    setToZero(n, arr) {
+        // set element of arr to zero
+        for (let i =0; i < n; i++) {
+            arr[i] = arr[i] ^ arr[i];
+        }
+    }
+
+    xor1ToN(n, arr) {
+        
+        for (let i = 0; i < n; i++) {
+            arr[i] = arr[i] ^ i;
+        }
+    }
+}
