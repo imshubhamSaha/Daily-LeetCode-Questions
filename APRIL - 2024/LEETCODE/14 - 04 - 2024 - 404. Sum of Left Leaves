@@ -1,0 +1,87 @@
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+class MyQueue {
+  static length = 0;
+  static front = -1;
+  static rear = -1;
+  constructor() {
+    this.queue = [];
+  }
+
+  enqueue(data) {
+    if (this.isEmpty) {
+      MyQueue.front++;
+    }
+    MyQueue.rear++;
+    this.queue[MyQueue.rear] = data;
+    MyQueue.length++;
+  }
+
+  dequeue() {
+    if (this.isEmpty) {
+      return -1;
+    }
+
+    let popped = this.queue[MyQueue.front++];
+
+    if (MyQueue.front > MyQueue.rear) {
+      MyQueue.front = -1;
+      MyQueue.rear = -1;
+    }
+    MyQueue.length--;
+
+    return popped;
+  }
+
+  get size() {
+    return MyQueue.length;
+  }
+
+  get isEmpty() {
+    return MyQueue.length === 0;
+  }
+
+  get peek () {
+    if (this.isEmpty) 
+      return false;
+    
+    return this.queue[MyQueue.front];
+  }
+}
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var sumOfLeftLeaves = function(root) {
+    if (!root)
+      return 0;
+
+    let sum = 0;
+
+    const queue = new MyQueue();
+
+    queue.enqueue([root,false]);
+
+    while (!queue.isEmpty) {
+     
+      let [node, is_left] = queue.dequeue();
+
+      if (is_left && !node.left && !node.right) 
+        sum += node.val;
+      
+      if (node.left) {
+        queue.enqueue([node.left, true]);
+      }
+      if (node.right) {
+        queue.enqueue([node.right, false]);
+      }
+    }
+
+    return sum;
+};
