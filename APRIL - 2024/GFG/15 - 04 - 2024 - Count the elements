@@ -1,0 +1,74 @@
+class Solution {
+    /**
+    * @param number n
+    * @param number[] a
+    * @param number[] b
+    * @param number q
+    * @param number[] queries
+
+    * @returns number[]
+    */
+    getCount(arr, upper_bound) {
+        let low = 0;
+        let high = arr.length-1;
+        let idx = -1;
+        
+        while (low <= high) {
+            let mid = low + Math.floor((high-low)/2);
+            
+            if(arr[mid] <= upper_bound) {
+                idx = mid;
+                low = mid+1;
+            }else {
+                high = mid -1;
+            }
+        }
+        
+        return idx === -1 ? 0 : idx+1;
+    } 
+    countElements(n, a, b, q, queries) {
+        b.sort((a,b) => a-b);
+        
+        const result = new Array(q).fill(0);
+        for (let i = 0; i < q; i++) {
+            result[i] = this.getCount(b,a[queries[i]]);
+        }
+        return result;
+    }
+}
+
+*********************************************************************************************************************************************
+
+class Solution {
+    /**
+    * @param number n
+    * @param number[] a
+    * @param number[] b
+    * @param number q
+    * @param number[] queries
+
+    * @returns number[]
+    */
+    countElements(n, a, b, q, queries) {
+        let maxElm = -1;
+        
+        for (let i = 0; i < n; i++) 
+            maxElm = Math.max(a[i], b[i], maxElm);
+        
+        const hashed = new Array(maxElm+1).fill(0);
+        
+        for (let i = 0; i < n; i++) 
+            hashed[b[i]]++;
+       
+        for (let i = 1; i <= maxElm; i++) 
+            hashed[i] += hashed[i-1];
+            
+       
+        const result = new Array(q).fill(0);
+        
+        for (let i = 0; i < q; i++) 
+            result[i] = hashed[a[queries[i]]];
+        
+        return result;
+    }
+}
