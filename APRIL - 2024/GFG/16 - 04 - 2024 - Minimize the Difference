@@ -1,0 +1,49 @@
+class Solution {
+/**
+* @param number n
+* @param number k
+* @param number[] arr
+
+* @returns number
+*/
+    minimizeDifference(n, k, arr) {
+        const prefixMin = new Array(n).fill(0);
+        const prefixMax = new Array(n).fill(0);
+        const suffixMin = new Array(n).fill(0);
+        const suffixMax = new Array(n).fill(0);
+        
+        prefixMin[0] = arr[0];
+        prefixMax[0] = arr[0];
+        suffixMin[n-1] = arr[n-1];
+        suffixMax[n-1] = arr[n-1];
+        
+        for(let i = 1; i < n; i++) {
+            prefixMin[i] = Math.min(arr[i], prefixMin[i-1]);
+            prefixMax[i] = Math.max(arr[i], prefixMax[i-1]);
+        }
+        
+        for(let i = n-2; i >= 0; i--) {
+            suffixMin[i] = Math.min(arr[i], suffixMin[i+1]);
+            suffixMax[i] = Math.max(arr[i], suffixMax[i+1]);
+        }
+        
+        let res = Number.MAX_SAFE_INTEGER;
+        
+        for (let i = 0; i <= (n-k); i++) {
+            let left_min = (i > 0) ? prefixMin[i-1] : Number.MAX_SAFE_INTEGER;
+            let left_max = (i > 0) ? prefixMax[i-1] : Number.MIN_SAFE_INTEGER;
+            
+            let right_min = (i+k) < n ? suffixMin[i+k] : Number.MAX_SAFE_INTEGER;
+            let right_max = (i+k) < n ? suffixMax[i+k] : Number.MIN_SAFE_INTEGER;
+            
+            let min = Math.min(left_min, right_min);
+            let max = Math.max(left_max,right_max);
+            
+            res = Math.min(res, Math.abs(max-min));
+        }
+        
+        
+        return res;
+    }
+}
+   
