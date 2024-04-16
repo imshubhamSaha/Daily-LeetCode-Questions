@@ -1,0 +1,49 @@
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} node
+ * @param {number} val
+ * @param {number} depth
+ * @param {number} curr
+ * @return {TreeNode}
+ */
+const add = function(node, val, depth, curr) {
+  if(!node)
+    return null;
+  
+  if(curr === depth - 1) {
+    let lNode = node.left;
+    let rNode = node.right;
+    node.left = new TreeNode(val);
+    node.right = new TreeNode(val);
+    node.left.left = lNode;
+    node.right.right = rNode;
+    return node;
+  }
+
+  node.left = add(node.left,val,depth,curr+1);
+  node.right = add(node.right,val,depth,curr+1);
+
+  return node;
+}
+
+/**
+ * @param {TreeNode} root
+ * @param {number} val
+ * @param {number} depth
+ * @return {TreeNode}
+ */
+const addOneRow = function(root, val, depth) {
+    if (depth === 1) {
+      let newRoot = new TreeNode(val, root);
+      return newRoot;
+    }
+
+    return add(root, val, depth, 1);
+};
