@@ -1,0 +1,18 @@
+class Solution {
+    findMissing(a,b,n,m){
+        const ans = [];
+        const hashMap = {};
+        for(let i =0; i < m; i++) {
+            hashMap[b[i]] = (hashMap[b[i]] || 0) + 1;
+        }
+        let j =0;
+        while(j < n) {
+            if(!hashMap[a[j]]) {
+                ans.push(a[j]);
+            }
+            j++;
+        }
+        
+        return ans;
+    }
+}
