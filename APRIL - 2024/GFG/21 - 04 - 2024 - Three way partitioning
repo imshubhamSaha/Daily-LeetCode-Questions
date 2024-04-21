@@ -1,0 +1,70 @@
+class Solution {
+    //Function to partition the array around the range such 
+    //that array is divided into three parts.
+    threeWayPartition(arr, a, b)
+    {
+        const len = arr.length;
+        
+        let pnt = 0;
+        const temp = new Array(len).fill(-1);
+        let lst = len - 1;
+        
+        let i = 0;
+        
+        while ( i < len) {
+            if(arr[i] < a) {
+                temp[pnt++] = arr[i];
+            }else if(arr[i] > b) {
+                temp[lst--] = arr[i];
+            }
+            i++;
+        }
+        
+        i = 0;
+        
+        while ( i < len) {
+            if(pnt <= lst && arr[i] >= a && arr[i] <= b) {
+                temp[pnt++] = arr[i];
+            }
+            
+            i++;
+        }
+        
+        i = 0;
+        
+        while (i < len) {
+            arr[i] = temp[i];
+            i++;
+        }
+    }
+}
+
+*********************************************************************************************************************************************
+
+class Solution {
+    //Function to partition the array around the range such 
+    //that array is divided into three parts.
+    swap(arr, first,second) {
+        [arr[first], arr[second]] = [arr[second], arr[first]];
+    }
+    threeWayPartition(arr, a, b)
+    {
+        const len = arr.length;
+        let left = 0;
+        let pnter = 0;
+        let right = len - 1;
+        
+        while(left <= right) {
+            if(arr[left] < a) {
+                this.swap(arr, pnter, left);
+                pnter++;
+            }else if (arr[left] > b) {
+                this.swap(arr,left, right);
+                right--;
+                left--;
+            }
+            left++;
+        }
+        
+    }
+}
