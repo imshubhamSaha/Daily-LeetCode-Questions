@@ -1,0 +1,22 @@
+class Solution {
+    //Function to find the row of first index containing 1.
+    minRow(n, m, a)
+    {
+        let cnt = m+1;
+        let minIdx = m+1;
+        for(let i = 0; i < n; i++) {
+            let zeroCnt = 0;
+            for(let j = 0; j < m; j++) {
+                if(a[i][j] === 0)
+                    zeroCnt++;
+            }
+            let oneCnt = m - zeroCnt; 
+            if(oneCnt < cnt) {
+                cnt = oneCnt;
+                minIdx = (i + 1);
+            }
+        }
+        
+        return minIdx;
+    }
+}
