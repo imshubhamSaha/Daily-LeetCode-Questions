@@ -1,0 +1,84 @@
+
+#RECURSIVE
+
+var tribonacci = function(n) {
+    if(n === 0)
+      return 0;
+    else if (n === 1 || n === 2) 
+      return 1;
+    else 
+      return tribonacci(n-1) + tribonacci(n-2) + tribonacci(n-3); 
+};
+
+Time Complexity : The time complexity of this recursive solution is exponential (O(3^n)), as each call branches into three recursive calls.
+Space Complexity : o(n) recursive stack
+*********************************************************************************************************************************************
+
+# MEMONIZTION RECURSIVE
+
+var tribonacci = function(n) {
+    const memo  = {};
+
+    const solve = function(n) {
+      if(memo[n])
+        return memo[n];
+      
+      if(n === 0)
+        return 0;
+      else if(n === 1 || n===2) 
+        return 1
+      else {
+        res = solve(n-1) + solve(n-2) + solve(n-3);
+        memo[n] = res;
+        return res;
+      }
+    } 
+
+    return solve(n);
+};
+
+*********************************************************************************************************************************************
+
+#MEMONIZATION ITERATIVE
+
+var tribonacci = function(n) {
+    const dp = new Array(n).fill(0)
+    dp[0] =0;
+    dp[1] = 1;
+    dp[2] = 1;
+
+    for(let i=3; i<=n; i++) {
+        dp[i] = dp[i-1] + dp[i-2] + dp[i-3]
+    }
+
+    return dp[n]
+};
+
+Time Complexity : O(n)
+Space Complexity : o(n) (dp array)
+*********************************************************************************************************************************************
+
+#Iterative Space optimization
+
+var tribonacci = function(n) {
+    if(n <= 1) {
+      return n;
+    }
+    let t_0 = 0;
+    let t_1 = 1;
+    let t_2 = 1;
+    let t3;
+    for(let i = 3; i <= n; i++) {
+      t_3 = t_0 + t_1 + t_2;
+      t_0 = t_1;
+      t_1 = t_2;
+      t_2 = t_3;
+    }
+
+    return t_2;
+};
+
+Time Complexity : O(n)
+Space Complexity : o(1) (Constant)
+
+*********************************************************************************************************************************************
