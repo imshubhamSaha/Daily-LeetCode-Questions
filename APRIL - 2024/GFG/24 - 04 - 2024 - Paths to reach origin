@@ -1,0 +1,86 @@
+
+*********************************************************************************************************************************************
+
+# RECUSIVE APPROACH (TLE)
+
+class Solution {
+    
+    solve(x,y,) {
+        if(x < 0 || y < 0) 
+            return 0;
+        
+        if(x === 0 && y === 0)
+            return 1;
+            
+        let l = this.solve(x-1, y);
+        let r = this.solve(x, y-1);
+        
+        return (l+r) % 1000000007; 
+    }
+    
+    ways(x, y) {
+        return this.solve(x,y);
+    }
+}
+
+*********************************************************************************************************************************************
+
+# DP ITERATIVE APPROACH (TABULATION APPROACH)
+
+class Solution {
+  ways(x, y) {
+    const dp = Array.from({length:x+1} , () => new Array(y+1).fill(0));
+    const MOD = 1000000007;
+    for(let i = 0; i <= x; i++) {
+        for(let j = 0; j <= y; j++) {
+            if(i === 0 && j === 0) 
+                dp[i][j] = 1;
+            else if(i === 0) 
+                dp[i][j] = dp[i][j-1];
+            else if(j === 0)
+                dp[i][j] = dp[i-1][j];
+            else 
+                dp[i][j] = (dp[i-1][j]% MOD + dp[i][j-1]% MOD)% MOD; 
+        }
+    }
+    
+    return dp[x][y];
+  }
+}
+
+TIME COMPLEXITY : O(n*m)
+SPACE COMPLEXITY : O(n*m)
+
+*********************************************************************************************************************************************
+
+#DP RECUSIVE APPRAOCH (MEMONIZATION APPROACH)
+
+class Solution {
+    
+    solve(x,y,dp) {
+        if(x < 0 || y < 0) 
+            return 0;
+        
+        if(x === 0 && y === 0)
+            return 1;
+        
+        if(dp[x][y] !== -1) 
+            return dp[x][y];
+            
+        let l = this.solve(x-1, y,dp);
+        let r = this.solve(x, y-1,dp);
+        
+        return dp[x][y] = (l+r) % 1000000007; 
+    }
+    
+    ways(x, y) {
+        const dp = Array.from({length:x+1} , () => new Array(y+1).fill(-1));
+        
+        return this.solve(x,y,dp);
+    }
+}
+
+TIME COMPLEXITY : O(n*m)
+SPACE COMPLEXITY : O(n*m) + O(n) -> recusive stack
+
+*********************************************************************************************************************************************
