@@ -1,0 +1,28 @@
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {number}
+ */
+var longestIdealString = function(s, k) {
+    const charArr = new Array(26).fill(0);
+    const len = s.length;
+    let res = 0;
+
+    for(let i = 0; i < len; i++) {
+      let curr  = s[i].charCodeAt(0) - 97;
+      let low = Math.max(0, curr - k);
+      let high = Math.min(25, curr + k);
+
+      let lngest = 0;
+
+      for(let j = low; j <= high; j++) {
+        lngest = Math.max(lngest, charArr[j]);
+      }
+
+      charArr[curr] = Math.max(lngest + 1, charArr[curr]);
+      res = Math.max(res, charArr[curr]);
+    }
+
+
+    return res;
+};
