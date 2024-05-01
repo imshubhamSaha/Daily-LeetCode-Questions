@@ -1,0 +1,40 @@
+class Solution {
+  arrangeCV(head){
+    let vowHead = null;
+    let vowNext = null;
+    let consHead = null;
+    let consNext = null;
+    let curr = head;
+    const vowels = new Set(["a", 'e', 'i', 'o', 'u']);
+    while(curr) {
+        const newNode = new Node(curr.data)
+        if(vowels.has(curr.data)) {
+            if(!vowHead) {
+                vowHead = newNode;
+                vowNext = newNode;
+            }else {
+                vowNext.next = newNode;
+                vowNext = newNode;
+            }
+        }else {
+            if(!consHead) {
+                consHead = newNode;
+                consNext = newNode;
+            }else {
+                consNext.next = newNode;
+                consNext = newNode;
+            }
+        }
+        
+        curr = curr.next;
+    }
+    
+    if(vowHead) {
+        vowNext.next = consHead;
+    }else {
+        return consHead;
+    }
+    
+    return vowHead;
+  }
+}
