@@ -1,0 +1,48 @@
+/**
+ * @param {string} str
+ * @param {character} target
+ * @return {number}
+ */
+const firstOccurance = (str, target) => str.indexOf(target)
+
+/**
+ * @param {array} arr
+ * @return {array}
+ */
+const reverse = (arr) => arr.reverse();
+
+/**
+ * @param {string} word
+ * @param {number} start
+ * @param {number} end
+ * @return {string}
+ */
+const getPart = (word, start, end) => word.slice(start,end+1);
+
+/**
+ * @param {string} word
+ * @param {character} value
+ * @return {array}
+ */
+const stringToArray = (word, value = "") => word.split(value); 
+
+/**
+ * @param {characterarray} wordArr
+ * @param {character} value
+ * @return {string}
+ */
+const arrayToString = (wordArr, value = "") => wordArr.join(value);
+
+/**
+ * @param {string} word
+ * @param {character} ch
+ * @return {string}
+ */
+var reversePrefix = function(word, ch) {
+    const first_occurance = firstOccurance(word,ch);
+    if (first_occurance === -1) return word;
+
+    const reversed_word = arrayToString(reverse(stringToArray(getPart(word,0,first_occurance),"")),"") + word.slice(first_occurance+1);
+
+    return reversed_word; 
+};
