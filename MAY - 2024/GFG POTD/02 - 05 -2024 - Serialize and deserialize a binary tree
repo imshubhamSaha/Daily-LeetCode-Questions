@@ -1,0 +1,54 @@
+class Solution 
+{
+    constructor() {
+        this.idx = 0;
+    }
+    
+    buildTree(vec) {
+        if(vec[this.idx] === null || this.idx === vec.length) {
+            this.idx++;
+            return null;
+        }
+        
+        const root = new Node(vec[this.idx++]);
+        root.left = this.buildTree(vec);
+        root.right = this.buildTree(vec);
+        
+        return root;
+    }
+    
+    preOrder(root, vector) {
+        if(!root) {
+            vector.push(null);
+            return;
+        }
+        vector.push(root.data);
+        this.preOrder(root.left,vector);
+        this.preOrder(root.right,vector);
+        
+        return;
+    }
+    /**
+     * @param {Node} root
+     * @returns {number[]}
+    */
+    //Function to serialize a tree and return a list containing nodes of tree.
+    serialize(root)
+    {
+        const vec = [];
+        this.preOrder(root, vec);
+        return vec;
+    }
+    
+    /**
+     * @param {number[]} A
+     * @returns {Node}
+    */
+    
+    //Function to deserialize a list and construct the tree
+    deSerialize(A)
+    {
+        
+        return this.buildTree(A);
+    }
+}
