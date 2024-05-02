@@ -1,0 +1,67 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findMaxK = function(nums) {
+  let largest = -1;
+  const len = nums.length;
+  
+
+  for(let i = 0; i < len; i++) {
+    if(nums[i] < 0) {
+      for(let j = 0; j < len; j++) {
+        if(nums[i] === (nums[j] * -1)) {
+          if (nums[j] > largest )
+            largest = nums[j];
+          
+          break;
+        }
+      }
+    }
+  }
+  return largest;
+};
+
+**********************************************************************************************************************************************
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findMaxK = function(nums) {
+  nums.sort((a,b) => a - b);
+
+  let i = 0;
+  let j = nums.length-1;
+
+  let largest = -1;
+
+  while( i < j ) {
+    let abs = Math.abs(nums[i]);
+    if(abs === nums[j] && nums[i] === (nums[j] * -1))
+      return nums[j];
+    else if (abs < nums[j]) 
+      j--;
+    else
+      i++;
+  }
+  return largest;
+};
+**********************************************************************************************************************************************
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findMaxK = function(nums) {
+  let largest = -1;
+  const len = nums.length;
+  const negativeNum = nums.reduce((hashSet, curr) => curr < 0 ? hashSet.add(curr) : hashSet, new Set());
+
+  for(let i = 0; i < len; i++) {
+    if(nums[i] > 0) {
+      if(nums[i] > largest && negativeNum.has((-nums[i]))) 
+        largest = nums[i];
+    }
+  }
+  return largest;
+};
+**********************************************************************************************************************************************
