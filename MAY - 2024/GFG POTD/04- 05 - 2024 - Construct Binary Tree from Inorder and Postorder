@@ -1,0 +1,27 @@
+class Solution 
+{
+    //Function to return a tree created from postorder and inoreder traversals.
+    buildTree(ino, post, n)
+    {
+        let pi = [n - 1];
+
+        const contructTree = function (startIdx, endIdx) {
+            if (startIdx > endIdx)
+                return null;
+
+            const node = new Node(post[pi[0]--]);
+
+            if (startIdx === endIdx)
+                return node;
+
+            const idx = ino.indexOf(node.data);
+            
+            node.right = contructTree(idx + 1, endIdx);
+            node.left = contructTree(startIdx, idx - 1);
+
+            return node;
+        };
+
+        return contructTree(0, n - 1);
+    }
+}
