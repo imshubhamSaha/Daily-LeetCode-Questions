@@ -1,0 +1,74 @@
+class Pair {
+    constructor(hd, root) {
+        this.root = root;
+        this.hd = hd;
+    }
+}
+
+class Queue {
+    constructor() {
+        this.queue = [];
+        this.front = -1;
+        this.rear = -1;
+        this.size = 0;
+    }
+    
+    eneque(data) {
+        if(this.isEmpty()) {
+            this.front++;
+        }
+        this.rear++;
+        this.queue[this.rear] = data;
+        this.size++;
+    }
+    deque(){
+        if(this.isEmpty())
+            return -1;
+        const popped = this.queue[this.front++];
+        this.size--;
+        if(this.front > this.rear) {
+            this.front = -1;
+            this.rear = -1;
+        }
+        
+        return popped;
+    }
+    
+    isEmpty() {
+        return this.size === 0;
+    }
+    
+    frontElm() {
+        if(!this.isEmpty()) {
+            return this.queue[this.front];
+        }
+        return -1;
+    }
+}
+class Solution {
+  	verticalSum(root){
+  	    const hashMap = new Map();
+  		const myQueue = new Queue();
+  		myQueue.eneque(new Pair(0, root));
+  		
+  		while(!myQueue.isEmpty()) {
+  		    const curr = myQueue.deque();
+  		    let sum = hashMap.get(curr.hd) || 0;
+  		    sum += (curr.root.data);
+  		    hashMap.set(curr.hd, sum)
+  		    
+  		    if(curr.root.left) {
+  		        myQueue.eneque(new Pair(curr.hd - 1, curr.root.left));
+  		    }
+  		    if(curr.root.right) {
+  		        myQueue.eneque(new Pair(curr.hd + 1, curr.root.right));
+  		    }
+  		}
+  		const newMap = Array.from(hashMap).sort((a,b) => a[0] - b[0]);
+  		const res = [];
+  		for(let i = 0; i < newMap.length; i++) {
+  		    res.push(newMap[i][1]);
+  		}
+  		return res;
+  	}
+}
