@@ -1,0 +1,157 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+var reverse = function(head) {
+  let current = head;
+  let previous = null;
+  while(current !== null) {
+    const next = current.next;
+    current.next = previous;
+    previous = current;
+    current = next;
+  }
+
+  return previous;
+}
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var doubleIt = function(head) {
+    const reversedList = reverse(head);
+    let current  = reversedList;
+    let previous = null;
+    let carry = 0;
+
+    while(current) {
+      const value = (current.val * 2 + carry);
+      current.val = value % 10;
+      carry = value > 9 ? 1 : 0;
+      previous = current;
+      current = current.next;
+    }
+
+    if(carry) 
+      previous.next = new ListNode(carry);
+    
+    return reverse(reversedList);
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var doubleIt = function(head) {
+    const stack = [];
+    let current = head;
+
+    while(current) {
+      stack.push(current.val)
+      current = current.next;
+    }
+
+    let new_head = null;
+    let carry = 0;
+
+    while(stack.length || carry) {
+      new_head = new ListNode(0, new_head);
+      if(stack.length)
+        carry += stack.pop() * 2;
+      
+      new_head.val = (carry % 10);
+      carry = carry > 9 ? 1 : 0;
+    }
+
+    return new_head;
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var doubleIt = function(head) {
+    let current = head;
+    let previous = null;
+
+    while (current) {
+      const doubled = current.val * 2;
+
+      if (doubled <= 9) 
+        current.val = doubled;
+      else if (previous) {
+        current.val = doubled % 10;
+        previous.val += 1;
+      }else {
+        head = new ListNode(1, current);
+        current.val = doubled % 10;
+      }
+
+      previous = current;
+      current = current.next;
+    }
+
+    return head;
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {Int}
+ */
+var makeDouble = function (head) {
+  /* Base Case */
+  if (!head)
+    return 0;
+  /* Double the value of current node and add the result of next nodes */
+  doubledVal = head.val * 2 + makeDouble(head.next);
+  /* Update current node's value */
+  head.val = doubledVal % 10;
+  /* Return the carry */
+  return Math.floor(doubledVal/10) ;
+}      
+
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var doubleIt = function(head) {
+    const carry = makeDouble(head);
+    /* If carry insert new node at the begining with carry as value*/
+    if (carry) head = new ListNode(carry,head);
+    /* Return the head of the updated linked list */
+    return head;
+};
+    
+
+*********************************************************************************************************************************************
+
