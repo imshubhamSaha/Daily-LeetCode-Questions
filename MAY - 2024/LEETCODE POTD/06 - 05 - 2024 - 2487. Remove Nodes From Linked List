@@ -1,0 +1,104 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var removeNodes = function(head) {
+    if(!head.next)
+      return head;
+    const stack = [];
+
+    let curr = head;
+    while(curr.next) {
+      stack.push(curr);
+      curr = curr.next;
+    }
+    
+    let greaterdata = curr;
+
+    while(stack.length) {
+      const data = stack.pop();
+      if(data.val >= greaterdata.val)  {
+        data.next = greaterdata;
+        greaterdata = data;
+      }
+    }
+
+    return greaterdata;
+};
+
+*********************************************************************************************************************************************
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var removeNodes = function(head) {
+    if(!head) 
+      return null;
+
+    let node = head;
+    let nextGreater = removeNodes(node.next);
+    node.next = nextGreater;
+    if(!nextGreater || node.val >= nextGreater.val) 
+      return node;
+    
+    return nextGreater;
+};
+*********************************************************************************************************************************************
+/**
+ * @param {ListNode} root
+ * @return {ListNode}
+ */
+
+var reverseList = function(root) {
+  let curr = root;
+  let prev = null;
+
+  while(curr) {
+    let next = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = next;
+  }
+
+  return prev;
+}
+
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var removeNodes = function(head) {
+    if(!head.next) 
+      return head;
+    let reverse = reverseList(head);
+    
+    let curr = reverse;
+    let prev = reverse;
+    curr = curr.next
+    while(curr) {
+      let next = curr.next;
+      if(curr.val < prev.val) {
+        prev.next = curr.next;
+      }else {
+        prev = curr;
+      }
+      curr = next; 
+    }
+
+  return reverseList(reverse)
+};
+*********************************************************************************************************************************************
