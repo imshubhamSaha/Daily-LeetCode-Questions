@@ -1,0 +1,53 @@
+/**
+ * @param {number[]} score
+ * @return {string[]}
+ */
+var findRelativeRanks = function(score) {
+  const len = score.length;
+  const sortedPairs = score.map((elm, idx) => [idx, elm])
+  sortedPairs.sort((a,b) => b[1] - a[1]);
+
+  const result = new Array(len).fill("");
+
+  for(let i = 0; i < len; i++) {
+    if(i === 0) 
+      result[sortedPairs[i][0]] += "Gold Medal";
+    else if (i === 1)
+      result[sortedPairs[i][0]] += "Silver Medal";
+    else if (i===2)
+      result[sortedPairs[i][0]] += "Bronze Medal";
+    else result[sortedPairs[i][0]] += i+1;
+  }
+
+  return result;
+};
+
+*********************************************************************************************************************************************
+
+/**
+ * @param {number[]} score
+ * @return {string[]}
+ */
+var findRelativeRanks = function(score) {
+    let max_score = Math.max(...score);
+    const maxArray = new Array(max_score+1).fill(0);
+    const n = score.length;
+    score.forEach((elm,idx) => maxArray[elm] = idx + 1);
+    const result = new Array(n).fill("");
+    let secure = 1;
+    while(max_score >= 0) {
+      if(maxArray[max_score] === 0) {
+        max_score--;
+        continue;
+      }
+      let idx = maxArray[max_score] - 1;
+
+      if(secure === 1) result[idx] += "Gold Medal";
+      else if (secure === 2) result[idx] += "Silver Medal";
+      else if (secure === 3) result[idx] += "Bronze Medal";
+      else result[idx] += secure;
+      max_score--;
+      secure++;
+    }
+    return result;
+};
