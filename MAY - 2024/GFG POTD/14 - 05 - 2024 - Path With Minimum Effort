@@ -1,0 +1,126 @@
+class MinPriorityQueue {
+    constructor() {
+        this.heap = [];
+    }
+    
+    parentIndex(index) {
+    /* Helper method to get the parent index */
+        return Math.floor((index - 1) / 2);
+    }
+    
+    leftChildIndex(index) {
+    /* Helper method to get the left child index */
+        return 2 * index + 1;
+    }
+
+    rightChildIndex(index) {
+    /* Helper method to get the right child index */
+        return 2 * index + 2;
+    }
+
+    swap(index1, index2) {
+    /* Helper method to swap two elements in the heap */
+        [this.heap[index1], this.heap[index2]] = [this.heap[index2], this.heap[index1]];
+    }
+
+    enqueue(element) {
+    /* Method to enqueue an element */
+        this.heap.push(element);
+        this.heapifyUp();
+    }
+
+    heapifyUp() {
+    /* Method to heapify up from the last element  */    
+        let index = this.heap.length - 1;
+        while (index > 0) {
+            let parent = this.parentIndex(index);
+            if (this.heap[index][2] >= this.heap[parent][2]) {
+                break;
+            }
+            this.swap(index, parent);
+            index = parent;
+        }
+    }
+
+    dequeue() {
+    /* Method to dequeue the minimum element */
+        if (this.isEmpty()) {
+            throw new Error("Priority queue is empty");
+        }
+        if (this.heap.length === 1) {
+            return this.heap.pop();
+        }
+        const min = this.heap[0];
+        this.heap[0] = this.heap.pop();
+        this.heapifyDown(0);
+        return min;
+    }
+
+    heapifyDown(index) {
+    /* Method to heapify down from the root element */    
+        let smallest = index;
+        const left = this.leftChildIndex(index);
+        const right = this.rightChildIndex(index);
+
+        if (left < this.heap.length && this.heap[left][2] < this.heap[smallest][2]) {
+            smallest = left;
+        }
+
+        if (right < this.heap.length && this.heap[right][2] < this.heap[smallest][2]) {
+            smallest = right;
+        }
+
+        if (smallest !== index) {
+            this.swap(index, smallest);
+            this.heapifyDown(smallest);
+        }
+    }
+
+    isEmpty() {
+    /* Method to check if the priority queue is empty */
+        return this.heap.length === 0;
+    }
+}
+
+class Solution {
+    /**
+    * @param number rows
+    * @param number columns
+    * @param number[][] heights
+
+    * @returns number
+    */
+    MinimumEffort(rows, columns, heights) {
+        const my_priority_queue = new MinPriorityQueue();
+
+        const directions = [[0, 1],[0, -1],[1, 0],[-1, 0]];
+
+        const visited = Array.from({ length: rows }, () => Array(columns).fill(false));
+
+        my_priority_queue.enqueue([0, 0, 0]);
+
+        while (!my_priority_queue.isEmpty()) {
+            let cell = my_priority_queue.dequeue();
+            let [x, y, maxEffort] = cell;
+
+            if (x === rows - 1 && y === columns - 1) {
+                return maxEffort;
+            }
+
+            if (visited[x][y]) continue;
+            visited[x][y] = true;
+
+            for (const [dx, dy] of directions) {
+                let nextX = x + dx;
+                let nextY = y + dy;
+
+                if (nextX >= 0 && nextX < rows && nextY >= 0 && nextY < columns && !visited[nextX][nextY]) {
+                    let nextMaxEffort = Math.max(maxEffort, Math.abs(heights[x][y] - heights[nextX][nextY]));
+                    my_priority_queue.enqueue([nextX, nextY, nextMaxEffort]);
+                }
+            }
+        }
+
+        return -1;
+    }
+}
