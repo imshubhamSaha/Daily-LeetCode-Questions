@@ -1,0 +1,41 @@
+class Solution {
+/**
+* @param number n
+* @param number k
+* @param number[] arr
+
+* @returns number
+*/
+    findClosest(n, k, arr) {
+        let closest;
+        let diff;
+        let low = 0;
+        let high= n -1;
+        
+        while(low <= high) {
+            let mid = low + Math.floor((high-low)/2);
+            let d = arr[mid] - k;
+            if(!diff) {
+                diff = Math.abs(d);
+                closest = arr[mid];
+            }
+            else if(diff === Math.abs(d)) {
+                closest = Math.max(arr[mid], closest);
+            }else if(d === 0) 
+                return arr[mid];
+            else if(diff > Math.abs(d)) {
+                diff = Math.abs(d);
+                closest = arr[mid];
+            }  
+            
+            if(d > 0) {
+                high = mid - 1;
+            } else {
+                low  = mid + 1; 
+            }
+            
+        }
+        
+        return closest;
+    }
+}
