@@ -1,0 +1,19 @@
+/**
+ * @param {number[][]} customers
+ * @return {number}
+ */
+var averageWaitingTime = function(customers) {
+    const len = customers.length;
+    let chef_start = customers[0][0];
+    let chef_finished = chef_start + customers[0][1];
+    let waiting_time = chef_finished - chef_start;
+
+    for ( let i = 1; i < len; i++ )  {
+        const [customer_arive, time_to_cook ]= customers[i];
+        const cooking_start = Math.max(customer_arive,chef_finished);
+        waiting_time += (cooking_start + time_to_cook) - customer_arive;
+        chef_finished = cooking_start + time_to_cook;
+    }
+    
+    return waiting_time / len;
+};
