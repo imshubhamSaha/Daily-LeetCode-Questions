@@ -1,0 +1,49 @@
+
+/**
+ * @param {string[]} logs
+ * @return {number}
+ */
+var minOperations = function(logs) {
+    const stack = [];
+
+    for (const command of logs) {
+        if (command === "../") {
+            if (stack.length) stack.pop();
+        }    
+        else if (command !== "./")
+            stack.push(command);
+    }
+
+    return stack.length;
+};
+
+TIME COMPLEXITY -->> O(N)
+SPACE COMPLEXITY -->> O(N)
+
+*******************************************************************************************************************************************
+
+/**
+ * @param {string[]} logs
+ * @return {number}
+ */
+var minOperations = function(logs) {
+    const n = logs.length;
+    let operation_to_perform = 0;
+
+    for (let i = 0; i < n; i++) {
+        const command = logs[i];
+        if (command === "../") {
+            if (operation_to_perform)
+                    operation_to_perform--;
+        }            
+        else if (command !== "./") 
+            operation_to_perform++;
+    }
+
+    return operation_to_perform;
+};
+
+TIME COMPLEXITY -->> O(N)
+SPACE COMPLEXITY -->> O(1)
+
+*******************************************************************************************************************************************
