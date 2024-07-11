@@ -1,0 +1,64 @@
+class Solution {
+    dfs(grid, i, j, n,islandNo) {
+        if (i < 0 || j < 0 || i >= n || j >= n || grid[i][j] == 0 || grid[i][j] == islandNo) {
+            return 0;
+        }
+        grid[i][j] = islandNo;
+        let a = this.dfs(grid, i - 1, j, n, islandNo);
+        let b = this.dfs(grid, i, j - 1, n, islandNo);
+        let c = this.dfs(grid, i + 1, j, n, islandNo);
+        let d = this.dfs(grid, i, j + 1, n, islandNo);
+        return a + b + c + d + 1;
+    }
+    /**
+    * @param number n
+    * @param number[][] grid
+
+    * @returns number
+    */
+    MaxConnection(n, grid) {
+
+        const map = new Map();
+        let islandNo = 2;  
+        let ans = 0;
+        
+        
+        for (let i = 0; i < n; i++) {
+            for (let j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    let size = this.dfs(grid, i, j, n, islandNo);
+                    map.set(islandNo, size);
+                    ans = Math.max(ans, size);
+                    islandNo++;
+                }
+            }
+        }
+        
+        
+        for (let i = 0; i < n; i++) {
+            for (let j = 0; j < n; j++) {
+                if (grid[i][j] == 0) {
+                    const set = new Set();
+                    if (i > 0 && grid[i - 1][j] > 1) {
+                        set.add(grid[i - 1][j]);
+                    }
+                    if (i < n - 1 && grid[i + 1][j] > 1) {
+                        set.add(grid[i + 1][j]);
+                    }
+                    if (j > 0 && grid[i][j - 1] > 1) {
+                        set.add(grid[i][j - 1]);
+                    }
+                    if (j < n - 1 && grid[i][j + 1] > 1) {
+                        set.add(grid[i][j + 1]);
+                    }
+                    let maxSize = 1; 
+                    for (const s of set) {
+                        maxSize += map.get(s);
+                    }
+                    ans = Math.max(maxSize, ans);
+                }
+            }
+        }
+        return ans;
+    }
+}
