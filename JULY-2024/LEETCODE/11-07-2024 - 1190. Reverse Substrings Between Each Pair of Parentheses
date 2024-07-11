@@ -1,0 +1,57 @@
+var reverseParentheses = function(s) {
+    const stack = [];
+    const queue = new Queue();
+    const n = s.length;
+    for (const char of s) {
+        if (char === ")") {
+            while (stack.length && stack[stack.length-1] !== "(") {
+                queue.push(stack.pop());
+            }
+            stack.pop();
+            while (queue.size()) {
+                stack.push(queue.pop());
+            }
+        }else {
+            stack.push(char);
+        }
+    }
+
+    return stack.join("");
+};
+
+TIME COMPLEXITY -->> O(N*N);
+SPACE COMPLEXITY --> O(N)
+
+****************************************************************************************************************************************
+
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var reverseParentheses = function(s) {
+    const result = [];
+    const open_idx = [];
+    const n = s.length;
+    for (const char of s) {
+        if (char === "(") 
+            open_idx.push(result.length)
+        else if (char === ")"){
+            const idx = open_idx.pop();
+            const sub_string = result.slice(idx).reverse();
+            result.splice(idx, (result.length - idx), ...sub_string);
+        }else 
+            result.push(char);
+    }
+
+    return result.join("");
+};
+
+TIME COMPLEXITY -->> O(N*N);
+SPACE COMPLEXITY --> O(N)
+
+****************************************************************************************************************************************
+
+
+
+TIME COMPLEXITY -->> O(N*N);
+SPACE COMPLEXITY --> O(N)
