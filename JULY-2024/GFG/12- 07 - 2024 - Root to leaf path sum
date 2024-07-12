@@ -1,0 +1,13 @@
+class Solution {
+    hasPathSum(root, target) {
+        if(!root) 
+            return false;
+        
+        if (!root.right && !root.left) 
+            return root.key === target;
+        
+        target -= root.key;
+        
+        return this.hasPathSum(root.left, target) || this.hasPathSum(root.right,target);
+    }
+}
