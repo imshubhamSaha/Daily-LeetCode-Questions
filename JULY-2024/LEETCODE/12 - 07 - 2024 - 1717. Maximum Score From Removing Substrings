@@ -1,0 +1,107 @@
+/**
+ * @param {string} s
+ * @param {number} x
+ * @param {number} y
+ * @return {number}
+ */
+var maximumGain = function(s, x, y) {
+    const max_score = Math.max(x,y);
+    const min_score = Math.min(x,y);
+    const stack = [];
+    let max_string, min_string;
+    if (x > y) {
+        max_string = "ab";
+        min_string = "ba";
+    }else {
+        max_string = "ba";
+        min_string = "ab";
+    }
+    let maximum_points = 0;
+    
+    for(const ch of s) {
+        if(ch === max_string.at(-1) && stack.length > 0 && stack[stack.length-1] === max_string.at(-2)) {
+            maximum_points += max_score;
+            stack.pop(); 
+        } 
+        else stack.push(ch); 
+    }
+
+    const min_stack = []
+
+    while(stack.length) {
+        let popped = stack.pop();
+        if (popped === min_string[0] && min_stack.length > 0 && min_stack[min_stack.length-1] === min_string[1]) {
+            maximum_points = min_score + maximum_points;
+            min_stack.pop();
+        }
+        else 
+            min_stack.push(popped);
+    }
+    
+    return maximum_points;
+};
+
+TIME COMPLEXITY -->> O(N);
+SPACE COMPLEXITY -->> O(N) + O(N);
+
+****************************************************************************************************************************************
+
+/**
+ * @param {string} str
+ * @param {string} pair
+ * @return {list[]} 
+ */
+var validatePairs = function(str, pair) {
+    str = str.split("");
+    const n = str.length;
+    let idx = 0;
+    let pair_count = 0;
+    for (let i = 0; i < n; i++) {
+        str[idx] = str[i];
+        idx++;
+
+        if (idx >= 2 && str[idx-1] === pair[1] && str[idx-2] === pair[0]) {
+            pair_count++;
+            idx -= 2;
+        }
+    }
+
+    str = str.slice(0,idx).join("");
+    return [str,pair_count];
+}
+
+/**
+ * @param {string} s
+ * @param {number} x
+ * @param {number} y
+ * @return {number}
+ */
+var maximumGain = function(s, x, y) {
+    const max_score = Math.max(x,y);
+    const min_score = Math.min(x,y);
+    const stack = [];
+    let max_string, min_string;
+    if (x > y) {
+        max_string = "ab";
+        min_string = "ba";
+    }else {
+        max_string = "ba";
+        min_string = "ab";
+    }
+    let maximum_points = 0;
+    
+    let res = validatePairs(s,max_string);
+    s = res[0];
+
+    maximum_points += (max_score * res[1]);
+
+    res = validatePairs(s,min_string);
+    maximum_points += (min_score * res[1]);
+    
+    return maximum_points;
+};
+
+TIME COMPLEXITY -->> O(N);
+SPACE COMPLEXITY -->> O(N) --> Technically but if we not consider js behaviour then O(1);
+
+****************************************************************************************************************************************
