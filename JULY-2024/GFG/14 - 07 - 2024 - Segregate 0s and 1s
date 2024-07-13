@@ -1,0 +1,57 @@
+class Solution {
+
+    segregate0and1(arr) {
+        arr.sort((a,b) => a-b);
+    }
+}
+
+/**
+ *  TIME COMPLEXITY -->> {
+        O(NLOGN) --> SORTING THE ARRAY 
+
+        OVERALL -->> O(NLOGN)
+    }
+
+    SPACE COMPLEXITY -->> {
+        OVERALL --> O(1);
+    }
+ */
+
+***************************************************************************************************************************************
+
+lass Solution {
+
+    segregate0and1(arr) {
+        const n = arr.length;
+        let zero = 0;
+        let one = n - 1;
+        
+        while (zero < one) {
+            if (arr[one] === 1) 
+                one--;
+            else {
+                while ((zero < one) && (arr[zero] !== 1))
+                    zero++;
+                
+                let tmp = arr[one];
+                arr[one] = arr[zero];
+                arr[zero] = tmp;
+            }    
+        }
+        
+    }
+}
+
+/**
+ *  TIME COMPLEXITY -->> {
+        O(N) --> TRAVERSING THE ARR
+
+        OVERALL -->> O(NLOGN)
+    }
+
+    SPACE COMPLEXITY -->> {
+        OVERALL --> O(1);
+    }
+ */
+
+***************************************************************************************************************************************
