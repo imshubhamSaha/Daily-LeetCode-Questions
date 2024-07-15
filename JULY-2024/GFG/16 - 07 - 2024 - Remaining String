@@ -1,0 +1,16 @@
+class Solution {
+    printString(s, ch, count) {
+        const n = s.length;
+        let times = 0;
+        
+        for (let i = 0; i < n; i++) {
+            let char = s[i]
+            if (char === ch) 
+                times++;
+            if(times === count) 
+                return s.slice(i+1);
+        }
+        
+        return "";
+    }
+}
