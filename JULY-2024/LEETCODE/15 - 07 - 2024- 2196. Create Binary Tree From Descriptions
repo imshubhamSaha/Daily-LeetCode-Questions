@@ -1,0 +1,50 @@
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number} node_val
+ * @param {hashMap {}} root_map
+ * @return {TreeNode}
+ */
+var constructTree = function(node_val, root_map) {
+    const new_node = new TreeNode(node_val);
+
+    if (root_map.has(node_val)) {
+        const [left, right] = root_map.get(node_val);
+
+        if (left) new_node.left = constructTree(left, root_map);
+        if (right) new_node.right = constructTree(right,root_map);        
+    } 
+    return new_node;
+}
+
+/**
+ * @param {number[][]} descriptions
+ * @return {TreeNode}
+ */
+var createBinaryTree = function(descriptions) {
+    const root_map = new Map();
+    const children = new Set();
+   
+    for (const [root, child,side] of descriptions) {
+        if (!root_map.has(root)) root_map.set(root, [null,null]);
+        children.add(child);
+        root_map.get(root)[`${side === 1 ? 0 : 1}`] = child
+    }
+
+    let head_node = null;
+    
+    for (const parent of root_map.keys()) {
+        if (!children.has(parent)) {
+            head_node = parent;
+            break;
+        }
+    }
+
+    return constructTree(head_node, root_map);
+};
