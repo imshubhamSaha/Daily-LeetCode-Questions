@@ -1,0 +1,49 @@
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+var findPath = function (node, target, pathString) {
+    if (!node) 
+        return false;
+    if (node.val === target) 
+        return true;
+        
+    pathString.push('L');
+    if (findPath(node.left, target, pathString)) 
+        return true;
+    pathString.pop();
+        
+    pathString.push('R');
+    if (findPath(node.right, target, pathString))
+        return true;
+    pathString.pop();
+    return false;
+};
+     
+/**
+ * @param {TreeNode} root
+ * @param {number} startValue
+ * @param {number} destValue
+ * @return {string}
+ */
+var getDirections = function(root, startValue, destValue) {
+    const start_path = [];
+    const dest_path = [];
+    findPath(root, startValue, start_path);
+    findPath(root, destValue, dest_path);
+    const n = start_path.length;
+    const m = dest_path.length;
+    let idx = 0;
+    while (idx < n && idx < m && start_path[idx] === dest_path[idx]) 
+        idx++;
+    
+    
+    let stepsUp = 'U'.repeat(n - idx);
+    let stepsDown = dest_path.slice(idx).join('');
+    
+    return stepsUp + stepsDown;
+};
