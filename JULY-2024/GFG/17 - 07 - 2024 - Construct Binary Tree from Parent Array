@@ -1,0 +1,27 @@
+ class Solution {
+    // Function to construct binary tree from parent array.
+    createTree(parent) {
+        const n = parent.length;
+        
+        const hashed = new Map();
+        let root = null;
+        for (let i = 0; i< n; i++) {
+            hashed.set(i, new Node(i));
+            if (parent[i] === -1) 
+                root = hashed.get(i);
+        }
+        
+        for (let i = 0; i < n; i++) {
+            if (parent[i] !== -1) {
+                const parent_node = hashed.get(parent[i]);
+                const child_node = hashed.get(i);
+                
+                if (!parent_node.left)
+                    parent_node.left = child_node;
+                else parent_node.right = child_node;
+            }
+        }
+        
+        return root;
+    }
+}
