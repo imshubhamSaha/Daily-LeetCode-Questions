@@ -1,0 +1,16 @@
+class Solution {
+  	RemoveHalfNodes(root){
+  		if (!root) 
+  		    return null;
+  		
+  		root.left = this.RemoveHalfNodes(root.left);
+  		root.right = this.RemoveHalfNodes(root.right);
+  		
+  		if (!root.left && root.right)
+  		    return root.right;
+  		else if (root.left && !root.right) 
+  		    return root.left;
+  		else 
+  		    return root;
+  	}
+}
