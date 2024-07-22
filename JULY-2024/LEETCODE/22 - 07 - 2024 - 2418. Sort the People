@@ -1,0 +1,71 @@
+/**
+ * @param {string[]} names
+ * @param {number[]} heights
+ * @return {string[]}
+ */
+var sortPeople = function(names, heights) {
+    const n = names.length;
+    for (let i = 0; i < n-1; i++) {
+        let flag = false;
+        for(let j = 0; j < (n - i - 1); j++) {
+            if(heights[j] < heights[j + 1]) {
+                let [h, n] = [heights[j], names[j]];
+                heights[j] = heights[j+1];
+                names[j] = names[j+1];
+                names[j+1] = n;
+                heights[j+1] = h;
+                flag = true;
+            }
+        }
+
+        if (!flag) break;
+    }
+    console.log(heights)
+    return names;
+};
+TIME COMPLEXITY -->> O(N * N)
+SPACE COMPLEXITY -->> O(1)
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @param {string[]} names
+ * @param {number[]} heights
+ * @return {string[]}
+ */
+var sortPeople = function(names, heights) {
+    const name_map = {};
+    const n = names.length;
+    for(let i = 0; i < n; i++) {
+        name_map[heights[i]] = names[i];
+    }
+    heights.sort((a,b) => b - a);
+    for(let i = 0; i < n; i++) {
+        names[i] = name_map[heights[i]];
+    }
+    return names;
+};
+
+TIME COMPLEXITY -->> O(NLOGN)
+SPACE COMPLEXITY -->> O(N)
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @param {string[]} names
+ * @param {number[]} heights
+ * @return {string[]}
+ */
+var sortPeople = function(names, heights) {
+
+    const people = names.map((name, idx) => ({
+        name,
+        h : heights[idx]
+    }));
+    people.sort((a,b) => b.h - a.h);
+
+    return people.map(data => data.name);
+};
+
+TIME COMPLEXITY -->> O(NLOGN)
+SPACE COMPLEXITY -->> O(N)
