@@ -1,0 +1,84 @@
+class Solution {
+    compute_inorder(root,node_list) {
+        if (!root)
+            return;
+        this.compute_inorder(root.left,node_list);
+        node_list.push(root.data);
+        this.compute_inorder(root.right,node_list);
+    }
+    /**
+    * @param Node root1
+    * @param Node root2
+
+    * @returns number[]
+    */
+    merge(root1, root2) {
+        const merged_sorted_tree = [];
+        this.compute_inorder(root1,merged_sorted_tree);
+        this.compute_inorder(root2,merged_sorted_tree);
+        merged_sorted_tree.sort((a,b) => a-b);
+        return merged_sorted_tree;
+    }
+}
+
+TIME COMPLEXITY -->> O(M + N) + O(KLOGK) --> K = M+N
+SPACE COMPLEXITY -->> O(M+N)
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+class Solution {
+    compute_inorder(root,node_list) {
+        if (!root)
+            return;
+        this.compute_inorder(root.left,node_list);
+        node_list.push(root.data);
+        this.compute_inorder(root.right,node_list);
+    }
+    /**
+    * @param Node root1
+    * @param Node root2
+
+    * @returns number[]
+    */
+    merge(root1, root2) {
+        /* List for the nodes data*/
+        const merged_sorted_tree = [];
+        const root1_list = [];
+        const root2_list = [];
+        
+        /*pushing nodes data into list*/
+        this.compute_inorder(root1,root1_list);
+        this.compute_inorder(root2,root2_list);
+        
+        /*computing size of both lists*/
+        const m = root1_list.length;
+        const n = root2_list.length;
+        
+        let i = 0;
+        let j = 0;
+        
+        /*Pushing data into result list in a sorted way from both list*/
+        while (i < m && j < n) {
+            if (root1_list[i] < root2_list[j]) 
+                merged_sorted_tree.push(root1_list[i++]);
+            else 
+                merged_sorted_tree.push(root2_list[j++]);
+        }
+        
+        /*pushing data into result list from root1 data list*/
+        while (i < m)
+            merged_sorted_tree.push(root1_list[i++]);
+        
+        /*pushing data into result list from root2 data list*/
+        while (j < n)
+            merged_sorted_tree.push(root2_list[j++]);
+        
+        /*returning the sorted list*/
+        return merged_sorted_tree;
+    }
+}
+
+TIME COMPLEXITY -->> O(M + N) + O(M+N)
+SPACE COMPLEXITY -->> O(M+N)
+
+---------------------------------------------------------------------------------------------------------------------------------------
