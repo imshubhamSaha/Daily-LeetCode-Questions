@@ -1,0 +1,87 @@
+
+****************INSERTION SORT TECHNIQUE********************
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var frequencySort = function(nums) {
+    const freq = {};
+    const n = nums.length;
+    for(const num of nums) 
+        freq[num] = (freq[num] || 0) + 1;
+   
+    for (let i = 1; i < n; i++) {
+        let temp = nums[i];
+        let j = i - 1;
+
+        while (j >= 0 && ((freq[nums[j]] > freq[temp]) || (freq[nums[j]] === freq[temp] && nums[j] < temp))) {
+            nums[j+1] = nums[j];
+            j--;
+        }
+
+        nums[j+1] = temp;
+    }
+    return nums;
+};
+
+TIME COMPLEXITY -->> O(N * N);
+SPACE COMPLEXITY -->> O(N) [FREQUENCY MAP] + O(1) SORTING;
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+****************BUBBLE SORT TECHNIQUE********************
+var frequencySort = function(nums) {
+    const freq = new Map();
+    const n = nums.length;
+    for(const num of nums) 
+        freq.set(num,(freq.get(num) || 0) + 1);
+    
+    for(let i = 0; i < n - 1; i++) {
+        let flag = false;
+        for (let j = 0; j < (n - i- 1); j++) {
+            if(freq.get(nums[j]) > freq.get(nums[j+1]) || (freq.get(nums[j]) === freq.get(nums[j+1]) && nums[j] < nums[j+1]) ) {
+                [nums[j], nums[j+1]] = [nums[j+1], nums[j]];
+                flag = true
+            }
+        }
+
+        if (!flag) break;
+    }
+    
+    return nums;
+}
+
+
+
+TIME COMPLEXITY -->> O(N * N);
+SPACE COMPLEXITY -->> O(N) [FREQUENCY MAP] + O(1) SORTING;
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+var comp_by_freq = function(a,b,freq) {
+    if (freq.get(a) === freq.get(b)) {
+        return b - a;
+    }
+
+    return freq.get(a) - freq.get(b);
+}
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var frequencySort = function(nums) {
+    const freq = new Map();
+
+    for(const num of nums) 
+        freq.set(num,(freq.get(num) || 0) + 1);
+    
+    nums.sort((a,b) => comp_by_freq.call(this,a,b,freq))
+    return nums;
+};
+
+TIME COMPLEXITY -->> O(NLOGN);
+SPACE COMPLEXITY -->> O(N) [FREQUENCY MAP] + O(N) SORTING;
+
+-------------------------------------------------------------------------------------------------------------------------------------------
