@@ -1,0 +1,57 @@
+class Solution {
+    
+    inorder(root, node_list) {
+        if (!root)
+            return;
+        this.inorder(root.left, node_list);
+        node_list.push(root.data);
+        this.inorder(root.right,node_list);
+    }
+    
+    // Function to check whether a Binary Tree is BST or not.
+    isBST(root) {
+        const node_list = [];
+        this.inorder(root,node_list);
+        
+        const n = node_list.length;
+        
+        for (let i = 1; i < n; i++) {
+            if (node_list[i] <= node_list[i-1]) 
+                return false;
+        }
+        
+        return true;
+    }
+}
+
+TIME COMPLEXITY -->> O(N) + O(N) -- [O(N) TIME TO TRAVERSE THE TREE + O(N) TIME TO TRAVERSE THE NODE_LIST]
+SPACE COMPLEXITY -->> O(N) + O(HEIGHT OF THE TREE) -- [O(N) SPACE TO STORE NODE DATA + O(H) SPACE FOR THE RECURSION STACK]
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+class Solution {
+    
+    checkBst(root, minimum, maximum) {
+        if (!root)
+            return true;
+        
+        if (root.data <= minimum || root.data >= maximum)
+            return false;
+            
+        return this.checkBst(root.left, minimum,root.data) && this.checkBst(root.right,root.data,maximum);
+    }
+    
+    // Function to check whether a Binary Tree is BST or not.
+    isBST(root) {
+        const minimum = Number.MIN_SAFE_INTEGER;
+        const maximum = Number.MAX_SAFE_INTEGER;
+        return this.checkBst(root,minimum,maximum);
+    }
+}
+
+
+TIME COMPLEXITY -->> O(HEIGHT OF THE TREE) -- [O(HEIGHT OF THE TREE) TIME TO TRAVERSE THE TREE]
+SPACE COMPLEXITY -->> O(HEIGHT OF THE TREE) -- [O(H) SPACE FOR THE RECURSION STACK]
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
