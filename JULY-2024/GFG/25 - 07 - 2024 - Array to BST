@@ -1,0 +1,51 @@
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+class Solution {
+    construct_tree(nums,low,high) {
+        if (low > high) 
+            return null;
+        
+        const mid = low + Math.floor((high - low) / 2);
+        
+        const root = new Node(nums[mid]);
+        
+        root.left = this.construct_tree(nums, low, mid - 1);
+        root.right = this.construct_tree(nums, mid + 1, high);
+        
+        return root;
+    }
+    sortedArrayToBST(nums) {
+        const n = nums.length;
+        return this.construct_tree(nums,0,n-1);
+    }
+}
+
+Time Complexity
+  construct_tree Function:
+    1 . The function is called recursively for the left and right halves of the array.
+    2 . At each recursive call, the array is divided into two halves until the base condition low > high is met.
+    3. In each call, the middle element is selected, and new recursive calls are made for the left and right subarrays.
+    4. The total number of recursive calls is 2**h − 1, where h is the height of the tree. Since the height of the tree in the worst case is O(logn) for a balanced BST, the number of calls is proportional to the number of nodes, which is 
+       O(n).
+    5. Each recursive call takes constant time O(1) to calculate the middle index and create a new node.
+      ----Thus, the overall time complexity is: O(n)
+
+Space Complexity
+  Recursive Stack Space:
+
+    1 . The depth of the recursion tree is O(logn) because the array is divided in half at each step.
+    2. Thus, the space required for the recursive stack is  O(logn).
+  Space for the BST:
+
+    1 . A new node is created for each element in the array, leading to O(n) space for the nodes.
+    2 . The overall space complexity is dominated by the space required for the recursive stack since the nodes themselves are part of the output and do not count towards extra space.
+
+      ----Thus, the overall space complexity is:O(logn)
+
+Summary
+  Time Complexity: O(n)
+  Space Complexity: O(logn)
+  This analysis shows that the algorithm efficiently constructs a BST from a sorted array with linear time complexity and logarithmic space complexity for the recursion stack.
+
