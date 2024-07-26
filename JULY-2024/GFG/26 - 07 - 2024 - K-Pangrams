@@ -1,0 +1,30 @@
+class Solution {
+    kPangram(str, k) {
+        const n = str.length;
+        if (n < 26) return false;
+            
+        const char_arr = new Array(26).fill(false);
+        
+        let total_char = 0;
+        let distinct_char = 0;
+        
+        for (const char of str) {
+            if (char === " ")  continue;
+            const char_code = char.charCodeAt(0) - 97;
+            if (!char_arr[char_code]) {
+                char_arr[char_code] = true;
+                distinct_char++;
+            }
+            total_char++;
+        }
+
+        if (distinct_char === 26) return true;
+    
+        if (total_char < 26) return false;
+        
+        return k >= (26 - distinct_char);
+    }
+}
+
+TIME COMPLEXITY -->> O(N)
+SPACE COMPLEXITY --> O(26) ~ O(1)
