@@ -1,0 +1,16 @@
+class Solution {
+    removeDups(str) {
+        const n = str.length;
+        let res = "";
+        const char = new Array(26).fill(false);
+        
+        for (const ch of str) {
+            if (!char[ch.charCodeAt(0) - 97]) {
+                res += ch;
+                char[ch.charCodeAt(0) - 97] = true;
+            }
+        }
+        
+        return res;
+    }
+}
