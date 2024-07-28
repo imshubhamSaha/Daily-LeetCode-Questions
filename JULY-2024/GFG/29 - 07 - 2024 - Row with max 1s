@@ -1,0 +1,122 @@
+BRUTE FORCE APPROACH
+
+class Solution {
+    rowWithMax1s(arr) {
+        const n = arr.length;
+        const m = arr[0].length;
+        
+        let max_idx = -1;
+        let ones_cnt = 0;
+        
+        for (let i = 0; i < n; i++) {
+            let one = 0;
+            for(let j = 0; j < m; j++) {
+                if (arr[i][j] === 1) 
+                    one++;
+            }
+            
+            if (one > ones_cnt) {
+                max_idx = i;
+                ones_cnt = one;
+            }
+        }
+        
+        return max_idx;
+    }
+}
+
+TIME COMPLEXITY -->> O(N * M)
+SPACE COMPLEXITY -->> O(1)
+
+________________________________________________________________________________________________________________________________________
+
+BETTER APPROACH
+
+/**
+ * @param {number[][]} arr
+ * @param {number} n
+ * @param {number} m
+ * @returns {number}
+ */
+class Solution {
+
+    rowWithMax1s(arr) {
+        const n = arr.length;
+        const m = arr[0].length;
+        
+        let max_idx = -1;
+        let ones = 0;
+        let first_occr = m-1;
+        
+        for (let i = 0; i < n; i++) {
+            if (arr[i][first_occr] !== 1) continue;
+            
+            let low = 0;
+            let high = first_occr;
+            
+            let idx = high;
+            
+            while (low <= high) {
+                let mid = low + Math.floor((high - low)/2);
+                
+                if (arr[i][mid] === 1) {
+                    idx = mid;
+                    high = mid - 1;
+                    first_occr = mid;
+                }else {
+                    low = mid + 1;
+                }
+            }
+            
+            if ((m - idx) > ones) {
+                ones = (m - idx);
+                max_idx = i;
+            }
+        }
+        
+        return max_idx;
+    }
+}
+
+TIME COMPLEXITY -->> O(NLOGM)
+SPACE COMPLEXITY -->> O(1)
+
+________________________________________________________________________________________________________________________________________
+
+OPTIMAL APPROACH
+
+class Solution {
+    rowWithMax1s(arr) {
+        const n = arr.length;
+        const m = arr[0].length;
+        
+        let max_idx = -1;
+        let ones_cnt = 0;
+        
+        let row = 0;
+        let col = m - 1;
+    
+        while (row < n && col >= 0) {
+            if (arr[row][col] && col === 0) 
+                return row;
+            
+            if (arr[row][col]) {
+                if ((m - col) > ones_cnt) {
+                    max_idx = row;
+                    ones_cnt = m - col;
+                }
+                col--;
+            }
+            else row++;
+        }
+        
+        return max_idx;
+    }
+}
+
+
+TIME COMPLEXITY -->> O(N + M)
+SPACE COMPLEXITY -->> O(1)
+
+________________________________________________________________________________________________________________________________________
+
