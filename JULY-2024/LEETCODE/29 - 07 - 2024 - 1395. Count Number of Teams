@@ -1,0 +1,57 @@
+/**
+ * @param {number[]} rating
+ * @return {number}
+ */
+var numTeams = function(rating) {   
+    const n = rating.length;
+    let group = 0;
+
+    for (let i = 0; i <= (n-3); i++) {
+        for (let j = i+1; j <= (n - 2); j++) {
+            for (let k = j + 1; k < n; k++) {
+                if ((rating[i] < rating[j] && rating[j] < rating[k]) || (rating[i] > rating[j] && rating[j] >  rating[k])) {  
+                    group++;
+                } 
+            }
+        }
+    }
+
+    return group;
+};
+
+TIME COMPLEXITY -->> O(N * N * N)
+SPACE COMPLEXITY -->> O(1)
+
+__________________________________________________________________________________________________________________________________________
+
+/**
+ * @param {number[]} rating
+ * @return {number}
+ */
+var numTeams = function(rating) {   
+    const n = rating.length;
+    let group = 0;
+
+    for (let mid = 1; mid < n-1; mid++) {
+        let dec_left = 0;
+        let inc_left = 0;
+        let dec_right = 0;
+        let inc_right = 0;
+
+        for (let l = 0; l < mid; l++) 
+            (rating[l] < rating[mid]) ? inc_left++ : dec_left++;   
+
+        for (let r = mid + 1; r < n; r++) {
+            (rating[mid] < rating[r]) ? inc_right++ : dec_right++;
+        }    
+
+        group += (dec_left * dec_right) + (inc_left * inc_right);
+        
+    }
+    return group;
+};
+
+TIME COMPLEXITY -->> O(N * N)
+SPACE COMPLEXITY -->> O(1)
+
+__________________________________________________________________________________________________________________________________________
