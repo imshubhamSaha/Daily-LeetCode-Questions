@@ -1,0 +1,51 @@
+
+class Solution {
+    solve(arr,i,j,n,move, paths, visited) {
+        // Base case
+        if (i === (n-1) && j === (n-1)) {
+            paths.push(move);
+            return;
+        }
+        
+        // downward
+        if ((i + 1) < n && !visited[i+1][j] && arr[i+1][j] === 1) {
+            visited[i][j] = 1;
+            this.solve(arr,i+1, j, n, move + "D", paths,visited);
+            visited[i][j] = 0;
+        }
+        // left
+        if ((j - 1) >= 0 && !visited[i][j-1] && arr[i][j-1] === 1) {
+            visited[i][j] = 1;
+            this.solve(arr,i, j-1, n, move + "L", paths,visited);
+            visited[i][j] = 0;
+        }
+        // right
+        if ((j +1) < n && !visited[i][j+1] && arr[i][j+1] === 1) {
+            visited[i][j] = 1;
+            this.solve(arr,i, j+1, n, move + "R", paths,visited);
+            visited[i][j] = 0;
+        }
+        // upward
+        if ((i - 1) >= 0 && !visited[i-1][j] && arr[i-1][j] === 1) {
+            visited[i][j] = 1;
+            this.solve(arr,i-1, j, n, move + "U", paths,visited);
+            visited[i][j] = 0;
+        }
+    }
+    /**
+    * @param number n
+    * @param number[][] arr
+
+    * @returns string[]
+    */
+    findPath(arr) {
+        const n = arr.length;
+        const visited = Array.from({length:n}, () => new Array(n).fill(0));
+        const paths = [];
+        
+        if (arr[0][0] === 1) 
+            this.solve(arr,0,0,n,"",paths,visited);
+            
+        return paths;
+    }
+}
