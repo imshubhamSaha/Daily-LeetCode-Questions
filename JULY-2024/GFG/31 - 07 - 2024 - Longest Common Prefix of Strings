@@ -1,0 +1,76 @@
+class Solution {
+    longestCommonPrefix(arr,n){ 
+        //code here
+        let ans = "";
+        
+        let i = 0
+        
+        while(i<arr[0].length){
+            let ch = arr[0][i]
+            let flag = true
+            for(let j=1; j<arr.length; j++){
+                if(i>arr[j].length || arr[j][i] !== ch){
+                    flag = false
+                    break
+                }
+            }
+            
+            if(flag) ans += ch
+            else break;
+            
+            i++
+        }
+        
+        return ans =="" ? -1 : ans
+    }
+}
+
+-----------------
+
+/**
+ * @param {string[]} arr
+ * @param {number} n
+ * @returns {string}
+ */
+
+class Solution {
+    longestCommonPrefix(arr) {
+        arr.sort();
+        const first = arr[0];
+        const last = arr[arr.length-1];
+        let idx = 0;
+        while (idx < first.length && idx < last.length && first[idx] === last[idx]) 
+            idx++;     
+    
+
+        return idx > 0 ? first.slice(0,idx) : -1;
+    }
+}
+
+------------
+
+/**
+ * @param {string[]} arr
+ * @param {number} n
+ * @returns {string}
+ */
+
+class Solution {
+    longestCommonPrefix(arr) {
+        const n = arr.length;
+        const len = arr[0].length;
+        let idx = 0;
+        
+        while (idx < len) {
+            let i = 1;
+            while (i < n) {
+                if (idx >= arr[i].length || arr[i][idx] !== arr[0][idx]) 
+                    return idx > 0 ? arr[0].slice(0, idx) : -1;
+                i++;    
+            } 
+            idx++;
+        }
+        
+        return idx >= len ? arr[0] : -1;
+    }
+}
