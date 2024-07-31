@@ -1,0 +1,35 @@
+var solve = function(books, shelf_width, idx, cache) {
+    if (idx === books.length) 
+        return 0;
+
+    if (cache.has(idx)) 
+        return cache.get(idx);
+
+    let max_height = 0;
+    let cur_width = shelf_width;
+    let result = Infinity;
+
+    for (let j = idx; j < books.length; j++) {
+        const [width,height] = books[j];
+
+        if (cur_width < width)
+            break;
+
+        cur_width -= width;
+        max_height = Math.max(max_height, height);
+        result = Math.min(result, solve(books, shelf_width, j+1, cache)+ max_height); 
+    }
+
+    cache.set(idx , result);
+    return result;
+}
+/**
+ * @param {number[][]} books
+ * @param {number} shelfWidth
+ * @return {number}
+ */
+var minHeightShelves = function(books, shelfWidth) {
+    const cache = new Map();
+
+    return solve(books,shelfWidth, 0, cache);
+};
