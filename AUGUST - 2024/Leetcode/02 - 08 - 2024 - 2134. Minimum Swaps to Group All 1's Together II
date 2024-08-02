@@ -1,0 +1,85 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minSwaps = function(nums) {
+    const temp = [...nums, ...nums];
+    const n = nums.length;
+    const ones = nums.filter(el => el === 1).length;
+    const zero =  n - ones;
+
+    if (!zero) return 0;
+
+    let swap = n;
+
+    for (let i = 0; i < n; i++) {
+        let sliced = temp.slice(i, i + ones).filter(el => el === 0).length;
+        swap = Math.min(swap,sliced);
+    }
+
+    return swap;
+};
+//TLE
+TIME COMPLEXITY --> O(N*N)
+SPACE COMPLEXITY -->> O(N)
+
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minSwaps = function(nums) {
+    const n = nums.length;
+    const ones = nums.reduce((sum,num) => sum + num, 0);
+
+    if (ones === 0 || ones === n) return 0;
+
+    const circular_array = [...nums, ...nums];
+    const prefix_sum = new Array(2*n + 1).fill(0);
+
+    for (let i = 0; i < 2 * n; i++) 
+        prefix_sum[i+1] = prefix_sum[i] + circular_array[i];
+    
+    let max_ones = 0;
+
+    for (let i = 0; i <=n; i++) {
+        let ones_window = prefix_sum[i + ones] - prefix_sum[i];
+        max_ones = Math.max(max_ones, ones_window);
+    }
+
+    return ones - max_ones;
+};
+
+TIME COMPLEXITY --> O(N)
+SPACE COMPLEXITY -->> O(N)
+
+
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minSwaps = function(nums) {
+    const n = nums.length;
+    const total_ones = nums.reduce((sum, num) => sum + num, 0);
+
+    // Base Case
+    if (total_ones === 0 || total_ones === n) 
+        return 0;
+
+    let ones_window = nums.slice(0, total_ones)
+                    .reduce((sum,num) => sum + num, 0);
+
+    let max_window = ones_window;
+
+    for (let i = 0; i < n; i++) {
+        ones_window -= nums[i];
+        ones_window += nums[(i + total_ones)%n];
+        max_window = Math.max(max_window, ones_window);
+    }
+
+    return total_ones - max_window;
+};
+
+TIME COMPLEXITY --> O(N)
+SPACE COMPLEXITY -->> O(1)
