@@ -1,0 +1,27 @@
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {number}
+ */
+
+class Solution {
+    solve(i, j, s1, s2,dp) {
+        if (i < 0) return j + 1;
+        
+        if (j < 0) return i + 1;
+        
+        if (dp[i][j] !== -1) return dp[i][j];
+        
+        if (s1[i] === s2[j]) return dp[i][j] = this.solve(i-1,j-1,s1,s2,dp);
+        
+        return dp[i][j] = 1 + Math.min(this.solve(i-1,j,s1,s2,dp) ,
+        Math.min(this.solve(i,j-1,s1,s2,dp), this.solve(i-1,j-1,s1,s2,dp)));
+    }
+    
+    editDistance(s, t) {
+        const n = s.length;
+        const m = t.length;
+        const dp = Array.from({length:n}, () => new Array(m).fill(-1));
+        return this.solve(n-1,m-1,s,t,dp);
+    }
+}
