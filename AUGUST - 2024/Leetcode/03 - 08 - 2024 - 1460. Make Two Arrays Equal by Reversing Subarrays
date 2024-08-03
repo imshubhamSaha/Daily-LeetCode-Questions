@@ -1,0 +1,124 @@
+/**
+ * @param {number[]} target
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+var canBeEqual = function(target, arr) {
+    const n = target.length;
+
+    for (let i = 0; i < n; i++) {
+        let not_found = true;
+        for (let j = 0; j < n; j++) {
+            if (arr[i] === target[j])  {
+                target[j] = -1;
+                not_found = false;
+                break;
+            }
+        } 
+        if (not_found) return false;
+    }
+
+    return true;
+};
+
+TIME COMPLEXITY -->> O(N * N)
+SPACE COMPLEXITY -->> O(1)
+
+/**
+ * @param {number[]} target
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+var canBeEqual = function(target, arr) {
+    const n = target.length;
+    target.sort((a,b) => a - b);
+    arr.sort((a,b) => a - b);
+
+    for (let i = 0; i < n; i++) {
+        if (arr[i] !== target[i]) return false;
+    }
+
+    return true;
+};
+
+TIME COMPLEXITY -->> O(NLOGN)
+SPACE COMPLEXITY -->> O(1)
+
+
+/**
+ * @param {number[]} target
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+var canBeEqual = function(target, arr) {
+    const n = target.length;
+    const num_map = new Map();
+
+    target.forEach((num) => num_map.set(num, (num_map.get(num) || 0) + 1));
+
+    for (let i = 0; i < n; i++) {
+        if (!num_map.has(arr[i])) 
+            return false;
+
+        num_map.set(arr[i], num_map.get(arr[i])-1);
+
+        if (num_map.get(arr[i]) === 0) 
+            num_map.delete(arr[i]);
+    }
+    return num_map.size ? false : true;
+};
+
+TIME COMPLEXITY -->> O(N)
+SPACE COMPLEXITY -->> O(N)
+
+/**
+ * @param {number[]} target
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+var canBeEqual = function(target, arr) {
+    const n = target.length;
+    const count = new Array(10001).fill(0);
+
+    let distinct_num = 0;
+
+    for (let i = 0; i < n; i++) {
+        if (count[target[i]]++ === 0) distinct_num++;
+        if (count[arr[i]]-- === 1) distinct_num--;
+    }
+
+    return distinct_num === 0;
+};
+
+TIME COMPLEXITY -->> O(N)
+SPACE COMPLEXITY -->> O(1000) ~ O(1)
+
+
+/**
+ * @param {number[]} target
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+var canBeEqual = function(target, arr) {
+    const n = target.length;
+    let xor = 0;
+
+    for (let i = 0; i < n; i++) 
+        xor ^= target[i] ^ arr[i];
+    
+    if (xor !== 0) return false;
+
+    const num_map = target.reduce((map, num) => map.set(num, (map.get(num) || 0) + 1), new Map());
+
+    for (const num of arr)  {
+        if (!num_map.has(num)) return false;
+        num_map.set(num, num_map.get(num) - 1);
+
+        if (num_map.get(num) === 0) num_map.delete(num);
+    }
+
+    return num_map.size === 0;
+};
+
+TIME COMPLEXITY -->> O(N)
+SPACE COMPLEXITY -->> O(m)
