@@ -1,0 +1,83 @@
+/**
+ * @param {number[]} nums
+ * @param {number} n
+ * @param {number} left
+ * @param {number} right
+ * @return {number}
+ */
+var rangeSum = function(nums, n, left, right) {
+    const MOD = 1000000007;
+
+    const sub_arr = new Array (Math.floor((n * (n + 1))/2)).fill(0);
+    
+    let idx = 0;
+    for (let i = 0; i < n; i++) {
+        let sum = 0;
+        for (let j = i; j < n; j++) {
+            sum += (nums[j]);
+            sub_arr[idx++] = (sum);
+        }
+    }
+
+    let res = 0;
+    sub_arr.sort((a,b) => a-b);
+    
+    while ((left - 1) < right) {
+        res += (sub_arr[left - 1])%MOD;
+        left++;
+    }
+
+    return res % MOD;
+};
+
+TIME COMPLEXITY -->> O(N * N)
+SPACE COMPLEXITY -->> O(n * (n + 1))/2) ~ O(N *N)
+
+
+
+                                  _________________________________________________
+
+/**
+ * @param {number[]} nums
+ * @param {number} n
+ * @param {number} left
+ * @param {number} right
+ * @return {number}
+ */
+var rangeSum = function(nums, n, left, right) {
+    const MOD = 1000000007;
+    const max_sum = nums.reduce((sum, num) => sum + num, 0);
+
+    const count_sort = new Array(max_sum+1).fill(0);
+
+    for (let i = 0; i < n; i++) {
+        let sum = 0;
+        for (let j = i; j < n; j++) {
+            sum += nums[j];
+            count_sort[sum]++;
+        }
+    }
+
+    for (let i = 1; i <= max_sum; i++)  
+        count_sort[i] += count_sort[i-1];
+
+    let res = 0;
+    let idx = 1;
+
+    for (let i = 1; i <= max_sum; i++) {
+        while (idx <= count_sort[i]) {
+            if (idx >= left && idx <= right) 
+                res = (res + i) % MOD;
+            idx++;    
+        }
+    }
+
+    return res;
+};
+
+TIME COMPLEXITY -->> O(N * N)
+SPACE COMPLEXITY -->> O(SUM) -> S = SUMMING OF ALL ELEMENTS
+
+
+
+                                  _________________________________________________
