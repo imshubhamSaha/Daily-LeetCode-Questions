@@ -1,0 +1,22 @@
+class Solution {
+    // Function to find the maximum number of meetings that can
+    // be performed in a meeting room.
+    maxMeetings(n, start, end) {
+        const paired = start.map((s,idx) => ({"start": s,"end":end[idx]}));
+       
+        paired.sort((a,b) => a.end - b.end);
+       
+        let max_meeting = 1;
+        let end_time = paired[0].end;
+       
+        for (let i = 1; i < n; i++) {
+            if (paired[i].start > end_time) {
+                max_meeting++;
+                end_time = paired[i].end;
+            }
+        }
+        
+        return max_meeting;
+    }
+    
+}
