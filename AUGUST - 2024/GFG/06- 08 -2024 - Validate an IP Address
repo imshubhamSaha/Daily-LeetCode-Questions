@@ -1,0 +1,67 @@
+/**
+ * @param {string} s
+ * @returns {number}
+ */
+
+class Solution {
+    isValid(str) {
+        const n = str.length;
+        if (n > 15 ) 
+            return false;
+            
+        const seperator = str.split(".");
+        let i = 0;
+        
+        while (i < seperator.length) {
+            const num = +seperator[i];
+            if (seperator[i].length > 3 || !(num >= 0 && num <= 255))
+                return false;
+            i++;    
+        }
+        
+        return true;
+    }
+}
+
+TIME COMPLEXITY -->> O(N);
+SPACE COMPLEXITY -->> O(N);
+
+                                           ______________________________________________
+
+
+/**
+ * @param {string} s
+ * @returns {number}
+ */
+
+class Solution {
+    isValid(str) {
+        const n = str.length;
+        if (n > 15 ) 
+            return false;
+            
+        let seperator_cnt = 0;
+        let i = 0;
+        
+        while (i < n) {
+            let t = i;
+            let val = 0;
+            while (i < n && str[i] !== "." && str[i].charCodeAt(0) >= 48 && str[i].charCodeAt(0) <= 57) {
+                val = val * 10 + (str[i++] * 1);
+            }
+            
+            if ((i < n && str[i] !== "." ) || val > 255 || (i - t) > 3 ) 
+                return false;
+            
+            seperator_cnt++;
+            i++;
+        }
+        
+        return seperator_cnt <= 4;
+    }
+}
+
+TIME COMPLEXITY -->> O(N);
+SPACE COMPLEXITY -->> O(1);
+
+                                           ______________________________________________
