@@ -1,0 +1,214 @@
+class Pair {
+    constructor(character,priority) {
+        this.character = character;
+        this.priority = priority;
+    }
+}
+
+class MyPriorityQueue {
+    constructor() {
+        this.heap = [];
+    }
+
+    // Helper Methods
+    getLeftChildIndex(parentIndex) {
+        return 2 * parentIndex + 1;
+    }
+
+    getRightChildIndex(parentIndex) {
+        return 2 * parentIndex + 2;
+    }
+
+    getParentIndex(childIndex) {
+        return Math.floor((childIndex - 1) / 2);
+    }
+
+    hasLeftChild(index) {
+        return this.getLeftChildIndex(index) < this.heap.length;
+    }
+
+    hasRightChild(index) {
+        return this.getRightChildIndex(index) < this.heap.length;
+    }
+
+    hasParent(index) {
+        return this.getParentIndex(index) >= 0;
+    }
+
+    leftChild(index) {
+        return this.heap[this.getLeftChildIndex(index)];
+    }
+
+    rightChild(index) {
+        return this.heap[this.getRightChildIndex(index)];
+    }
+
+    parent(index) {
+        return this.heap[this.getParentIndex(index)];
+    }
+
+    swap(indexOne, indexTwo) {
+        const temp = this.heap[indexOne];
+        this.heap[indexOne] = this.heap[indexTwo];
+        this.heap[indexTwo] = temp;
+    }
+
+    peek() {
+        if (this.heap.length === 0) {
+            return null;
+        }
+        return this.heap[0].character;
+    }
+
+    remove() {
+        if (this.heap.length === 0) {
+            return null;
+        }
+        const item = this.heap[0];
+        this.heap[0] = this.heap[this.heap.length - 1];
+        this.heap.pop();
+        this.heapifyDown();
+        return item;
+    }
+
+    add(item) {
+        this.heap.push(item);
+        this.heapifyUp();
+    }
+
+    heapifyUp() {
+        let index = this.heap.length - 1;
+        while (this.hasParent(index) && this.parent(index).priority < this.heap[index].priority) {
+            this.swap(this.getParentIndex(index), index);
+            index = this.getParentIndex(index);
+        }
+    }
+
+    heapifyDown() {
+        let index = 0;
+        while (this.hasLeftChild(index)) {
+            let largerChildIndex = this.getLeftChildIndex(index);
+            if (this.hasRightChild(index) && this.rightChild(index).priority > this.leftChild(index).priority) {
+                largerChildIndex = this.getRightChildIndex(index);
+            }
+            if (this.heap[index].priority >= this.heap[largerChildIndex].priority) {
+                break;
+            }
+            this.swap(index, largerChildIndex);
+            index = largerChildIndex;
+        }
+    }
+
+    isEmpty() {
+        return this.heap.length === 0;
+    }
+}
+
+/**
+ * @param {string} word
+ * @return {number}
+ */
+var minimumPushes = function(word) {
+    const n = word.length;
+    if (n === 1) return 1;
+
+    const char = new Array(26).fill(0);
+
+    for (const ch of word) 
+        char[ch.charCodeAt(0) - 97]++;
+
+    const pq = new MyPriorityQueue();
+
+    for (let i = 0; i < 26; i++) {
+        if (char[i] > 0) {
+            const ch = String.fromCharCode(i + 97);
+            const data = new Pair(ch, char[i])
+            pq.add(data);
+        }
+    } 
+
+    let combination = 8;
+    let press = 1;
+    let res = 0;
+
+    while (!pq.isEmpty()) {
+        const char_code = (pq.peek()).charCodeAt(0) - 97;
+        res += char[char_code]* press;
+        combination--;
+        if (combination === 0) {
+            combination = 8;
+            press++;
+        }
+        pq.remove();
+    }
+
+    return res;
+};
+
+Time Complexity
+    1. Counting Character Frequencies:
+         The loop iterating through each character of word has a time complexity of O(n), where n is the length of the string word.
+
+    2. Building the Priority Queue:
+         The loop iterating through the char array has a constant time complexity of O(26), as there are only 26 lowercase English 
+         letters.For each character with a non-zero frequency, a new Pair object is created and added to the priority queue.
+
+         Adding an element to the priority queue (pq.add(data)) involves inserting it into the heap and maintaining the heap property 
+         using heapifyUp. In the worst case, heapifyUp has a time complexity of O(log m), where m is the number of distinct characters in 
+         word.
+
+         Therefore, the time complexity for building the priority queue is O(m log m).
+
+    3. Calculating Minimum Pushes:
+
+          The while (!pq.isEmpty()) loop iterates m times, where m is the number of distinct characters in word. For each iteration:
+                pq.peek() is O(1).
+                pq.remove() involves removing the top element from the heap and maintaining the heap property using heapifyDown, which has 
+                a time complexity of O(log m).
+                Therefore, the time complexity for this part is O(m log m).
+
+     Combining these parts, the overall time complexity of the function is O(n + m log m), where:
+        n is the length of the input string word.
+        m is the number of distinct characters in word.
+
+Space Complexity
+    1. Character Frequency Array:
+         The char array has a fixed size of 26, which is O(1).
+    2. Priority Queue:
+          The space complexity of the priority queue is O(m), where m is the number of distinct characters in word. This is because the 
+           heap stores Pair objects for each distinct character.
+
+Auxiliary Space:
+      The space used by variables and other data structures like the Pair objects is also O(m).
+      Thus, the overall space complexity of the function is O(m).
+
+                                      ----------------------------------------------------------
+
+
+GREEDY APPROACH
+
+/**
+ * @param {string} word
+ * @return {number}
+ */
+var minimumPushes = function(word) {
+    const char = new Array(26).fill(0);
+
+    for (const ch of word) char[ch.charCodeAt(0) - 97]++;
+
+    char.sort((a,b) => a - b);
+    
+    let key_press = 1;
+    let res = 0;
+    for (let i = 25; i>= 0; i--) {
+        if (char[i] === 0) break;
+
+        if ((25 - i) % 8 === 0 && i < 25) key_press++;
+
+        res += char[i] * key_press;
+    }
+    return res;
+};
+
+Time Complexity: O(n), as counting and sorting the frequencies are both efficient operations given the fixed alphabet size.
+Space Complexity: O(1), since we use a fixed-size array to store character frequencies.
