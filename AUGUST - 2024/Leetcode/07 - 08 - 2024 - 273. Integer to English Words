@@ -1,0 +1,29 @@
+var generateWords = function(num, ones, tens, hundreds) {
+    if (num < 10) 
+        return ones[num];
+    if (num < 20)
+        return tens[num-10];
+    if (num < 100)
+        return hundreds[Math.floor(num/10)] + (num % 10 !== 0 ? " " + ones[num%10] : "");
+    if (num < 1000) // 573 , 500
+        return ones[Math.floor(num/100)] +" " + "Hundred" +(num % 100 === 0 ? "" :" " + generateWords(num%100, ones, tens, hundreds) )
+    if (num < 1000000)   // 2334, 1002,2000,20000
+        return generateWords(Math.floor(num/1000),ones, tens, hundreds) + " " +"Thousand"  +(num % 1000 === 0 ? "" :" " +  generateWords(num%1000,ones, tens, hundreds))
+    if (num < 1000000000) // 222222, 2000000 ,99999999
+        return generateWords(Math.floor(num/1000000),ones, tens, hundreds)  + " " + "Million"  +(num % 1000000 === 0 ? "" : " " + generateWords(num%1000000,ones, tens, hundreds));
+    
+    return generateWords(Math.floor(num/1000000000),ones, tens, hundreds) + " " +"Billion" + (num % 1000000000 === 0 ? "" : " " + generateWords(num%1000000000,ones, tens, hundreds));
+}
+/**
+ * @param {number} num
+ * @return {string}
+ */
+var numberToWords = function(num) {
+    if (num === 0) return "Zero";
+
+    const ones_list = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
+    const tens_list = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+    const hundreds_list = ["","Ten",  "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy","Eighty", "Ninety"];
+
+    return generateWords(num, ones_list,tens_list,hundreds_list);
+};
