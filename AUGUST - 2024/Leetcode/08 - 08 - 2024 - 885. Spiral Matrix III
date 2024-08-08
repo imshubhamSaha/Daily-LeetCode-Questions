@@ -1,0 +1,27 @@
+/**
+ * @param {number} rows
+ * @param {number} cols
+ * @param {number} rStart
+ * @param {number} cStart
+ * @return {number[][]}
+ */
+var spiralMatrixIII = function(rows, cols, rStart, cStart) {
+    const matrix = [[rStart,cStart]];
+    const directions = [[0,1], [1,0], [0,-1], [-1, 0]];
+
+    let r = rStart, c = cStart;
+    let step = 0, dir_idx = 0;
+
+    while (matrix.length < (rows * cols)) {
+        if (dir_idx === 0 || dir_idx === 2) step++;
+
+        for (let i = 0; i < step; i++) {
+            r += directions[dir_idx][0];
+            c += directions[dir_idx][1];
+            if ((r >= 0) && (r < rows) && (c >= 0) && (c < cols)) 
+                matrix.push([r,c]);
+        }
+        dir_idx = (dir_idx + 1) % 4;
+    }
+    return matrix;
+};
