@@ -1,0 +1,26 @@
+/**
+ * @param {Node} root
+ * @return {boolean}
+ */
+class Solution {
+    checkSumTree(root) {
+        //Base Case
+        if (!root) return 0;
+        if (!root.left && !root.right) return root.key;
+        
+        //check left and right sums
+        const left_sum = this.checkSumTree(root.left);
+        const right_sum = this.checkSumTree(root.right);
+        
+        //check current node data is equal to left and right sum
+        if (root.key !== (left_sum + right_sum)) return false;
+        
+        //return total sum of the tree rooted upto current node
+        return root.key + left_sum + right_sum;
+    }
+    
+    // Should return true if tree is Sum Tree, else false
+    isSumTree(root) {
+        return this.checkSumTree(root) !== false;
+    }
+}
