@@ -1,0 +1,49 @@
+var isMagicSquare = function(grid,  row, col) {
+        const seen = new Array(10).fill(false);
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                let num = grid[row + i][col + j];
+                if (num < 1 || num > 9) return false;
+                if (seen[num]) return false;
+                seen[num] = true;
+            }
+        }
+        // Check if diagonal sums are the same
+        let d1 = grid[row][col] + grid[row + 1][col + 1] + grid[row + 2][col + 2];
+        let d2 = grid[row + 2][col] + grid[row + 1][col + 1] + grid[row][col + 2];
+
+        if (d1 != d2) return false;
+
+         // Check if all row sums are the same as the diagonal sums
+        let r1 = grid[row][col] + grid[row][col + 1] + grid[row][col + 2];
+        let r2 = grid[row + 1][col] + grid[row + 1][col + 1] + grid[row + 1][col + 2];
+        let r3 = grid[row + 2][col] + grid[row + 2][col + 1] + grid[row + 2][col + 2];
+
+        if (!(r1 === d1 && r2 == d1 && r3 == d1)) return false;
+        
+        // Check if all column sums are the same as the diagonal sums
+        let c1 = grid[row][col] + grid[row + 1][col] + grid[row + 2][col];
+        let c2 = grid[row][col + 1] + grid[row + 1][col + 1] + grid[row + 2][col + 1];
+        let c3 = grid[row][col + 2] + grid[row + 1][col + 2] + grid[row + 2][col + 2];
+
+        if (!(c1 === d1 && c2 === d1 && c3 === d1)) return false;
+        
+        return true;
+    }
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var numMagicSquaresInside = function(grid) {
+    const m = grid.length, n = grid[0].length;
+    if (n < 3 || m < 3) return 0;
+    
+    let distinct = 0;
+    for (let i = 0; i <= m - 3; i++) {
+        for (let j = 0; j <= n; j++) {
+            if (isMagicSquare(grid, i, j))
+                distinct++;
+        }
+    }
+    return distinct;
+};
