@@ -1,0 +1,49 @@
+class Solution {
+    // Function to rotate a linked list.
+    rotate(head, k) {
+        let curr = head; 
+        let tail = head;
+        
+        while (k > 1) {
+            curr = curr.next;
+            k--;
+        }
+        
+        let cur = curr.next;
+        head = cur;
+        curr.next = null;
+        
+        while (cur && cur.next) {
+            cur = cur.next;
+        }
+        
+        if (cur) {
+            cur.next = tail;
+            return head;
+        }
+        return tail;    
+    }
+}
+
+                                 __________________________________________________________________
+
+class Solution {
+    // Function to rotate a linked list.
+    rotate(head, k) {
+        let curr = head; 
+        let prev = null;
+        let tail = null;
+        
+        while (curr) {
+            if (k === 1) tail = curr;
+            k--;
+            prev = curr;
+            curr = curr.next;
+        }
+        
+        prev.next = head;
+        head = tail.next;
+        tail.next = null;
+        return head;
+    }
+}
