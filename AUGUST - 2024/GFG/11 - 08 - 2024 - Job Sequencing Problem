@@ -1,0 +1,41 @@
+class Solution 
+{
+    //Function to find the maximum profit and the number of jobs done.
+    JobScheduling(arr, n)
+    {
+        arr.sort((a,b) => b.profit - a.profit);
+        
+        const max_deadline = arr.reduce((deadline,curr) => {
+            if (deadline < curr.dead) deadline = curr.dead;
+                
+            return deadline;
+        }, 0);
+        
+        const jobs_done = new Array(max_deadline).fill(false);
+        
+        let jobs_completed = 0;
+        let total_profit = 0;
+        
+        for (let i = 0; i < n; i++) {
+            const {dead, profit} = arr[i];
+            if (!(jobs_done[dead-1])) {
+                jobs_completed++;
+                total_profit += profit;
+                jobs_done[dead-1] = true;
+            }else {
+                let idx = dead - 2;
+                while (idx >= 0 && jobs_done[idx]) 
+                    idx--;
+    
+                if (idx >= 0) {
+                    jobs_done[idx] = true;
+                    jobs_completed++;
+                    total_profit += profit;
+                }   
+            }
+            if (jobs_completed === max_deadline) break;
+        }
+        
+        return [jobs_completed, total_profit];
+    }
+}
