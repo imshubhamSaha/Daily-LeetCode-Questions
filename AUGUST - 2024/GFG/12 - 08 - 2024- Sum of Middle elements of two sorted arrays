@@ -1,0 +1,29 @@
+
+class Solution {
+    SumofMiddleElements(arr1, arr2) {
+        const n = arr1.length;
+        let low = 0;
+        let high = n;
+
+        while (low <= high) {
+            let m1 = Math.floor((low + high) / 2);
+            let m2 = n - m1;
+
+            let left1 = (m1 === 0) ? -Infinity : arr1[m1 - 1];
+            let right1 = (m1 === n) ? Infinity: arr1[m1];
+
+            let left2 = (m2 === 0) ? -Infinity : arr2[m2 - 1];
+            let right2 = (m2 === n) ? Infinity : arr2[m2];
+
+            if (left1 <= right2 && left2 <= right1) 
+                return Math.max(left1, left2) + Math.min(right1, right2);
+
+            if (left1 > right2) 
+                high = m1 - 1;
+            else 
+                low = m1 + 1;
+        }
+        return -1;
+        
+    }
+}
