@@ -1,0 +1,32 @@
+/**
+ * @param {number} N
+ * @returns {number}
+ */
+
+class Solution {
+
+    floorSqrt(n) {
+        let low = 0;
+        let high = n;
+        let ans = 0;
+        let sqr = 0;
+        
+        while (low <= high) {
+            let mid = (low + high) >> 1;
+            sqr = (mid * mid);
+            
+            if (sqr === n) return mid;
+            else if (sqr > n) high = mid - 1;
+            else {
+                ans = mid;
+                low = mid + 1;
+            }
+        }
+        
+        return ans;
+    }
+}
+
+Time Complexity: O(logn)
+Auxiliary Space: O(1)
+
