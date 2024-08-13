@@ -1,0 +1,23 @@
+/**
+ * @param {string} s1
+ * @param {string} s2
+ * @return {number}
+ */
+
+class Solution {
+    longestCommonSubstr(str1, str2) {
+        const n = str1.length, m = str2.length;
+        const dp = Array.from({length:n+1}, ()=>new Array(m+1).fill(0));
+        let longestSubstring = 0;
+        for (let i = 1; i <= n; i++) {
+            for (let j = 1; j<=m; j++) {
+                if (str1[i-1] === str2[j-1]) {
+                    dp[i][j] = 1 + dp[i-1][j-1];
+                    longestSubstring = Math.max(longestSubstring, dp[i][j]);
+                }
+            }
+        }
+        
+        return longestSubstring;
+    }
+}
