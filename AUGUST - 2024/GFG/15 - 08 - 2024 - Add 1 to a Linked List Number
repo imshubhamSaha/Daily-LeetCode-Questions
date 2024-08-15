@@ -1,0 +1,45 @@
+let head;
+This is method only submission.
+You only need to complete the below method.
+*/
+
+class Solution {
+    reverseList(root) {
+        let prev = null;
+        let curr = root;
+        
+        while (curr) {
+            let next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        
+        return prev;
+    }
+    
+    addOne(node) {
+        const rev_list = this.reverseList(node);
+        let data = rev_list.data + 1;
+        rev_list.data = data % 10;
+        
+        let curr = rev_list.next;
+        let prev = null;
+        let carry = Math.floor(data / 10);
+        while (curr && carry) {
+            let data = curr.data + carry;
+            curr.data = data % 10;
+            carry = Math.floor(data/10);
+            prev = curr;
+            curr = curr.next;
+        }
+        
+        while (carry) {
+            let new_node = new Node(carry % 10);
+            prev.next = new_node;
+            carry = Math.floor(carry/10);
+        }
+        
+        return this.reverseList(rev_list);
+    }
+}
