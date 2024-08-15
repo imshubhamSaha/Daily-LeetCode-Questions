@@ -1,0 +1,31 @@
+/**
+ * @param {number[]} bills
+ * @return {boolean}
+ */
+var lemonadeChange = function(bills) {
+    const n = bills.length;
+    let five_change = 0;
+    let ten_change = 0;
+    let twenty_change = 0;
+
+    for (let i = 0; i < n; i++) {
+        let return_change = bills[i] - 5;
+        if (!return_change) five_change++;
+        else if (return_change >= 5 && return_change < 10 ) {
+            if (!five_change) return false;
+            ten_change++;
+            five_change--;
+        }else {
+            if ((!ten_change && five_change < 3) || (ten_change && five_change < 1)) return false;
+            if (ten_change && five_change) {
+                ten_change--;
+                five_change--;
+            }
+            else {
+                five_change -= 3;
+            }
+        }
+    }
+
+    return true;
+};
