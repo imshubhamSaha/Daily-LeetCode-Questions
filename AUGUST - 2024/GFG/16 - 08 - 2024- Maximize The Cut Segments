@@ -1,0 +1,26 @@
+class Solution
+{
+    //Function to find the maximum number of cuts.
+    maximizeTheCuts(n, x, y, z)
+    {
+        //Initialize dp of size n + 1 and set -1 initially as no segements are done
+        const dp = new Array(n+1).fill(-1);
+        //make dp[0] as 0 ,it signifies no segement possible on length 0;
+        dp[0] = 0;
+    
+        //runs a loop from 1 to n and checks how many segemantation is possible
+        for (let i = 1; i <= n; i++) {
+            if (i >= x && dp[i - x] !== -1) 
+                dp[i] = Math.max(dp[i], dp[i-x] + 1);
+            
+            if (i >= y && dp[i-y] !== -1)
+                dp[i] = Math.max(dp[i], dp[i-y] + 1);
+                
+            if (i >= z && dp[i-z] !== -1) 
+                dp[i] = Math.max(dp[i], dp[i-z] + 1);
+        }
+        
+        //return maximum segementation at length n;
+        return dp[n] === -1 ? 0 : dp[n];
+    }
+}
