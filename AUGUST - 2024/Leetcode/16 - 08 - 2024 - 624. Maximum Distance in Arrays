@@ -1,0 +1,15 @@
+var calcDist = (a, b) => Math.abs(a-b);
+/**
+ * @param {number[][]} arr
+ * @return {number}
+ */
+var maxDistance = function(arr) {
+    const n = arr.length;
+    let maximum_dist = 0, min_num = arr[0][0], max_num = arr[0].at(-1);
+    for (let i = 1; i < n; i++) {
+        maximum_dist = Math.max(maximum_dist, calcDist(min_num, arr[i].at(-1)), calcDist(max_num, arr[i].at(0)));
+        min_num = Math.min(min_num, arr[i][0]);
+        max_num = Math.max(max_num, arr[i].at(-1));
+    }
+    return maximum_dist;
+};
