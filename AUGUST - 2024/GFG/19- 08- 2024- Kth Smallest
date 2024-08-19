@@ -1,0 +1,27 @@
+
+/**
+ * @param {number[]} arr
+ * @param {number} k
+ * @return {number}
+ */
+
+class Solution {
+    kthSmallest(arr, k) {
+        const n = arr.length;
+        const maxNum = arr.reduce((maxEl, currEl) => {
+            if (currEl > maxEl) maxEl = currEl;
+            
+            return maxEl;
+        },0);
+        const hash = new Array(maxNum+1).fill(false);
+        
+        for (let i = 0; i < n; i++) hash[arr[i]] = true;
+        
+        for (let i = 0; i < hash.length; i++) {
+            if (hash[i]) k--;
+            
+            if ( k === 0) return i;
+        }
+        return maxNum;
+    }
+}
