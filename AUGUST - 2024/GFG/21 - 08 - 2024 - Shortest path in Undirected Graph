@@ -1,0 +1,86 @@
+class MyQueue {
+    constructor() {
+        this.arr = [];
+        this.front = -1;
+        this.end = -1;
+        this.size = 0;
+    }
+    
+    enqueue (data) {
+        if(this.isEmpty()) {
+            this.front++;
+            this.end++;
+        }
+        this.arr[this.end++] = data;
+        this.size++;
+    }
+
+    dequeue () {
+        if (this.isEmpty()) {
+            return -1;
+        }
+
+        let popped = this.arr[this.front++];
+
+        if (this.front === this.end) {
+            this.front = -1;
+            this.end = -1;
+        }
+        this.size--;
+        return popped;
+    }
+
+    peek() {
+        if(!this.isEmpty()) 
+            return this.arr[this.front];
+    
+        return -1;
+    }
+
+    isEmpty() {
+        if(this.front === -1 && this.end === -1) {
+            return true;
+        }
+
+        return false;
+    }
+}
+class Solution {
+    /**
+    * @param number n
+    * @param number m
+    * @param number src
+    * @param number[][] edges
+
+    * @returns number[]
+    */
+    shortestPath(edges, n, m, src) {
+        const adj = Array.from({length:n}, () => [])
+        for (const [point1,point2] of edges) {
+            adj[point1].push(point2);
+            adj[point2].push(point1);
+        }
+        
+        const q = new MyQueue();
+        q.enqueue(src);
+        const dist = new Array(n).fill(Infinity);
+        
+        dist[src] = 0;
+        
+        while (!q.isEmpty()) {
+            const elm = q.peek();
+            q.dequeue();
+            for (const neighbour of adj[elm]) {
+                if (dist[elm] + 1 < dist[neighbour]) {
+                    dist[neighbour] = dist[elm] + 1;
+                    q.enqueue(neighbour)
+                }
+            }
+        }
+        
+        for (let i = 0; i < dist.length; i++) {
+            if (dist[i] === Infinity) dist[i] = -1;
+        }
+        return dist;
+    }
+}
