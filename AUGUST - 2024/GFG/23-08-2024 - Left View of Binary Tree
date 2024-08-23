@@ -1,0 +1,18 @@
+class Solution {
+    traverseLeft(root,level, result) {
+        if (!root) return;
+        
+        if (level > result.length) 
+            result.push(root.data);
+            
+        this.traverseLeft(root.left, level + 1, result);
+        
+        this.traverseLeft(root.right, level + 1, result);
+    }
+    leftView(root)
+    {
+        const result = [];
+        this.traverseLeft(root,1, result);
+        return result;
+    }
+}
