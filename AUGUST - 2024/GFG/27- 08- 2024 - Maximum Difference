@@ -1,0 +1,37 @@
+class Solution {
+    findMaxDiff(arr) {
+        const n = arr.length;
+        const st = [];
+        const ls = [];
+        const rs = [];
+        let i = 0;
+        while (i < n) {
+            while (st.length && arr[st[st.length-1]] >= arr[i]) {
+                st.pop();
+            }
+            if (st.length) ls.push(arr[st[st.length-1]]);
+            else ls.push(0);
+            st.push(i);
+            i++;
+        }
+        while (st.length) {
+            st.pop();
+        }
+       
+        i = n - 1;
+        while(i >= 0) {
+            while(st.length && arr[st[st.length-1]] >= arr[i]) st.pop();
+            
+            if (st.length) rs.push(arr[st[st.length-1]]) 
+            else rs.push(0);
+            st.push(i);
+            i--;
+        }
+
+        let maxi = 0;
+        for(let i = 0; i < n; i++) {
+            maxi = Math.max(maxi, Math.abs(ls[i] - rs[n-1-i]));
+        }
+        return maxi;
+    }
+}
