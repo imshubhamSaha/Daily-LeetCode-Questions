@@ -1,0 +1,19 @@
+class Solution {
+    // Function to sort the array according to frequency of elements.
+    sortByFreq(arr) {
+        const n = arr.length;
+        const freq = arr.reduce((freq, curr) => {
+            freq.set(curr, (freq.get(curr) || 0) + 1);
+            return freq;
+        },new Map());
+        
+        arr.sort((a,b) => {
+            const f1 = freq.get(a);
+            const f2 = freq.get(b);
+            if (f1 === f2) return a - b;
+            
+            return f2-f1;
+        });
+        return arr;
+    }
+}
