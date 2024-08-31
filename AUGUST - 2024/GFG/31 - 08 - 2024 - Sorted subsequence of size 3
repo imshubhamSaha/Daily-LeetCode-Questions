@@ -1,0 +1,21 @@
+class Solution {
+    find3Numbers(arr) {
+        const n = arr.length;
+        const smallest = new Array(n).fill(0);
+        const longest = new Array(n).fill(0);
+        smallest[0] = arr[0];
+        longest[n-1] = arr[n-1];
+        
+        for (let i = 1; i < n; i++) {
+            smallest[i] = Math.min(smallest[i-1], arr[i]);
+            longest[n-1-i] = Math.max(longest[n-i], arr[n-1-i]);
+        }
+        
+        for (let i = 1; i < n - 1; i++) {
+            if (arr[i] > smallest[i-1] && arr[i] < longest[i+1]) 
+                return [smallest[i-1],arr[i], longest[i+1]];
+        }
+        
+        return [];
+    }
+}
