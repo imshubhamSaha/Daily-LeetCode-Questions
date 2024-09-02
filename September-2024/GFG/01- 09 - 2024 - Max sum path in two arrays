@@ -1,0 +1,44 @@
+
+/**
+ * @param {number[]} arr1
+ * @param {number[]} arr2
+ * @returns {number}
+ */
+
+class Solution {
+    maxPathSum(arr1, arr2) {
+        const n = arr1.length, m = arr2.length;
+        let maxPathSum = 0;
+        let arr1_sum = 0, arr2_sum = 0;
+        let i = 0, j = 0;
+        
+        while (i < n || j < m){
+            const s1 = i < n ? arr1[i] : 0;
+            const s2 = j < m ? arr2[j] : 0;
+            if ( s1 === s2) {
+                maxPathSum += Math.max(arr1_sum , arr2_sum);
+                maxPathSum += s1
+                arr1_sum  = 0;
+                arr2_sum = 0;
+                i++;
+                j++;
+            }
+            else if (s1 < s2 && i < n) {
+                arr1_sum += s1;
+                i++;
+            }else if (s2 < s1 && j < m){
+                arr2_sum += s2;
+                j++;
+            }else if (i >= n ) {
+                arr2_sum += s2;
+                j++;
+            }else {
+                arr1_sum += s1;
+                i++;
+            }
+            
+        }
+        maxPathSum += Math.max(arr1_sum , arr2_sum);
+        return maxPathSum;
+    }
+}
