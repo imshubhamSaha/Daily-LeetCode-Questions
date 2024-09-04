@@ -1,0 +1,37 @@
+/**
+ * @param {number[]} chalk
+ * @param {number} k
+ * @return {number}
+ */
+var chalkReplacer = function(chalk, k) {
+    const n = chalk.length;
+    let  i = 0;
+    while (k > 0) {
+        let idx = i % n;
+        if (chalk[idx] > k) 
+            return idx;
+        k -= chalk[idx] ; 
+        i++;  
+    }
+
+    return i % n;
+};
+
+-----------------
+
+/**
+ * @param {number[]} chalk
+ * @param {number} k
+ * @return {number}
+ */
+var chalkReplacer = function(chalk, k) {
+    const n = chalk.length;
+    const totalChalks = chalk.reduce((total, chk) => total + chk, 0);
+    let chalksLeft = k % totalChalks;
+    if (!chalksLeft) return 0;
+    for (let i = 0; i < n; i++) {
+        chalksLeft -= chalk[i];
+        if (chalksLeft < 0) 
+            return i;
+    }
+};
