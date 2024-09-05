@@ -1,0 +1,24 @@
+/**
+ * @param {number[]} rolls
+ * @param {number} mean
+ * @param {number} n
+ * @return {number[]}
+ */
+var missingRolls = function(rolls, mean, n) {
+    const m = rolls.length;
+    const rollsSum = rolls.reduce((sum, curr) => sum + curr, 0);
+    const requiredSum = ((n + m) * mean) - rollsSum;
+
+    if (requiredSum < n || requiredSum > (6 * n)) return [];
+
+    const distributedNum = Math.floor(requiredSum / n);
+    const remainingNum = requiredSum % n;
+
+    const remainingRolls = new Array(n).fill(distributedNum);
+
+    for (let i = 0; i < remainingNum; i++) remainingRolls[i] += 1;
+
+    return remainingRolls;
+};
+
+2
