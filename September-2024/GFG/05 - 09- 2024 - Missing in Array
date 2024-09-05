@@ -1,0 +1,18 @@
+/**
+ * @param {number[]} array
+ * @param {number} n
+ * @returns {number}
+ */
+
+class Solution {
+
+    // Note that the size of the array is n-1
+    missingNumber(n, arr) {
+        
+        let xor = arr.reduce((xor, curr) => curr^xor, 0);
+        
+        for (let i = 1; i <= n; i++) xor ^= i;
+        
+        return xor;
+    }
+}
