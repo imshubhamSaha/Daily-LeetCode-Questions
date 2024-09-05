@@ -1,0 +1,54 @@
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {number}
+ */
+var getLucky = function(s, k) {
+    let char = "";
+    for (let i = 0; i < s.length; i++) char += s[i].charCodeAt(0) - 96;
+
+    while (k > 0) {
+        let temp = 0;
+        for (let i = 0; i < char.length; i++) temp += char[i] - 0;
+        char = temp + "";
+        k--;
+    }
+
+    return char - 0;
+};
+
+Time Complexity -->> O(n + k * m)
+Space Complexity --> O(n)
+
+
+-----------------------
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {number}
+ */
+var getLucky = function(s, k) {
+    let charSum = 0;
+    for (let i = 0; i < s.length; i++) {
+        let code = s[i].charCodeAt(0) - 96;
+        charSum += Math.floor(code/10) + code % 10;
+    }    
+
+    while (k > 1) {
+        let temp = 0;
+        while (charSum > 0) {
+            temp += charSum % 10;
+            charSum = Math.floor(charSum/10);
+        }
+        charSum = temp;
+        k--;
+    }
+
+    return charSum;
+};
+
+Time Complexity -->> O(n + k * log10*charsum)
+Space Complexity --> O(1)
+
+
+-----------------------
