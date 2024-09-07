@@ -1,0 +1,55 @@
+/**
+ * @param {number} n
+ * @returns {number}
+ */
+
+class Solution {
+    hasNine(n) {
+        if (n < 9) return true;
+        while (n) {
+            if (n % 10 === 9) return false;
+            n = Math.floor(n/10);
+        }
+        
+        return true;
+    }
+    findNth(n) {
+        let cnt = 1;
+        let num = 1;
+        while (cnt < n) {
+            if (this.hasNine(num)) {
+                cnt++;
+            }
+            num++;
+        }
+        
+        return num;
+    }
+}
+
+Time Complexity: O(n * log10 n)
+Space Complexity: O(1)
+
+
+/**
+ * @param {number} n
+ * @returns {number}
+ */
+
+class Solution {
+   
+    findNth(n) {
+        let num = 0;
+        let place = 1;
+        
+        while (n > 0) {
+            num += place * (n % 9);
+            place *= 10;
+            n = Math.floor(n / 9);
+        }
+        return num;
+    }
+}
+
+Time Complexity: O( log9 n)
+Space Complexity: O(1)
