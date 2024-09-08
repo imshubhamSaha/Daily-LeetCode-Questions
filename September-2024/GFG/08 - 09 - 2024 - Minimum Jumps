@@ -1,0 +1,23 @@
+/**
+ * @param {number[]} arr
+ * @return {number}
+ */
+
+class Solution {
+    minJumps(arr) {
+        const n = arr.length;
+        let jumpsTaken = 0, maxJumps = 0, maxRange = 0;
+        
+        for(let jump = 0; jump < n; jump++) {
+            maxJumps = Math.max(maxJumps, (jump + arr[jump]));
+            
+            if (maxRange === jump) {
+                maxRange = maxJumps;
+                jumpsTaken++;
+                if (maxRange >= n - 1) return jumpsTaken;
+            }
+            else if (maxRange < jump) return -1;
+        }
+        
+    }
+}
