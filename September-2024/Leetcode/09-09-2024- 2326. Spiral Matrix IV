@@ -1,0 +1,71 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+var checkList = (node) => node.next === null;
+/**
+ * @param {number} m
+ * @param {number} n
+ * @param {ListNode} head
+ * @return {number[][]}
+ */
+var spiralMatrix = function(m, n, head) {
+    let curr = head;
+    const matrix = Array.from({length:m}, () => new Array(n).fill(-1));
+    if (!head) return matrix;
+
+    let left = 0, right = n-1, top = 0, bottom = m-1;
+    let listEnd = false;
+    while (top <= bottom && left <= right && curr) {
+        for (let i = left; i <= right; i++) {
+            matrix[top][i] = curr.val
+            if (checkList(curr)){
+                listEnd = true;
+                break;
+            }
+            curr = curr.next;
+        }
+        if (listEnd) break;
+        top++;
+
+        for(let i = top; i <= bottom; i++) {
+            matrix[i][right] = curr.val
+            if (checkList(curr)){
+                listEnd = true;
+                break;
+            }
+            curr = curr.next;
+        }
+        if (listEnd) break;
+        right--;
+        if (bottom < top) break;
+
+        for(let i = right; i >= left; i--) {
+            matrix[bottom][i] = curr.val
+            if (checkList(curr)){
+                listEnd = true;
+                break;
+            }
+            curr = curr.next;
+        }
+        if (listEnd) break;
+        bottom--;
+        if (right < left) break;
+
+        for(let i = bottom; i>= top; i--) {
+            matrix[i][left] = curr.val
+            if (checkList(curr)){
+                listEnd = true;
+                break;
+            }
+            curr = curr.next;
+        }
+        if (listEnd) break;
+        left++;
+    }
+
+    return matrix;
+};
