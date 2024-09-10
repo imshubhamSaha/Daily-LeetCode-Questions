@@ -1,0 +1,38 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+var gcd = function(a, b){
+
+    while (a > 0 && b > 0) {
+        if (a > b) 
+            a = a % b;
+        else 
+            b = b % a;
+    }
+    if (a == 0) 
+        return b;
+    return a;
+}
+
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var insertGreatestCommonDivisors = function(head) {
+    let curr = head;
+
+    while (curr && curr.next) {
+        let factor = gcd(curr.val, curr.next.val);
+        let newNode = new ListNode(factor);
+        let nextNode = curr.next;
+        curr.next = newNode;
+        newNode.next = nextNode;
+        curr = nextNode; 
+    }
+
+    return head;
+};
