@@ -1,0 +1,79 @@
+/**
+ * @param {number} start
+ * @param {number} goal
+ * @return {number}
+ */
+var minBitFlips = function(start, goal) {
+    let bitFlips = 0;
+
+    for (let i = 0; i < 32; i++) {
+        if (((start >> i) & 1) !== ((goal >> i) & 1)) 
+            bitFlips++;
+    }
+
+    return bitFlips;
+};
+Time Complexity --> O(32)
+space = constant
+---------------------
+
+/**
+ * @param {number} start
+ * @param {number} goal
+ * @return {number}
+ */
+var minBitFlips = function(start, goal) {
+    let bitFlips = 0;
+    
+    while (start  || goal) {
+        bitFlips += (start & 1) === (goal & 1) ? 0 : 1;
+        start = start >> 1;
+        goal = goal >> 1;
+    }
+    return bitFlips;
+};
+Time complexity - > o(k) k = length of larger integer
+space = constant
+-------------------
+
+/**
+ * @param {number} start
+ * @param {number} goal
+ * @return {number}
+ */
+var minBitFlips = function(start, goal) {
+    let bitFlips = 0;
+    let xorResult = start ^ goal;
+
+    while (xorResult) {
+        bitFlips += xorResult & 1
+        xorResult >>= 1;
+    }
+    
+    return bitFlips;
+};
+Time complexity - > o(k) k = length of larger integer
+space = constant
+
+--------------
+
+/**
+ * @param {number} start
+ * @param {number} goal
+ * @return {number}
+ */
+var minBitFlips = function(start, goal) {
+    let bitFlips = 0;
+    let xorResult = start ^ goal;
+
+    while (xorResult) {
+        xorResult = xorResult & (xorResult-1);
+        bitFlips ++;
+    }
+    
+    return bitFlips;
+};
+Time complexity - > o(k) k = length of larger integer
+space = constant
+
+--------------
