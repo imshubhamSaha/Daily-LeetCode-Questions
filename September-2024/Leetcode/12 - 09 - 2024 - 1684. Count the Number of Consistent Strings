@@ -1,0 +1,25 @@
+/**
+ * @param {string} allowed
+ * @param {string[]} words
+ * @return {number}
+ */
+var countConsistentStrings = function(allowed, words) {
+    const n = allowed.length, m = words.length;
+    const allowedChar = new Array(26).fill(0);
+    let consistent  = 0;
+    for (const ch of allowed) allowedChar[ch.charCodeAt(0) - 97] = 1;
+
+    for (let i = 0; i < m; i++) {
+        let notAllowed = 0;
+        for (let j = 0; j < words[i].length; j++) {
+            if (!allowedChar[words[i][j].charCodeAt(0) - 97]) {
+                notAllowed = 1;
+                break;
+            }
+        }
+
+        if(!notAllowed) consistent++; 
+    }
+
+    return consistent;
+};
