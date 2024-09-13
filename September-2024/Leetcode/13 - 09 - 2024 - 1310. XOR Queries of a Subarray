@@ -1,0 +1,46 @@
+/**
+ * @param {number[]} arr
+ * @param {number[][]} queries
+ * @return {number[]}
+ */
+var xorQueries = function(arr, queries) {
+    const n = arr.length, m = queries.length;
+    const xor = new Array(n).fill(0);
+    xor[0] = arr[0];
+
+    for (let i = 1; i < n; i++) xor[i] = xor[i-1] ^ arr[i];
+
+    const ans = new Array(m).fill(0);
+
+    for (let i = 0; i < m; i++) {
+        const [left, right] = queries[i];
+        if (left > 0 && right < n) {
+            ans[i] = xor[right] ^ xor[left-1];
+        }else {
+            ans[i] = xor[right];
+        }
+    } 
+
+    return ans;
+};
+TIME COMPLEXITY --> O(N + M )
+SPACE COMPLEXITY --> O(N + M)
+
+-----------
+
+/**
+ * @param {number[]} arr
+ * @param {number[][]} queries
+ * @return {number[]}
+ */
+var xorQueries = function(arr, queries) {
+    const n = arr.length, m = queries.length;
+
+    for (let i = 1; i < n; i++) arr[i] = arr[i-1] ^ arr[i];
+
+    const ans = queries.map(([left, right]) => left > 0 ? arr[left-1] ^ arr[right] : arr[right]);
+
+    return ans;
+};
+TIME COMPLEXITY --> O(N + M )
+SPACE COMPLEXITY --> O(M)
