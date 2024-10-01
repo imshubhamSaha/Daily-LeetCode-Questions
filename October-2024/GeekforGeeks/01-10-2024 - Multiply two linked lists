@@ -1,0 +1,31 @@
+/**
+ * @param {Node} l1
+ * @param {Node} l2
+ * @return {number}
+ */
+
+// Use Bigint for javascript
+class Solution {
+    
+    multiplyTwoLists(first, second) {
+        
+        let curr1 = first;
+        let curr2 = second;
+        let sum1 = 0, sum2 = 0;
+        const mod = 1000000000+7;
+         while(curr1){
+            sum1= sum1*10+curr1.data;
+            curr1=curr1.next;
+        }
+        
+        while(curr2){
+            sum2=sum2*10+curr2.data;
+            curr2=curr2.next;
+        }
+        
+        const ans= (sum1*sum2)%mod;
+        
+        return ans;
+        
+    }
+}
