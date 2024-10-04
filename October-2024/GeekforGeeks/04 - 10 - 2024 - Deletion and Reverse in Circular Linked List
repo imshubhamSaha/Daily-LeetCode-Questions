@@ -1,0 +1,48 @@
+// User function Template for javascript
+class Solution {
+    // Function to reverse a circular linked list
+    reverse(head) {
+        let prev = null;
+        let curr = head;
+        let frw = head.next;
+    
+        while (frw !== head) {
+            curr.next = prev;
+            prev = curr;
+            curr = frw;
+            frw = frw.next;
+        }
+
+        curr.next = prev;
+        frw.next = curr;
+    
+        return curr;  
+    }
+
+    // Function to delete a node from the circular linked list
+    deleteNode(head, key) {
+        let temp = head;
+    
+        if (head.data === key) {
+
+            while (temp.next !== head) {
+                temp = temp.next;
+            }
+
+            temp.next = head.next;
+            return head.next;  
+        }
+
+    
+        while (temp.next.data !== key && temp.next !== head) {
+            temp = temp.next;
+        }
+
+    
+        if (temp.next.data === key) {
+            temp.next = temp.next.next;
+        }
+    
+        return head;
+    }
+}
