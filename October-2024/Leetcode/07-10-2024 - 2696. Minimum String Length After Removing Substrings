@@ -1,0 +1,43 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var minLength = function(s) {
+    const stk = [], len =s.length;
+    if(len === 1) return 1;
+    
+    let newLen = 0;
+    for(let i=0; i<len; i++) {
+        if(!stk.length) {
+            stk.push(s[i]);
+            newLen++;
+        }else{
+            
+            if(s[i] === "B") {
+                if(stk.length && stk[stk.length-1] === "A") {
+                    stk.pop();
+                    
+                    newLen--;
+                }else{
+                    stk.push(s[i]);
+                    newLen++;
+                }
+
+            }else if(s[i] === "D") {
+                if(stk.length && stk[stk.length-1] === "C") {
+                    stk.pop();
+                    newLen--;
+                }else{
+                    stk.push(s[i]);
+                    newLen++;
+                }
+            }
+            else {
+                stk.push(s[i]);
+                newLen++;
+            }
+        }
+    }
+
+    return newLen;
+};
