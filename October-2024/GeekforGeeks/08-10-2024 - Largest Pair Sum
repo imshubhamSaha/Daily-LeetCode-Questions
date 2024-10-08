@@ -1,0 +1,27 @@
+class Solution {
+    /**
+    * @param number[] arr
+
+    * @returns number
+    */
+    pairsum(arr) {
+        const n = arr.length;
+        
+        if (n === 2 ) return arr[0] + arr[1];
+        
+        let greatest = arr[0], greater = 0;
+        let i = 1;
+        
+        while (i < n) {
+            const num = arr[i];
+            if (num >= greatest) {
+                greater = greatest;
+                greatest = num;
+            }else if (num > greater) 
+                greater = num;
+            i++;    
+        }
+        
+        return greatest + greater;
+    }
+}
