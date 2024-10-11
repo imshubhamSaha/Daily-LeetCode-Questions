@@ -1,0 +1,16 @@
+//Back-end complete function Template for javascript
+class Solution {
+    rearrange(arr) {
+        const n = arr.length;
+        
+        for (let i = 0; i < n; i++) {
+            if (arr[i] !== i && arr[i] !== -1) {
+                let temp = arr[i];
+                arr[i] = arr[arr[i]];
+                arr[temp] = temp;
+                i--;
+            } 
+        }
+        
+        return arr;
+    }
