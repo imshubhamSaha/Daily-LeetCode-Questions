@@ -1,0 +1,18 @@
+/**
+ * @param {number[]} arr
+ * @returns {number[]}
+ */
+
+class Solution {
+    // Function to pair with max sum in the array.
+    pairWithMaxSum(arr) {
+        const n = arr.length;
+        let ans = 0;
+        
+        for (let i = 1; i < n; i++) {
+            ans = Math.max(ans, (arr[i] + arr[i-1]));
+        }
+        
+        return ans ? ans : -1;
+    }
+}
