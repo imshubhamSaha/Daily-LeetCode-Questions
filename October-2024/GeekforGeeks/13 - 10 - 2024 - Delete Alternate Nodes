@@ -1,0 +1,25 @@
+/*LINKED LIST NODE
+class Node {
+  constructor(x){
+    this.data = x;
+    this.next = null;
+  }
+}
+*/
+
+/**
+ * @param {Node} head
+ */
+
+class Solution {
+    deleteAlt(head) {
+        let curr = head;
+        
+        while (curr && curr.next) {
+            curr.next = curr.next.next;
+            curr = curr.next;
+        }
+        
+        return head;
+    }
+}
