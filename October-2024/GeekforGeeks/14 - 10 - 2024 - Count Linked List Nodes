@@ -1,0 +1,23 @@
+/*
+class Node{
+    constructor(data){
+        this.data = data;
+        this.next = null;
+    }
+}
+*/
+
+class Solution {
+    // Function to count nodes of a linked list.
+    getCount(head) {
+        let curr = head;
+        let cnt = 0;
+        
+        while(curr) {
+            cnt++;
+            curr = curr.next;
+        }
+        
+        return cnt;
+    }
+}
