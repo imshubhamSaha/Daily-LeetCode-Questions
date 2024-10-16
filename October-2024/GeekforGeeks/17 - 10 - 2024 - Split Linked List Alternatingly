@@ -1,0 +1,30 @@
+/**
+ * @param {Node} head
+ * @return {Array} [Node, Node]
+ */
+
+class Solution {
+    alternatingSplitList(head) {
+        let curr = head;
+        let firstHead = curr;
+        let secondHead = curr.next;
+        let prev = firstHead;
+        let last = secondHead;
+        curr = curr.next;
+        while (curr && curr.next) {
+            let nextNode = curr.next.next;
+            
+            prev.next = curr.next;
+            last.next = curr.next.next;
+            
+            prev = prev.next;
+            last= last.next;
+            
+            curr = nextNode;
+        }
+        
+        prev.next = null;
+        
+        return [firstHead,secondHead];
+    }
+}
