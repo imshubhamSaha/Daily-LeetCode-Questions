@@ -1,0 +1,70 @@
+/**
+ * @param {number} num
+ * @return {number}
+ */
+var maximumSwap = function(num) {
+    const n = num.length;
+    let temp = num;
+    const arr = [];
+    while (temp > 0) {
+        let n = temp % 10;
+        arr.push(n);
+        temp = Math.floor(temp/10);
+    }
+    arr.reverse();
+    const arrNum = [...arr].sort((a,b) => b - a);
+
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] !== arrNum[i]) {
+            let idx = -1;
+
+            for (let j = i + 1; j < arrNum.length; j++) {
+                if (arr[j] === arrNum[i]) 
+                    idx = j;
+            }
+
+            let temp = arr[i];
+            arr[i] = arr[idx];
+            arr[idx] = temp;
+            break;
+        }
+    }
+  
+    return +(arr.join(""));
+};
+--------------------------
+
+
+/**
+ * @param {number} num
+ * @return {number}
+ */
+var maximumSwap = function(num) {
+    const numArr = [];
+    const lastVisit = new Array(10).fill(-1);
+    let numCopy = num;
+    while (numCopy) {
+        numArr.push(numCopy % 10);
+        numCopy = Math.floor(numCopy/10);
+    }
+    numArr.reverse();
+    const n = numArr.length;
+
+    for (let i = 0; i < n; i++) {
+        lastVisit[numArr[i]] = i;
+    }
+
+    for (let i = 0; i < n; i++) {
+        for (let j = 9; j > numArr[i]; j--) {
+            if (lastVisit[j] > i) {
+                let temp = numArr[i];
+                numArr[i] = numArr[lastVisit[j]];
+                numArr[lastVisit[j]] = temp;
+                return +(numArr.join(""));
+            }
+        }
+    }
+
+    return num;
+};
+
