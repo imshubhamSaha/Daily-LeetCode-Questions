@@ -1,0 +1,12 @@
+/**
+ * @param {number[]} arr
+ * @returns {number}
+ */
+
+class Solution {
+    getSingle(arr) {
+        const appearOnce = arr.reduce((appeared, num) => appeared ^ num, 0);
+        
+        return appearOnce;
+    }
+}
