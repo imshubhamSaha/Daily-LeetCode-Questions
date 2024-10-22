@@ -1,0 +1,81 @@
+var MyQueue = function () {
+    this.queue = [];
+    this.len = 0;
+    this.front = -1;
+    this.rear = -1;
+}
+
+MyQueue.prototype.enequeue = function (data) {
+    if (!data) return;
+    if (this.isEmpty()) this.front++;
+    this.rear++;
+    this.queue[this.rear] = data;
+    this.len++;
+
+    return this.size;
+}
+
+MyQueue.prototype.dequeue = function () {
+    if (this.isEmpty()) return null;
+
+    const popped = this.queue[this.front++];
+
+    if (this.front > this.rear) {
+        this.front = -1;
+        this.rear = -1;
+    }
+    this.len--;
+    return popped;
+}
+MyQueue.prototype.isEmpty = function () {
+    return this.len === 0;
+}
+
+MyQueue.prototype.front = function () {
+    if (this.isEmpty()) return null;
+
+    return this.queue[this.front];
+}
+
+MyQueue.prototype.size = function () {
+    return this.len;
+}
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} k
+ * @return {number}
+ */
+var kthLargestLevelSum = function (root, k) {
+    const sums = [];
+    const queue = new MyQueue();
+    queue.enequeue(root);
+    while (!queue.isEmpty()) {
+        const n = queue.size();
+        console.log(n)
+        let sum = 0;
+
+        for (let i = 0; i < n; i++) {
+            const node = queue.dequeue();
+            sum += node.val;
+            if (node.left) queue.enequeue(node.left);
+            if (node.right) queue.enequeue(node.right);
+        }
+
+        sums.push(sum);
+    }
+
+    if (k > sums.length) return -1;
+
+    sums.sort((a,b) => b - a);
+
+    return sums[k-1];
+};
