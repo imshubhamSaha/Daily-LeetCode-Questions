@@ -1,0 +1,23 @@
+
+
+// User function Template for javascript
+
+class Solution {
+    alternateSort(arr) {
+        const n = arr.length;
+        arr.sort((a,b) => b - a);
+        
+        if (n < 3) return arr;
+        const result = new Array(n).fill(0);
+        let i = 0, j = n - 1, idx = 0;
+        
+        while (i < j) {
+            result[idx++] = arr[i++];
+            result[idx++] = arr[j--];
+        }
+        
+        if ( i === j) result[idx] = arr[i];
+        
+        return result;
+    }
+}
