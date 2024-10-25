@@ -1,0 +1,137 @@
+/**
+ * @param {string} path
+ * @return boolean
+ */
+const notValid = (path) => path === "" || path === "/";
+
+/**
+ * @param {string[]} folder
+ * @return {string[]}
+ */
+var removeSubfolders = function(folder) {
+    folder.sort();
+    const n = folder.length;
+    const hashMap = new Map();
+
+    for (let i = 0; i < n; i++) {
+        const path = folder[i];
+        if (notValid(path)) continue;
+
+        if (hashMap.size === 0) {
+            hashMap.set(path,path);
+        }else if (!hashMap.has(path)) {
+            let p = "";
+            let present = false;
+            for (let j = 0; j < path.length; j++) {
+                const ch = path[j];
+                if (ch === "/" && hashMap.has(p)) {
+                    present = true;
+                    break;
+                } 
+                p += ch;
+            }
+
+            if (!present) hashMap.set(path,path);
+        }
+    }
+
+    const result = [];
+
+    for (const [key] of hashMap.entries()) {
+        result.push(key);
+    }
+
+    return result;
+
+};
+
+
+** Time Complexity -->> O(nlogn) + O(n * 100) + O(n) ~ O(nlogn)
+** Space Complexity -->> O(n) + O(n)
+-----------------------------------------------------------
+
+/**
+ * @param {string} path
+ * @return boolean
+ */
+var isValid = (path) => path !== "" && path !== "/";
+
+/**
+ * @param {string} path
+ * @param {string} lastFolder
+ * @return boolean
+ */
+var mainPresent = function(path, lastFolder) {
+    let p = "";
+
+    for (let j = 0; j < path.length; j++) {
+        const ch = path[j];
+
+        if(ch === "/" && p === lastFolder) return true;
+
+        p += ch;
+    }
+
+    return false;
+}
+
+/**
+ * @param {string[]} folder
+ * @return {string[]}
+ */
+var removeSubfolders = function(folder) {
+    folder.sort();
+    const n = folder.length;
+    const mainFolder = [folder[0]];
+
+    for (let i = 1; i < n; i++) {
+        const path = folder[i];
+        if (!isValid(path)) continue;
+
+        const lastFolder = mainFolder[mainFolder.length - 1];
+
+        if (lastFolder === path) continue;
+
+        if (!mainPresent(path,lastFolder)) mainFolder.push(path);
+    }
+
+    return mainFolder;
+
+};
+
+
+** Time Complexity -->> O(nlogn) + O(n * 100) ~ O(nlogn)
+** Space Complexity -->> O(n) 
+-----------------------------------------------------------
+
+/**
+ * @param {string} path
+ * @return boolean
+ */
+const isValid = (path) => path !== "" && path !== "/";
+
+/**
+ * @param {string[]} folder
+ * @return {string[]}
+ */
+var removeSubfolders = function(folder) {
+    folder.sort();
+    const n = folder.length;
+    const mainFolder = [folder[0]];
+
+    for (let i = 1; i < n; i++) {
+        const path = folder[i];
+        if (!isValid(path)) continue;
+
+        const lastFolder = mainFolder[mainFolder.length - 1] + "/";
+        if (!path.startsWith(lastFolder)) mainFolder.push(path);
+        
+    }
+
+    return mainFolder;
+
+};
+
+** Time Complexity -->> O(nlogn) + O(n * 100)  ~ O(nlogn)
+** Space Complexity -->> O(n)
+-----------------------------------------------------------
