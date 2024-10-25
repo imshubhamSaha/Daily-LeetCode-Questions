@@ -1,0 +1,19 @@
+/**
+ * @param {Node} head
+ * @param {number} key
+ * @returns {number}
+ */
+
+class Solution {
+    count(head, key) {
+        let occurence = 0;
+        let curr = head;
+        
+        while (curr) {
+            if (curr.data === key) occurence++;
+            curr = curr.next;
+        }
+        
+        return occurence;
+    }
+};
