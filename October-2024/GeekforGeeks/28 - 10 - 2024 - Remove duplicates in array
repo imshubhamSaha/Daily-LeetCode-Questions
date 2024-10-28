@@ -1,0 +1,21 @@
+class Solution {
+
+    removeDuplicate(arr) {
+        const n = arr.length;
+        const seen = new Array(101).fill(0);
+        let i = 0, j = 1,len=1;
+        seen[arr[i]] = 1;
+        while (j < n) {
+            if (!seen[arr[j]]) {
+                i++;
+                arr[i] = arr[j];
+                seen[arr[j]] = 1;
+                len++;
+            }
+            j++;
+        }
+        
+        arr.length = len;
+        return arr;
+    }
+}
