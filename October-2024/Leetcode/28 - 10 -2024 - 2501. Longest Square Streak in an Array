@@ -1,0 +1,58 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var longestSquareStreak = function(nums) {
+    const n = nums.length;
+    nums.sort((a,b) => a - b);
+    let maxLen = -1;
+    
+    for (let i = 0; i < n - 1; i++) {
+        let lastVisited = nums[i];
+        let len = 0;
+        for (let j = i+1; j < n; j++) {
+            if (nums[j] === (lastVisited ** 2)) {
+                lastVisited = nums[j];
+                len++;
+            }
+        }
+
+        if (len && (len + 1) > maxLen)
+            maxLen = len + 1;
+    }
+
+    return maxLen;
+};
+
+Time Complexity -->> O(nlogn) + O(n * n)
+Space Complexity --> O(1)
+*****************************************************************************************************************************************
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var longestSquareStreak = function(nums) {
+    const n = nums.length;
+    nums.sort((a,b) => a - b);
+    let maxLen = -1;
+    const map = new Map()
+    for (let i = 0; i < n ; i++) {
+        let lastVisited = nums[i];
+        const sqrt = Math.sqrt(lastVisited);
+        if (map.has(sqrt)) {
+            maxLen = Math.max(maxLen, map.get(sqrt) + 1);
+            map.set(lastVisited, map.get(sqrt) + 1);
+            map.delete(sqrt);
+            continue;
+        }
+        if (!map.has(lastVisited)) {
+            map.set(lastVisited, 1);
+        }  
+        
+    }
+    return maxLen;
+};
+
+Time Complexity -->> O(nlogn) + O(nlogn)
+Space Complexity --> O(n)
