@@ -1,0 +1,57 @@
+/**
+ * @param {number} num
+ * @return {number}
+ */
+var setBits = function (num) {
+    let cnt = 0;
+
+    while (num > 0) {
+        if (num & 1 === 1) cnt++;
+        num = num >> 1;
+    }
+
+    return cnt;
+}
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var checkSorted = function(nums) {
+    const n = nums.length;
+
+    for (let i = 1; i < n; i++) {
+        if (nums[i] < nums[i-1]) return false;
+    }
+
+    return true;
+}
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var canSortArray = function(nums) {
+    const n = nums.length;
+    const bits = new Array(n);
+
+    for (let i = 0; i < n; i++) {
+        bits[i] = setBits(nums[i]);
+    }
+
+    let j = 0; 
+
+    while ( j < n) {
+        for (let i = 1; i < n; i++) {
+            if ((bits[i] === bits[i-1]) && nums[i] < nums[i-1]) {
+                nums[i] = nums[i] ^ nums[i-1];
+                nums[i-1] = nums[i-1] ^ nums[i];
+                nums[i] = nums[i] ^ nums[i-1];
+            }
+        }
+
+        if (checkSorted(nums))  return true;
+
+        j++;
+    }
+
+    return false;
+};
