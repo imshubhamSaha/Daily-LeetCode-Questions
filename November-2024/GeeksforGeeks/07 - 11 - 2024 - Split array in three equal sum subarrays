@@ -1,0 +1,38 @@
+// User function Template for Javascript
+/**
+ * @param {number[]} arr
+ * @returns {boolean}
+ */
+
+class Solution {
+
+    findSplit(arr) {
+        // Return an array of possible answer, driver code will judge and return true or
+        // false based on
+        const n = arr.length;
+        let leftsum = arr[0];
+        let rightsum = arr[n-1];
+        let midsum = 0;
+        
+        for(let i=1; i<n-1; i++) midsum+=arr[i];
+        
+        let i=1;
+        let j=n-2;
+        
+        while(i<=j){
+            if(leftsum == rightsum && leftsum == midsum){
+               return [i-1,j];
+            }
+            if(leftsum < rightsum){
+                leftsum+=arr[i];
+                midsum-=arr[i];
+                i++;
+            }else{
+                rightsum+=arr[j];
+                midsum-=arr[j];
+                j--;
+            }
+        }
+        return [i,j];
+    }
+}
