@@ -1,0 +1,29 @@
+/**
+ * @param {number[]} arr
+ * @returns {string}
+ */
+
+class Solution {
+    minSum(arr) {
+        const n = arr.length;
+        if (n === 1) return arr[0] + "";
+        
+        let carry = 0 , totalSum = [];
+        
+        arr.sort((a,b) => a - b);
+        
+        for (let i = n - 1; i >= 0; i -= 2) {
+            if (arr[i] === 0) break;
+            let firstNum = arr[i], scndNum = i === 0 ? 0 : arr[i-1];
+            
+            let addition = carry + firstNum + scndNum;
+            carry = Math.floor(addition/10);
+            totalSum.push(addition % 10);
+        }
+        
+        if (carry) totalSum.push(carry);
+        
+        totalSum.reverse();
+        return totalSum.join("");
+    }
+}
