@@ -1,0 +1,61 @@
+class Solution {
+    // Function to find minimum number of increments/decrements required.
+    minIncrements(arr) {
+        const n = arr.length;
+        
+        const hash = new Set();
+        
+        let increment = 0;
+        
+        for (let i = 0; i < n; i++) {
+            if (!hash.has(arr[i])) {
+                hash.add(arr[i]);
+            }else {
+                let num = arr[i];
+                
+                while (hash.has(num)) {
+                    increment++;
+                    num++;
+                }
+                hash.add(num);
+            }
+        }
+        
+        return increment;
+    }
+}
+
+Time Complexity -->> O(n * n)
+
+Space Complexity -->> O(n)
+
+****************************************************************************************************************************************
+
+
+/**
+ * @param {number[]} arr
+ * @returns {number}
+ */
+
+class Solution {
+    // Function to find minimum number of increments/decrements required.
+    minIncrements(arr) {
+        const n = arr.length;
+        arr.sort((a,b) => a - b);
+        let increment = 0;
+        let lastVisited = arr[0];
+        for (let i = 1; i < n; i++) {
+            if (arr[i] === arr[i-1] || lastVisited >= arr[i]) {
+                let diff = Math.abs(arr[i]- lastVisited) + 1;
+                lastVisited = diff + arr[i];
+                increment += lastVisited - arr[i];
+            }
+            else lastVisited = arr[i];
+        }
+        
+        return increment;
+    }
+}
+Time Complexity -->> O(nlogn)
+
+Space Complexity -->> O(1)
