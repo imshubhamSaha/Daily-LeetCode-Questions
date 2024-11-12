@@ -1,0 +1,159 @@
+var findIdx = function(arr, target) {
+    let idx = -1;
+    let low = 0, high = arr.length-1;
+
+    while (low <= high) {
+        let mid = low + Math.floor((high-low)/2);
+
+        if (arr[mid][0] <= target) {
+            idx = mid;
+            low = mid + 1;
+        }
+        else high = mid - 1;
+    }
+
+    return idx;
+}
+/**
+ * @param {number[][]} items
+ * @param {number[]} queries
+ * @return {number[]}
+ */
+var maximumBeauty = function(items, queries) {
+    const n = items.length, m = queries.length;
+
+    const answer = new Array(m).fill(0);
+
+    items.sort((a,b) => a[0] - b[0]);
+
+    for (let i = 0; i < m; i++) {
+        const idx = findIdx(items, queries[i]);
+
+        if (idx === -1) continue;
+        let maxBty = 0;
+        for (let j = idx; j >= 0; j--) {
+            if (items[j][1] > maxBty) maxBty = items[j][1];
+        }
+
+        answer[i] = maxBty;
+    }
+
+    return answer;
+};
+
+// [[1,2],[2,4],[3,2],[3,5],[5,6]]
+
+
+Time complexity --> O(nlogn) + O(m * (O(logn) + n) ) ~ O(m * n)
+Soace Complexity --> O(n) for sorting
+
+*****************************************************************************************************************************************
+
+
+/**
+ * @param {number[][]} items
+ * @param {number[]} queries
+ * @return {number[]}
+ */
+var maximumBeauty = function(items, queries) {
+    const n = items.length, m = queries.length;
+    const answer = new Array(m).fill(0);
+    items.sort((a,b) => a[0] - b[0]);
+
+    const maxBty = [[0, 0 , Infinity]];
+    
+    for (let i = 0; i < n; i++) {
+        const [price, beauty] = items[i];
+        const lastBty = maxBty.at(-1);
+
+        if (beauty > lastBty[1]) {
+            maxBty[maxBty.length-1][2] = price;
+            maxBty.push([price,beauty, Infinity]); 
+        }
+    }
+    let idx = 0;
+    for (const q of queries) {
+        for (let mb = maxBty.length - 1; mb >= 0; mb--) {
+            if (maxBty[mb][0] <= q) {
+                answer[idx] = maxBty[mb][1];
+                break;
+            }
+        }
+        idx++;
+    }
+    return answer;
+};
+
+Total Time Complexity:
+    Sorting: 𝑂(𝑛 log𝑛)
+    Building maxBty: O(n)
+    Query processing: O(m⋅n) in the worst case.
+    Thus, the overall time complexity is: O(nlogn+m⋅n)
+
+
+Space Complexity (SC)
+    Space for Sorting: Sorting the items array is done in-place, so no additional space is required.
+
+    Space for maxBty: The maxBty array stores price-beauty intervals. In the worst case (when all items have increasing beauty values),                       it will have O(n) elements.
+
+    Space for Answer Array: The answer array stores m results, requiring O(m) space.
+
+    Auxiliary Variables: A few variables (price, beauty, lastBty, etc.) are used, requiring  O(1) space.
+
+    Thus, the total space complexity is: O(n+m)
+****************************************************************************************************************************************
+
+/**
+ * @param {number[][]} items
+ * @param {number[]} queries
+ * @return {number[]}
+ */
+var maximumBeauty = function(items, queries) {
+    const n = items.length, m = queries.length;
+    const answer = new Array(m).fill(0);
+    items.sort((a,b) => a[0] - b[0]);
+
+    const maxBty = [[0, 0 , Infinity]];
+    
+    for (let i = 0; i < n; i++) {
+        const [price, beauty] = items[i];
+        const lastBty = maxBty.at(-1);
+
+        if (beauty > lastBty[1]) {
+            maxBty[maxBty.length-1][2] = price;
+            maxBty.push([price,beauty, Infinity]); 
+        }
+    }
+
+    let idx = 0;
+    for (const q of queries) {
+        let low = 0, high = maxBty.length-1;
+
+        while (low <= high) {
+            let mid = low + Math.floor((high-low)/2);
+
+            if (maxBty[mid][0] <= q && maxBty[mid][2] > q) {
+                answer[idx] = maxBty[mid][1];
+                break;
+            }
+            else if (maxBty[mid][2] <= q) low = mid + 1;
+            else high = mid - 1;
+        }
+        idx++;
+    }
+    return answer;
+};
+
+// [[1,2],[2,4],[3,2],[3,5],[5,6]]
+
+Time Complexity (TC)
+    1. Sorting the Items : O(nlogn)
+    2. Building the maxBty Array : O(n).
+    3. Processing the Queries : For each query, a binary search is performed on the maxBty array. Since the length of maxBty is at most
+                                n, binary search takes O(logn) for each query.
+                                There are m queries, so this step takes O(m⋅logn).
+
+    Thus, the overall time complexity is: O(nlogn+m⋅logn)
+
+Total Space Complexity
+    The dominant space is used by the maxBty array and the answer array: O(n+m)
