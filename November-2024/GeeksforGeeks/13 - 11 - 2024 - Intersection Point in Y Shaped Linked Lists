@@ -1,0 +1,55 @@
+
+/**
+ * @param {Node} head1
+ * @param {Node} head2
+ * @returns {number}
+ */
+
+/*
+class Node{
+    constructor(data){
+        this.data = data;
+        this.next = null;
+    }
+}
+
+*/
+
+class Solution {
+    getLength(head) {
+        let cnt = 0;
+        let ptr = head;
+        
+        while (ptr) {
+            cnt++;
+            ptr = ptr.next;
+        }
+        
+        return cnt;
+    }
+    // Function to find intersection point in Y shaped Linked Lists.
+    intersectPoint(head1, head2) {
+        let len1 = this.getLength(head1);
+        let len2 = this.getLength(head2);
+        
+        if (len1 < len2) {
+            [head1, head2] = [head2, head1];
+            [len1, len2] = [len2,len1];
+        }
+        
+        let ptr1 = head1, ptr2 = head2;
+        let diff = len1 - len2;
+        while (diff) {
+            ptr1 = ptr1.next;
+            diff--;
+        }
+        
+        while (ptr1) {
+            if (ptr1 === ptr2) return ptr1.data;
+            ptr1 = ptr1.next;
+            ptr2 = ptr2.next;
+        }
+        
+        return -1;
+    }
+}
