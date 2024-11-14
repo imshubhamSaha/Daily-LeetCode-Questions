@@ -1,0 +1,22 @@
+class Solution {
+    // Function returns the second largest element
+    getSecondLargest(arr) {
+        const n = arr.length;
+        
+        let largest = -1, scndLar = -1;
+        
+        for (let i = 0; i < n; i++) {
+            const num = arr[i];
+            
+            if (num > largest)  {
+                scndLar = largest;
+                largest = num;
+            }
+            else if (num > scndLar && num < largest) {
+                scndLar = num;
+            }
+        }
+        
+        return scndLar;
+    }
+}
