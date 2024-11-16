@@ -1,0 +1,24 @@
+/**
+ * @param {number[]} arr
+ * @returns {number[]}
+ */
+
+class Solution {
+    // Function to reverse the array.
+    reverseArray(arr) {
+        const n = arr.length;
+        let start = 0, end = n - 1;
+        
+        while (start < end) {
+            arr[start] ^= arr[end];
+            arr[end] ^= arr[start];
+            arr[start] ^= arr[end];
+            start++;
+            end--;
+        }    
+        return arr;    
+    }
+}
+
+TC -->> O(n/2) ~= o(n)
+SC --> constant
