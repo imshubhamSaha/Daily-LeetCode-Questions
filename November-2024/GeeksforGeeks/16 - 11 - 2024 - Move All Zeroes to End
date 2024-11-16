@@ -1,0 +1,63 @@
+/**
+ * @param {Number[]} arr
+ */
+
+class Solution {
+    pushZerosToEnd(arr) {
+        const n = arr.length;
+        let index = 0, idx = 0;
+        
+        while (idx < n) {
+            if (arr[idx] !== 0) 
+                arr[index++] = arr[idx];
+            
+            idx++;
+        }
+        
+        while (index < n) 
+            arr[index++] = 0;
+            
+        return arr;
+    }
+}
+
+Time Complexity -->> O(n + n)
+Space  --> constant;
+
+                                          *****************************************
+
+// User function Template for javascript
+/**
+ * @param {Number[]} arr
+ */
+
+class Solution {
+    swap (arr, i, j) {
+        arr[i] ^= arr[j];
+        arr[j] ^= arr[i];
+        arr[i] ^= arr[j];
+    }
+    pushZerosToEnd(arr) {
+        const n = arr.length;
+        let index = 0, slider = 0;
+        
+        while (index < n && slider < n) {
+            if (arr[index] === 0) 
+                index++;
+            else if (arr[index] && arr[slider]) {
+                index++;
+                slider++;
+            }else {
+                if (!arr[slider]) {
+                    this.swap(arr,slider, index);
+                    index++;
+                    slider++;
+                }else slider++;
+            }    
+        }
+        
+    }
+}
+
+Tc ->> o(n)
+Sc -->> constant
