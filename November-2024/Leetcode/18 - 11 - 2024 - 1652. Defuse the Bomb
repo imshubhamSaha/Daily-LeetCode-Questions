@@ -1,0 +1,61 @@
+/**
+ * @param {number[]} code
+ * @param {number} k
+ * @return {number[]}
+ */
+var decrypt = function(code, k) {
+    const n = code.length;
+    const res = new Array(n).fill(0);
+    if (k === 0) return res;
+
+    for (let i = 0; i < n; i++) {
+        let sum = 0;
+        let idx = k > 0 ? (i + 1) : (n + k + i);
+        const end = k > 0 ? (i + k): (n-1 + i) ;
+
+        while (idx <= end) {
+            sum += code[(idx%n)];
+            idx++;
+        }
+        res[i] = sum;
+    } 
+
+    return res;
+};
+
+TC --> O(n * k)
+SC --> O(n)
+
+                                *********************************************************
+
+/**
+ * @param {number[]} code
+ * @param {number} k
+ * @return {number[]}
+ */
+var decrypt = function(code, k) {
+    const n = code.length;
+    const res = new Array(n).fill(0);
+    if (k === 0) return res;
+
+    let currentWin = 0;
+    let strt = k > 0 ? 1 : n + k;
+    let end = k > 0 ? k : n - 1;
+
+    for (let i = strt ; i <= end; i++) {
+        currentWin += code[i % n];
+    }
+    
+    for (let i = 0; i < n; i++) {
+        res[i] = currentWin;
+        currentWin -= code[(strt + i)%n];
+        currentWin += code[(end+1+i)%n];
+    } 
+
+    return res;
+};
+
+TC -->> O(n)
+SC -->> O(n)
+
+                                        *********************************
