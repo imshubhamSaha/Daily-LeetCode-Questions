@@ -1,0 +1,107 @@
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var maximumSubarraySum = function(nums, k) {
+    const n = nums.length;
+
+    let maxSum = 0;
+
+    for (let i = 0; i <= n - k; i++) {
+        let sum = 0;
+        let duplicate = false;
+        for (let j = i; j < i + k; j++) {
+            for (let k = j-1; k >= i; k--) {
+                if (nums[j] === nums[k]) {
+                    duplicate = true;
+                    break;
+                }
+            }
+            if (!duplicate) sum += nums[j];
+            if (duplicate) break;
+        }
+
+        if (!duplicate) maxSum = Math.max(maxSum, sum)
+    }
+    return maxSum;
+};
+
+T C -->> O(n * k * k)
+S C -->> O(1)
+
+                                    ********************************************
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var maximumSubarraySum = function(nums, k) {
+    const n = nums.length;
+    
+    let maxSum = 0;
+
+    for (let i = 0; i <= n - k; i++) {
+        const hashSet = new Set();
+        let sum = 0;
+        let duplicate = false;
+        for (let j = i; j < i + k; j++) {
+            if (hashSet.has(nums[j])) {
+                duplicate = true;
+                break;
+            }
+            hashSet.add(nums[j]);
+            sum += nums[j];
+        }
+
+        if (!duplicate) maxSum = Math.max(maxSum, sum)
+    }
+    return maxSum;
+};
+T C -->> O(n * k)
+S C -->> O(k)
+
+                                    ********************************************
+
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var maximumSubarraySum = function(nums, k) {
+    const n = nums.length;
+    if (n === 1) 
+        return Math.max(...nums);
+    let maxSum = 0;
+    let prefixSum = 0
+    const hashSet = new Set();
+    let idx = 0;
+    for (let i = 0; i < n; i++) {
+        if (hashSet.has(nums[i])) {
+            while (nums[idx] !== nums[i]) {
+                prefixSum -= nums[idx];
+                hashSet.delete(nums[idx++]);
+            }
+            idx++;
+            continue;
+        }
+        prefixSum += nums[i];
+        hashSet.add(nums[i]);
+        if ((i - idx) + 1 === k) {
+            maxSum = Math.max(maxSum, prefixSum);
+            prefixSum -= nums[idx];
+            hashSet.delete(nums[idx]);
+            idx++;
+        } 
+        if (idx > (n - k)) break;
+    }
+    return maxSum;
+};
+
+T C -->> O(n)
+S C -->> O(k)
+
+                                    ********************************************
+
