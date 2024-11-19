@@ -1,0 +1,58 @@
+class Solution {
+    findMajority(arr, size) {
+        let cnt1 = 0, cnt2 = 0;
+        let majority1 = -1,  majority2 = -1;
+    
+        for (let i = 0; i < arr.length; i++) {
+            
+            if(arr[i] === majority1){
+                 cnt1++;
+            }
+            else if(arr[i] === majority2) {
+                cnt2++;
+            }    
+            else if(cnt1 === 0) {
+                cnt1 = 1;
+                majority1 = arr[i];
+            }else if(cnt2 === 0) {
+                cnt2 = 1;
+                majority2 = arr[i]
+            }else{
+                cnt1--;
+                cnt2--;
+            }
+        }
+
+        return [majority1, majority2];
+    }
+    
+    isMajority(arr, size , majority, oneThird, res) {
+        const [m1, m2] = majority;
+        let cnt1 = cnt2 = 0;
+
+        for(let i = 0; i < size; i++) {
+            if(arr[i] === key1) cnt1++;
+            else if(arr[i] === key2) cnt2++;
+        }
+
+        if(cnt1 > oneThird) res.push(m1);
+        if(cnt2 > oneThird) res.push(m1);
+        return res;
+    }
+    // Function to find the majority elements in the array
+    findMajority(arr) {
+        const n = arr.length;
+        if (n === 1) return arr;
+        const oneThird = n / 3;
+        const majority = this.findMajority(arr,n);
+        const res = this.isMajority(arr, n, majority, oneThird, []);
+        
+        if (res[0] > res[1]) {
+            res[0] ^= res[1];
+            res[1] ^= res[0];
+            res[0] ^= res[1];
+        }
+        
+        return res;
+    }
+}
