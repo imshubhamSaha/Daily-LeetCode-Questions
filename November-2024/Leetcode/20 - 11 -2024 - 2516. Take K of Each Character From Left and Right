@@ -1,0 +1,33 @@
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {number}
+ */
+var takeCharacters = function(s, k) {
+    const n = s.length;
+    if (k === 0) return 0;
+
+    const hash = [0,0,0];
+    for (let i = 0; i < n; i++) {
+        hash[s[i].charCodeAt(0) - 97]++;
+    }
+
+    if (Math.min(...hash) < k) 
+        return -1;
+
+    let min = n + 1;
+    let j = 0;
+    for (let i = 0; i < n ; i++) {
+        hash[s[i].charCodeAt(0) - 97]--;
+
+        while (Math.min(...hash) < k) {
+            hash[s[j].charCodeAt(0) - 97]++;
+            j++;
+        }
+
+        min = Math.min(min, (n - ((i - j) + 1)));
+        
+    }
+
+    return min;
+};
