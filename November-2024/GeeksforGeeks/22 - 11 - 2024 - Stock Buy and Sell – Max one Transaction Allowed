@@ -1,0 +1,24 @@
+// User function Template for javascript
+/**
+ * @param {number[]} prices
+ * @returns {number}
+ */
+
+class Solution {
+    // Function to find the maximum profit.
+    maximumProfit(prices) {
+        const n = prices.length;
+        let buy = prices[0];
+        let profit = 0;
+        
+        for (let i = 1; i < n; i++) {
+            const p = prices[i];
+            if (p > buy) 
+                profit = Math.max(profit, (p - buy));
+            else if (p < buy)
+                buy = p;
+        }
+        
+        return profit;
+    }
+}
