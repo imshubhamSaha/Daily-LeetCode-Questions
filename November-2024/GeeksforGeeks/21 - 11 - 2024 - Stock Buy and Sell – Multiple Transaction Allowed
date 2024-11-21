@@ -1,0 +1,36 @@
+class Solution {
+    /**
+    * @param number[] prices
+
+    * @returns number
+    */
+    maximumProfit(prices) {
+        const n = prices.length;
+        
+        let maxProfit = 0;
+        let purchase = prices[0];
+        
+        let i = 1;
+        
+        while (i < n) {
+            const price = prices[i];
+            if (price <= purchase) {
+                purchase = price;
+            }else {
+                if (i < n - 1) {
+                    if (price > purchase && price >= prices[i+1]) {
+                        maxProfit += (price - purchase);
+                        purchase = price;
+                    }
+                }else {
+                    if (price > purchase) {
+                        maxProfit += (price - purchase);
+                    }
+                }
+            }
+            i++;
+        }
+        
+        return maxProfit;
+    }
+}
