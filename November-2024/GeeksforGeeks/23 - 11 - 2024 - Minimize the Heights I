@@ -1,0 +1,26 @@
+// User function Template for javascript
+
+/**
+ * @param {number[]} arr
+ * @param {number} k
+ * @return {number}
+ */
+
+class Solution {
+    getMinDiff(k, arr) {
+        const n = arr.length;
+        arr.sort((a,b) => a-b);
+        let res = arr[n-1] - arr[0];
+        
+        for (let i = 1; i < n; i++) {
+            let longest = Math.max(arr[n-1]-k, arr[i-1] + k);
+            let smallest = Math.min(arr[0] + k, arr[i]-k);
+            
+            res = Math.min(res, (longest - smallest));
+        }
+        
+        return res;
+        
+    }
+}
+// -70 -59 83 16 61 19]80
