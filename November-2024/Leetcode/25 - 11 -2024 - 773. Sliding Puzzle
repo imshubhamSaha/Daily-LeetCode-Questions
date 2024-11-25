@@ -1,0 +1,47 @@
+/**
+ * @param {number[][]} board
+ * @return {number}
+ */
+var slidingPuzzle = function(board) {
+    const target = [[1,2,3], [4,5,0]];
+    const dr = [0,1,0,-1];
+    const dc = [-1,0,1,0];
+
+    let r, c;
+
+    for (let i = 0; i < 2; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (board[i][j] === 0) {
+                r = i;
+                c = j;
+            }
+        }
+    }
+
+    const q = [{row: r, col : c, board,step:0}];
+    const vis = new Set();
+    vis.add(board.join(""));
+
+    while (q.length) {
+        const {row, col,board, step} = q.shift();
+        if (board.join("") === target.join("")) return step;
+
+        for (let i = 0; i < 4; i++) {
+            const newR = row + dr[i];
+            const newC = col + dc[i];
+
+            if (newR >= 0&& newR < 2 && newC >= 0 && newC < 3) {
+                const newB = board.map(r => [...r]);
+                [newB[row][col], newB[newR][newC]] = [newB[newR][newC], newB[row][col]];
+
+                const newBStr = newB.join("");
+                if (!vis.has(newBStr)) {
+                    q.push({ row: newR, col: newC, board: newB, step: step + 1 });
+                    vis.add(newBStr);
+                }
+            }
+        }
+    }
+
+    return -1;
+};
