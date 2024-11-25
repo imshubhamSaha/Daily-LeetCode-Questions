@@ -1,0 +1,56 @@
+/**
+ * @param {number[]} arr
+ * @return {number}
+ */
+
+class Solution {
+    maxProduct(arr) {
+        const n = arr.length;
+        let prefix = 1, suffix = 1;
+        let maxProd = Number.MIN_SAFE_INTEGER;
+        
+        for (let i = 0; i < n; i++) {
+            if (prefix === 0) prefix = 1;
+            if (suffix === 0) suffix = 1;
+            
+            prefix *= arr[i];
+            suffix *= arr[n - 1- i];
+            
+            maxProd = Math.max(maxProd, Math.max(prefix, suffix));
+        }
+        
+        return maxProd;
+    }
+}
+
+                                              *******************************
+
+
+
+/**
+ * @param {number[]} arr
+ * @return {number}
+ */
+
+class Solution {
+    maxProduct(arr) {
+        const n = arr.length;
+        let maxi = arr[0], mini = arr[0];
+        let maxProd = arr[0];
+        
+        for (let i = 1; i < n; i++) {
+            if (arr[i] < 0) {
+                const t = maxi;
+                maxi = mini;
+                mini = t;
+            }
+            
+            maxi = Math.max(arr[i], maxi * arr[i]);
+            mini = Math.min(arr[i], mini * arr[i]);
+            
+            maxProd = Math.max(maxProd, maxi);
+        }
+        
+        return maxProd;
+    }
+}                                        
