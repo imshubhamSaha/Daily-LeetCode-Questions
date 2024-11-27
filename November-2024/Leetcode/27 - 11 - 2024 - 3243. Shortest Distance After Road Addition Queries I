@@ -1,0 +1,36 @@
+var calc = function (graph, n) {
+    const distance = new Array(n).fill(Infinity);
+    distance[0] = 0;
+
+    const queue = [];
+    queue.push(0);
+    while (queue.length > 0) {
+        const p = queue.shift();
+        for (const nb of graph[p]) {
+            if (distance[nb] === Infinity) {
+                distance[nb] = distance[p] + 1;
+                queue.push(nb);
+            }
+        }
+    }
+
+    return distance[n - 1] === Infinity ? -1 : distance[n - 1];
+}
+
+var shortestDistanceAfterQueries = function(n, queries) {
+    const path = Array.from({ length: n }, () => []);
+    const m = queries.length;
+    for (let i = 0; i < n - 1; i++) 
+        path[i].push(i + 1);
+    
+    const result = new Array(m);
+
+    for (let i = 0; i < m; i++) {
+        const [u, v] = queries[i];
+        path[u].push(v);
+
+        result[i] = calc(path, n);
+    }
+
+    return result;
+};
