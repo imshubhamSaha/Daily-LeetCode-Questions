@@ -1,0 +1,86 @@
+// BRUTE- FORCE
+class Solution {
+    // Function is to check whether two strings are anagram of each other or not.
+    areAnagrams(s1, s2) {
+        const n = s1.length;
+        const m = s2.length;
+        if (n !== m) return false;
+        for (let i = 0; i < n; i++) {
+            let cnt = 1;
+            const ch = s1[i];
+            for (let j = 0; j < n; j++) {
+                if (i != j && s1[j] === ch) cnt++;
+            }
+            let matched = false;
+            for (let k = 0; k < m; k++) {
+                if (s2[k] === ch) {
+                    if (cnt === 0) return false;
+                    matched = true;
+                    cnt--;
+                }
+            }
+            
+            if (!matched) return false;
+        }
+        
+        return true;
+    }
+}
+
+
+________________________
+
+Optimised
+
+/**
+ * @param {string} a
+ * @param {string} b
+ * @returns {boolean}
+ */
+
+class Solution {
+    // Function is to check whether two strings are anagram of each other or not.
+    areAnagrams(s1, s2) {
+        const n = s1.length;
+        const m = s2.length;
+        if (n !== m) return false;
+        s1 = s1.split("").sort();
+        s2 = s2.split("").sort();
+        
+        for (let i = 0; i < n; i++) {
+            if (s1[i] !== s2[i]) return false;
+        }
+        return true;
+    }
+}
+
+------------------------
+
+//Optimised
+
+class Solution {
+    // Function is to check whether two strings are anagram of each other or not.
+    areAnagrams(s1, s2) {
+        const n = s1.length;
+        const m = s2.length;
+        
+        if (n !== m) return false;
+        
+        const freqArr = new Array(26).fill(0);
+        
+        for (let i = 0; i < n; i++) {
+            freqArr[s1[i].charCodeAt(0) - 97]++;
+        }
+        
+        for (let j = 0; j < n; j++) {
+            const idx = s2[j].charCodeAt(0) - 97;
+            
+            if (freqArr[idx] === 0) 
+                return false;
+                
+            freqArr[idx]--;    
+        }
+        
+        return true;
+    }
+}
