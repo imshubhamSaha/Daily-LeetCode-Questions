@@ -1,0 +1,33 @@
+/**
+ * @param {string} sentence
+ * @param {string} searchWord
+ * @return {number}
+ */
+var isPrefixOfWord = function(sen, sW) {
+    const n = sen.length;
+    const m = sW.length;
+
+    let idx = 1;
+    let i = 0;
+    let j = 0;
+    while (j < n) {
+        const ch = sen[j]
+        if (ch === " ") {
+            idx++;
+            i = 0;
+            j++;
+        }else {
+            if (ch !== sW[i]) {
+                while (j < n && sen[j] !== " ") {
+                    j++;
+                }
+            }else {
+                i++;
+                j++;
+            }
+        }
+        if (i === m) return idx;
+    }
+
+    return -1;
+};
