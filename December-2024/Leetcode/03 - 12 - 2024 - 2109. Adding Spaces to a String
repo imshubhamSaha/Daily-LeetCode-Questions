@@ -1,0 +1,23 @@
+/**
+ * @param {string} s
+ * @param {number[]} spaces
+ * @return {string}
+ */
+var addSpaces = function(s, spaces) {
+    const n = s.length;
+    const m = spaces.length;
+    let res = "";
+    let idx = 0;
+
+    for (let i = 0; i < n; i++) {
+        if (i < spaces[idx] || idx === m) {
+            res += s[i];
+        }
+        else if (i === spaces[idx]) {
+            res += " " + s[i];
+            idx++;
+        }
+    }
+
+    return res;
+};
