@@ -1,0 +1,36 @@
+class Solution {
+    // Function to find minimum number of characters needed to make the string
+    // palindrome.
+    lcs(palin) {
+        const n = palin.length;
+        
+        const dp = new Array(n).fill(0);
+        
+        let i = 1, len = 0;
+        
+        while ( i < n) {
+            if (palin[i] === palin[len]) {
+                len++;
+                dp[i] = len;
+                i++;
+            }else {
+                if (len > 0)
+                    len = dp[len-1];
+                else {
+                    dp[i] = 0;
+                    i++;
+                }
+            }
+        }
+        
+        return dp[n-1];
+    }
+    minChar(s) {
+        const n = s.length;
+        const revStr = s.split("").reverse().join("");
+        const palin = s + "#" +  revStr;
+        const longestSub = this.lcs(palin);
+        
+        return n - longestSub;
+    }
+}
