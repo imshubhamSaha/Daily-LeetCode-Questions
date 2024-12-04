@@ -1,0 +1,29 @@
+var incrementByOne = function (code) {
+    if (code === 25) return 0;
+    return code + 1;
+}
+/**
+ * @param {string} str1
+ * @param {string} str2
+ * @return {boolean}
+ */
+var canMakeSubsequence = function(s1, s2) {
+    const n = s1.length;
+    const m = s2.length;
+
+    if (n < m) 
+        return false;
+
+    let i = 0;
+    let j = 0;
+
+    while (i < n && j < m) {
+        const char = s1[i].charCodeAt(0) - 97;
+        const check = s2[j].charCodeAt(0) - 97;
+        if (char === check || incrementByOne(char) === check) {
+            j++;
+        }
+        i++;    
+    }
+    return j === m;
+};
