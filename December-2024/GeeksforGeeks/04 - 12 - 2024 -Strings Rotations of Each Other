@@ -1,0 +1,91 @@
+/**
+ * @param {string} s1
+ * @param {string} s2
+ * @returns {boolean}
+ */
+
+class Solution {
+    // Function to check if two strings are rotations of each other or not.
+    areRotations(s1, s2) {
+        const n = s1.length;
+        const m = s2.length;
+        if (s1 === s2)
+            return true;
+        let i = 1; 
+        while (i < n) {
+            const char = s1.slice(i) + s1.slice(0,(i-1)+1);
+            if (char === s2)
+                return true;
+            i++;    
+        }
+        
+        return false;
+    }
+}
+
+class Solution {
+    // Function to check if two strings are rotations of each other or not.
+    areRotations(s1, s2) {
+        const n = s1.length;
+        const m = s2.length;
+        const concat = s1 + s1;
+
+        return concat.includes(s2);
+    }
+}
+
+class Solution {
+    // Function to check if two strings are rotations of each other or not.
+    buildLps(pattern) {
+        const m = pattern.length;
+        const lps = new Array(m).fill(0);
+        let len = 0;
+        let i = 1;
+        
+        while (i < m) {
+            if (pattern[i] === pattern[len]) {
+                len++;
+                lps[i] = len;
+                i++;
+            }else {
+                if (len !== 0) {
+                    len = lps[len-1];
+                }else {
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+        
+        return lps;
+    }
+    kmp(text, pattern) {
+        const n = text.length;
+        const m = pattern.length;
+        
+        const lps = this.buildLps(pattern);
+        let i = 0, j = 0;
+        
+        while (i < n) {
+            if (text[i] === pattern[j]) {
+                i++;
+                j++;
+                if (j === m)
+                    return true;
+            }else {
+                if (j !== 0)
+                    j = lps[j-1];
+                else i++;    
+            }
+        }
+        
+        return false;
+    }
+    areRotations(s1, s2) {
+        const n = s1.length;
+        const m = s2.length;
+        const concat = s1 + s1;
+
+        return this.kmp(concat, s2);
+    }
+}
