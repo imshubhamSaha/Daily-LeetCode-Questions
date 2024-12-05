@@ -1,0 +1,43 @@
+/**
+ * @param {string} start
+ * @param {string} target
+ * @return {boolean}
+ */
+var canChange = function (start, target) {
+    if (start === target) return true;
+    const s = start.length;
+    const t = target.length;
+
+    if (s === 1) return start[0] === target[0];
+
+    let inlineL = 0, inlineR = 0;
+
+    for (let i = 0; i < s; i++) {
+        const curr = start[i];
+        const goal = target[i];
+        if (curr === "R") {
+            if (inlineL > 0)
+                return false;
+            inlineR++;
+        }
+
+        if (goal === "L") {
+            if (inlineR > 0)
+                return false;
+            inlineL++;
+        }
+        if (curr === "L") {
+            if (inlineL === 0)
+                return false;
+            inlineL--;
+        }
+
+        if (goal === "R") {
+            if (inlineR === 0)
+                return false;
+            inlineR--;
+        }
+    }
+
+    return inlineL === 0 && inlineR ===0;
+};
