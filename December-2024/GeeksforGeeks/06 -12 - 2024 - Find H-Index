@@ -1,0 +1,47 @@
+/**
+ * @param {number[]} citations
+ * @returns {number}
+ */
+
+class Solution {
+    // Function to find hIndex
+    hIndex(citations) {
+        const n = citations.length;
+
+        let maxCit = 0;
+
+        for (let i = 0; i < n; i++) {
+            let cnt = 0;
+            
+            for (let j = 0; j < n; j++) {
+                if (citations[j] >= citations[i])
+                    cnt++;
+            }
+            
+            cnt = Math.min(cnt,citations[i]);
+            maxCit = Math.max(maxCit, cnt);
+
+        }
+        
+        return maxCit;
+    }
+}
+
+
+
+class Solution {
+    // Function to find hIndex
+    hIndex(citations) {
+        const n = citations.length;
+        citations.sort((a,b) => b - a);
+        let maxCit = 0;
+
+        for (let i = 0; i < n; i++) {
+            if (citations[i] >= i+1) 
+                maxCit = Math.max(maxCit,i+1);
+            else break;
+        }
+        
+        return maxCit;
+    }
+}
