@@ -1,0 +1,21 @@
+/**
+ * @param {number[]} banned
+ * @param {number} n
+ * @param {number} maxSum
+ * @return {number}
+ */
+var maxCount = function(banned, n, maxSum) {
+    let maxNum = 0;
+    const ban = new Set(banned);
+    let sum = 0;
+    for (let i = 1; i <= n; i++) {
+        if (!ban.has(i)) {
+            sum += i;
+            if (sum > maxSum) 
+                break;
+            maxNum++;
+        }
+    }
+
+    return maxNum;
+};
