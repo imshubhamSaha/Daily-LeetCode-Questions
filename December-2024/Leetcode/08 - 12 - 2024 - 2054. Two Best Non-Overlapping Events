@@ -1,0 +1,41 @@
+/**
+ * @param {number[][]} events
+ * @return {number}
+ */
+var maxTwoEvents = function(events) {
+    const n = events.length;
+
+    events.sort((a,b) => a[0] - b[0]);
+
+    const maxValue = new Array(n).fill(0);
+    maxValue[n-1] = events[n - 1][2];
+
+    for (let i = n - 2; i >= 0; i--) {
+        maxValue[i] = Math.max(maxValue[i+1] , events[i][2]);
+    }
+
+    let maxSum = 0;
+
+    for (let i = 0; i < n; i++) {
+        let low = i + 1;
+        let high = n - 1;
+
+        let nextEvnt = -1;
+
+        while (low <= high) {
+            let mid = (low + high) >> 1;
+
+            if (events[mid][0] > events[i][1]) {
+                nextEvnt = mid;
+                high = mid - 1;
+            }else low = mid + 1;
+        }
+
+        if (nextEvnt !== -1) 
+            maxSum = Math.max(maxSum , (events[i][2] + maxValue[nextEvnt]));
+
+        maxSum = Math.max(maxSum, events[i][2]);
+    }
+
+    return maxSum;
+};
