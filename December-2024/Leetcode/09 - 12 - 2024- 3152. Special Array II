@@ -1,0 +1,99 @@
+/**
+ * @param {number[]} nums
+ * @param {number[][]} queries
+ * @return {boolean[]}
+ */
+var isArraySpecial = function(nums, queries) {
+    const n = nums.length;
+    const q = queries.length;
+
+    const res = [];
+
+    for (let i = 0; i < q; i++) {
+        const [start, end] = queries[i];
+        let isAlt = true;
+        for (let j = start+1; j<= end; j++) {
+            if ((nums[j] & 1) === (nums[j-1] & 1) ) {
+                isAlt = false;
+                break;
+            }
+        }
+
+        if (isAlt) res.push(true);
+        else res.push(false);
+    }
+
+    return res;
+};
+Time Complexity: O(q×n)
+Space Complexity: O(q)
+
+_________------------________________
+
+/**
+ * @param {number[]} nums
+ * @param {number[][]} queries
+ * @return {boolean[]}
+ */
+var isArraySpecial = function(nums, queries) {
+    const n = nums.length;
+    const q = queries.length;
+    let str = "";
+    const res = [];
+
+    for (let i = 0; i < n; i++) {
+        if ((nums[i] & 1) === 1) 
+            str += "o";
+        else str += "e";
+    }
+
+    for (let i = 0; i < q; i++) {
+        const [ start, end] = queries[i];
+        const s = str.slice(start, end + 1);
+        const len = (end - start) + 1;
+        let match = "oe".repeat((Math.floor(len/2)));
+        let match2 = "eo".repeat(Math.floor(len/2));
+        if (len & 1 === 1) {
+            match += "o";
+            match2 += "e";
+        }
+
+        if (s === match || s === match2) {
+            res.push(true);
+        }else res.push(false);
+    }
+    return res;
+};
+
+Time Complexity: O(q×n)
+Space Complexity: O(n+q)
+
+_________------------________________
+
+/**
+ * @param {number[]} nums
+ * @param {number[][]} queries
+ * @return {boolean[]}
+ */
+var isArraySpecial = function(nums, queries) {
+    const n = nums.length;
+    const q = queries.length;
+    const longestParity = new Array(n).fill(1);
+    const res = new Array(q).fill(false);
+
+    for (let i = 1; i < n; i++) {
+        if ((nums[i] & 1) !== (nums[i-1] & 1)) {
+            longestParity[i] = longestParity[i-1] + 1;
+        }    
+    }
+
+    for (let i = 0; i < q; i++) {
+        const [ start, end] = queries[i];
+        const len = (end - start) + 1;
+        if (longestParity[end] >= len ) 
+            res[i] = true;
+    }
+    return res;
+};
+Time Complexity: O(n+q)
+Space Complexity: O(n+q)
