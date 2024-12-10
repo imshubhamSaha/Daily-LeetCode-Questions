@@ -1,0 +1,19 @@
+class Solution {
+    // Function to find the minimum number of removals required.
+    minRemoval(intervals) {
+        const n = intervals.length;
+        intervals.sort((a,b) => a[0] - b[0]);
+        let end = intervals[0][1];
+        let remove = 0;
+        for (let i = 1; i < n; i++) {
+            if (intervals[i][0] === intervals[i][1]) 
+                continue;
+            if (intervals[i][0] < end) {
+                remove++;
+                end = Math.min(end, intervals[i][1]);
+            }else end = intervals[i][1];
+        }
+        
+        return remove;
+    }
+}
