@@ -1,0 +1,91 @@
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var maximumBeauty = function(nums, k) {
+    const n = nums.length;
+    let res = 0;
+    const map = new Map();
+    for (let i = 0; i < n; i++) {
+        const num = nums[i];
+        map.set(num , (map.get(num) || 0) + 1);
+
+        for (let j = 1; j <= k; j++) {
+            map.set(num - j, (map.get(num-j) || 0) + 1);
+            map.set(num + j, (map.get(num + j) || 0) + 1);
+        }
+    }
+
+    for (const [_, val] of map.entries()) {
+        if (val > res) 
+            res = val;
+    }
+
+    return res;
+};
+Tc ->> O(n * k) + O(m)
+Sc --> O(n * (2k + 1))
+
+_-------------------------
+
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var maximumBeauty = function(nums, k) {
+    const n = nums.length;
+    nums.sort((a,b) => a-b);
+    let res = 0;
+    let left = 0
+    for (let r = 0; r < n; r++) {
+        while (left < r && (nums[r] - nums[left]) > (2 * k))
+            left++;
+
+        res = Math.max(res, (r - left) + 1);
+    }   
+
+    return res;
+};
+Tc ->> O(nlogn) + O(n)
+Sc --> O(1)
+
+
+-----------------------------
+
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var maximumBeauty = function(nums, k) {
+    const n = nums.length;
+    if (n === 1) 
+        return 1;
+    const mx = Math.max(...nums);
+    const pre = new Array(mx + 1).fill(0);
+    let res = 0;
+    for (let r = 0; r < n; r++) {
+        const min = nums[r] - k;
+        const max = nums[r] + k;
+
+        pre[Math.max(min, 0)] += 1;
+        pre[Math.min(max+1 , mx)] -= 1;
+    }   
+    let cS = 0;
+    for (let i = 0; i < pre.length; i++) {
+        cS += pre[i];
+        res = Math.max(cS, res);
+    }
+
+
+    return res;
+};
+Tc ->> O(n) + O(n) + O(maxvalue) ~~ O(maxvalue)
+Sc --> O(maxvalue)
+
+
+-----------------------------
