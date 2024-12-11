@@ -1,0 +1,19 @@
+class Solution {
+    mergeArrays(a, b) {
+        const n = a.length;
+        const m = b.length;
+        let i = n-1;
+        let j= 0;
+        while(i>=0 && j<m) {
+            if(a[i] > b[j]) {
+                [a[i], b[j]] = [b[j], a[i]]
+            }
+            
+            i--;
+            j++;
+        }
+        
+        a.sort((a,b) =>a-b);
+        b.sort((a,b) =>a-b);
+    }
+}
