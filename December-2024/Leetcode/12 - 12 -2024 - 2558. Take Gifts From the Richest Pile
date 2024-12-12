@@ -1,0 +1,181 @@
+var squareRoot = function (n) {
+    if (n < 0) return -1;
+
+    if (n === 0 || n === 1) 
+        return n;
+    
+    const sqRt = Math.floor(Math.exp(Math.log(n)/2));
+
+    if ((sqRt * sqRt) === n) 
+        return sqRt;
+    if (((sqRt + 1) * (sqRt + 1)) === n)
+        return sqRt + 1;
+    return sqRt;
+}
+/**
+ * @param {number[]} gifts
+ * @param {number} k
+ * @return {number}
+ */
+var pickGifts = function(gifts, k) {
+    const n = gifts.length;
+    gifts.sort((a,b) => a-b);
+
+    let totalGifts = gifts.reduce((total,gift) => total + gift, 0);
+
+    while (k > 0) {
+        const num = squareRoot(gifts[n-1]);
+        totalGifts = (totalGifts - gifts[n-1]) + num;
+        gifts[n-1] = num;
+        gifts.sort((a,b) => a-b);
+        k--;
+    }
+
+    return totalGifts;
+
+};
+Time Complexity: O(k⋅nlogn).
+Space Complexity: O(1).
+
+----------------------------------------
+
+class MaxHeap {
+    constructor() {
+        this.heap = [];
+    }
+
+    getLeftChildIndex(parentIndex) { return 2 * parentIndex + 1; }
+    getRightChildIndex(parentIndex) { return 2 * parentIndex + 2; }
+
+    getParentIndex(childIndex) {
+        return Math.floor((childIndex - 1) / 2);
+    }
+
+    hasLeftChild(index) {
+        return this.getLeftChildIndex(index) < this.heap.length;
+    }
+
+    hasRightChild(index) {
+        return this.getRightChildIndex(index) < this.heap.length;
+    }
+
+    hasParent(index) {
+        return this.getParentIndex(index) >= 0;
+    }
+
+    leftChild(index) {
+        return this.heap[this.getLeftChildIndex(index)];
+    }
+
+    rightChild(index) {
+        return this.heap[this.getRightChildIndex(index)];
+    }
+
+    parent(index) {
+        return this.heap[this.getParentIndex(index)];
+    }
+
+    swap(indexOne, indexTwo) {
+        const temp = this.heap[indexOne];
+        this.heap[indexOne] = this.heap[indexTwo];
+        this.heap[indexTwo] = temp;
+    }
+
+    peek() {
+        if (this.heap.length === 0) {
+            return null;
+        }
+        return this.heap[0];
+    }
+
+    remove() {
+        if (this.heap.length === 0) {
+            return null;
+        }
+        const item = this.heap[0];
+        this.heap[0] = this.heap[this.heap.length - 1];
+        this.heap.pop();
+        this.heapifyDown();
+        return item;
+    }
+
+    add(item) {
+        this.heap.push(item);
+        this.heapifyUp();
+    }
+
+    heapifyUp() {
+        let index = this.heap.length - 1;
+        while (this.hasParent(index) && this.parent(index) < this.heap[index]) {
+            this.swap(this.getParentIndex(index), index);
+            index = this.getParentIndex(index);
+        }
+    }
+
+    heapifyDown() {
+        let index = 0;
+        while (this.hasLeftChild(index)) {
+            let largerChildIndex = this.getLeftChildIndex(index);
+            if (this.hasRightChild(index) && this.rightChild(index) > this.leftChild(index)) {
+                largerChildIndex = this.getRightChildIndex(index);
+            }
+            if (this.heap[index] > this.heap[largerChildIndex]) {
+                break;
+            } else {
+                this.swap(index, largerChildIndex);
+            }
+            index = largerChildIndex;
+        }
+    }
+    isEmpty() {
+        return this.heap.length === 0;
+    }
+
+}
+
+var squareRoot = function (n) {
+    if (n < 0) return -1;
+
+    if (n === 0 || n === 1)
+        return n;
+
+    const sqRt = Math.floor(Math.exp(Math.log(n) / 2));
+
+    if ((sqRt * sqRt) === n)
+        return sqRt;
+    if (((sqRt + 1) * (sqRt + 1)) === n)
+        return sqRt + 1;
+    return sqRt;
+}
+/**
+ * @param {number[]} gifts
+ * @param {number} k
+ * @return {number}
+ */
+var pickGifts = function (gifts, k) {
+    const n = gifts.length;
+    let totalGifts = 0;
+    const pq = new MaxHeap();
+
+    for (let i = 0; i < n; i++) {
+        totalGifts += gifts[i];
+        pq.add(gifts[i]);
+    }
+
+
+    while (k > 0) {
+        if (pq.isEmpty()) 
+            return totalGifts;
+        const maxGift = pq.peek();
+        pq.remove();
+        const sqrt = squareRoot(maxGift);
+        totalGifts = (totalGifts - maxGift) + sqrt;
+        pq.add(sqrt);
+        k--;
+    }
+
+    return totalGifts;
+
+};
+Time Complexity: O((n+k)logn).
+Space Complexity: O(n).
