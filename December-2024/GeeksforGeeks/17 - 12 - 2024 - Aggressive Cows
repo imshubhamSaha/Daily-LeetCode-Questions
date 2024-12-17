@@ -1,0 +1,74 @@
+class Solution {
+    // Function to solve the problem.
+    canWePlace(stalls, dist, cows) {
+        const n = stalls.length;
+        let cowsCnt = 1;
+        let lastCow = stalls[0];
+        
+        for (let i = 1; i < n; i++) {
+            if ((stalls[i] - lastCow) >= dist) {
+                cowsCnt++;
+                lastCow = stalls[i];
+            }
+            
+            if (cowsCnt >= cows)
+                return true;
+        }
+        
+        return false;
+    }
+    aggressiveCows(stalls, k) {
+        const n = stalls.length;
+        stalls.sort((a,b) => a - b);
+        const end = (stalls[n-1] - stalls[0]);
+        for (let i = 1; i <= (end); i++) {
+            if (!(this.canWePlace(stalls, i, k)))
+                return i - 1;
+        }
+    }
+}
+TC  -->> O(nlogn)+O(end⋅n)
+SC -->> O(1)
+
+
+                                      ------------------------------------------------
+
+class Solution {
+    // Function to solve the problem.
+    canWePlace(stalls, dist, cows) {
+        const n = stalls.length;
+        let cowsCnt = 1;
+        let lastCow = stalls[0];
+        
+        for (let i = 1; i < n; i++) {
+            if ((stalls[i] - lastCow) >= dist) {
+                cowsCnt++;
+                lastCow = stalls[i];
+            }
+            
+            if (cowsCnt >= cows)
+                return true;
+        }
+        
+        return false;
+    }
+    aggressiveCows(stalls, k) {
+        const n = stalls.length;
+        stalls.sort((a,b) => a - b);
+        let start = 1;
+        let end = (stalls[n-1] - stalls[0]);
+        
+        while (start <= end) {
+            let mid = (end + start) >> 1;
+            
+            if (this.canWePlace(stalls, mid, k))
+                start = mid + 1;
+            else end = mid - 1;
+        }
+        
+        return end;
+    }
+}
+
+Tc -->> O(n⋅log(end))
+Sc -->> O(1)
