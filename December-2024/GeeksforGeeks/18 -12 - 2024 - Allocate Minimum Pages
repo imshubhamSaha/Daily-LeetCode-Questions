@@ -1,0 +1,51 @@
+class Solution {
+     
+    solve(arr, n, m, mid) {
+        
+        let no_student = 1;
+        let sum = 0;
+        
+        for(let i=0; i<n; i++) {
+            if((sum + arr[i]) <= mid) {
+                sum += arr[i]
+            }else{
+                no_student++;
+                
+                if(no_student > m || arr[i] > mid) {
+                    return false;
+                }
+                sum = arr[i];
+            }
+        }
+        return true;
+    }
+    // Function to find minimum number of pages.
+    findPages(arr, k) {
+        const n = arr.length;
+        if(k>n) {
+            return -1;
+        }
+        let low = 0;
+        let high = arr.reduce((a,c) => a+c, 0);
+        let ans = -1;
+        let mid = low + Math.floor((high-low)/2);
+        while(low<=high) {
+            if(this.solve(arr,n, k, mid)){
+                ans = mid;
+                high = mid-1;
+            }else{
+                low = mid+1;
+            }
+            mid = low + Math.floor((high-low)/2);
+        }
+        
+        return ans;
+    }
+}
+Time Complexity: O(nlog(sum of arr))
+Space Complexity: O(1) (excluding input storage).
+
+
+
+
+
