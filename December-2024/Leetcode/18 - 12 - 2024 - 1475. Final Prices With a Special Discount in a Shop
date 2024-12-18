@@ -1,0 +1,49 @@
+/**
+ * @param {number[]} prices
+ * @return {number[]}
+ */
+var finalPrices = function(prices) {
+    const n = prices.length;
+
+    for (let i = 0; i < n-1; i++) {
+        let idx = i + 1;
+        while (idx < n && prices[idx] > prices[i]) {
+            idx++;
+        }
+
+        if (idx < n) {
+            prices[i] = prices[i] - prices[idx];
+        }
+    }
+
+    return prices;
+};
+Tc -->> O(n * n)
+Sc -->> O(1)
+
+                                    -------------------------------------------------------
+
+/**
+ * @param {number[]} prices
+ * @return {number[]}
+ */
+var finalPrices = function(prices) {
+    const n = prices.length;
+    const stack = []
+    for (let i = n - 1; i >= 0; i--) {
+        while (stack.length && stack[stack.length-1] > prices[i]) {
+            stack.pop();
+        }
+
+        const disc = stack.length ? stack[stack.length-1] : 0;
+
+        stack.push(prices[i]);
+
+        prices[i] -= disc;
+    }
+
+    return prices;
+};
+
+Tc -->> O(n )
+Sc -->> O(n)
