@@ -1,0 +1,19 @@
+var dfs = function(lC , rC, lev) {
+    if (!lC || !rC) return;
+
+    if (lev % 2 === 0) 
+        [lC.val, rC.val] = [rC.val, lC.val];
+    
+    dfs(lC.left, rC.right, lev + 1);
+    dfs(lC.right, rC.left, lev + 1);
+} 
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var reverseOddLevels = function(root) {
+    dfs(root.left, root.right,0);
+    return root;
+};
+Tc -->> O(n)
+Sc -->>(logn)
