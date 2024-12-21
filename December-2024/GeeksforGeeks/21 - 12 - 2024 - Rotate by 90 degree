@@ -1,0 +1,24 @@
+class Solution {
+    rev(mat,i, j) {
+        while (i < j) {
+            [mat[i], mat[j]] = [mat[j], mat[i]];
+            i++;
+            j--;
+        }
+    }
+    rotateby90(mat) {
+        const n = mat.length;
+        const m = mat[0].length;
+        for (let i = 0; i < n; i++) {
+            this.rev(mat[i], 0, m - 1);
+        }
+        
+        for (let i = 0; i < n -  1 ; i++) {
+            for (let j = i + 1; j < m; j++) {
+                let temp = mat[i][j];
+                mat[i][j] = mat[j][i];
+                mat[j][i] = temp;
+            }
+        }
+    }
+}
