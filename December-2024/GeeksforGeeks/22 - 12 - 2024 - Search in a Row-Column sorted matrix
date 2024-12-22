@@ -1,0 +1,12 @@
+class Solution {
+    matSearch(mat, x) {
+        let i=mat[0].length-1;
+        let j=0;
+        while(i >= 0 && j < mat.length){
+            if(mat[j][i] === x) return true;
+            if(mat[j][i]  >x) i--;
+            else j++;
+        }
+        return false;
+    }
+}
