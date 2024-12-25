@@ -1,0 +1,28 @@
+class Solution {
+    /**
+     * @param {number[][]} mat
+     */
+    setMatrixZeroes(mat) {
+        const rowLength=mat.length;
+        const colLength=mat[0].length;
+        
+        const row=new Array(rowLength);
+        const col=new Array(colLength);
+        
+        for(let i=0;i<rowLength;i++){
+            for(let j=0;j<colLength;j++){
+                if(mat[i][j]==0){
+                    row[i]=1;
+                    col[j]=1;
+                }
+            }
+        }
+        for(let i=0;i<rowLength;i++){
+            for(let j=0;j<colLength;j++){
+                if(row[i]==1||col[j]==1){
+                    mat[i][j]=0;
+                }
+            }
+        }
+    }
+}
