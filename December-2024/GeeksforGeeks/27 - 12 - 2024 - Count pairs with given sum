@@ -1,0 +1,24 @@
+/**
+ * @param {number[]} arr
+ * @param {number} target
+ * @return {number}
+ */
+class Solution {
+    countPairs(arr, target) {
+        const n = arr.length;
+        const mapped = new Map();
+        let pairs = 0;
+        
+        for (const nums of arr) {
+            const diff = target - nums;
+            
+            if (mapped.has(diff)) {
+                pairs += mapped.get(diff);
+            }
+            mapped.set(nums, (mapped.get(nums) ||  0) + 1);
+        }
+        
+        return pairs;
+        
+    }
+}
