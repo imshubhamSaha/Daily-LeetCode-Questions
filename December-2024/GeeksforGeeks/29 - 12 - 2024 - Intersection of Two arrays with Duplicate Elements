@@ -1,0 +1,25 @@
+/**
+ * @param {number[]} a
+ * @param {number[]} b
+ * @returns {number[]}
+ */
+class Solution {
+    intersectionWithDuplicates(a, b) {
+        const m = a.length;
+        const n = b.length;
+        const res = [];
+        const unique = new Set();
+        
+        for (const num of a) 
+            unique.add(num);
+            
+        for (const num of b) {
+            if (unique.has(num)) {
+                res.push(num);
+                unique.delete(num);
+            }
+        }
+        
+        return res;
+    }
+}
