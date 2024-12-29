@@ -1,0 +1,230 @@
+class Solution {
+    // Function to return the count of number of elements in the union of two arrays.
+    findUnion(a, b) {
+        const m = a.length;
+        const n = b.length;
+        const union = [];
+        
+        for (let i = 0; i < m; i++) {
+            if (!union.length)
+                union.push(a[i]);
+            else {
+                let flag = true;
+                for (let j = 0; j < union.length; j++) {
+                    if (union[j] === a[i]) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag) union.push(a[i]);
+            }
+        }
+        
+        for (let i = 0; i < n; i++) {
+            if (!union.length)
+                union.push(b[i]);
+            else {
+                let flag = true;
+                for (let j = 0; j < union.length; j++) {
+                    if (union[j] === b[i]) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag) union.push(b[i]);
+            }
+        }
+        
+        return union.length;
+    }
+}
+
+TC  --->>>O(m * m) + O(n * n) +O (m * n)
+SC --->>> O(m + n)
+
+                                              ----------------------------------------------------
+
+
+
+class Solution {
+    // Function to return the count of number of elements in the union of two arrays.
+    findUnion(a, b) {
+        const m = a.length;
+        const n = b.length;
+        a.sort((a,b) => a-b);
+        b.sort((a,b) => a-b);
+        let union = 0;
+        let i = 0, j = 0;
+        
+        while (i < m && j < n) {
+            const first = a[i];
+            const sec = b[j];
+            if (i > 0 && j > 0) {
+                if (first === sec) {
+                    if (first !== a[i-1] && sec !== b[j-1]) {
+                        union++;
+                    }    
+                        i++;
+                        j++;
+                    
+                }else {
+                    if (first < sec) {
+                        if (first != a[i-1] && first != b[j - 1]) {
+                            union++;
+                        }
+                        i++;
+                    }else {
+                        if (sec != a[i-1] && sec != b[j - 1]) {
+                            union++;
+                        }
+                        j++;
+                    }
+                }
+            }else if ( i > 0) {
+                if (first === sec) {
+                    if (first !== a[i-1] && sec !== a[i-1])
+                        union++;
+                    i++;
+                    j++;
+                }else if (first < sec ){
+                    if (first !== a[i-1]) {
+                        union++;
+                    }
+                    i++;
+                }else {
+                    union++;
+                    j++;
+                }
+            }else if (j > 0) {
+                if (first === sec) {
+                    if (sec !== b[j-1] && first !== b[j-1])
+                        union++;
+                    i++;
+                    j++;
+                }else if (sec < first ){
+                    if (sec !== b[j-1]) {
+                        union++;
+                    }
+                    j++;
+                }else {
+                    union++;
+                    i++;
+                }
+            }else {
+                if (first === sec) {
+                    i++;
+                    j++;
+                }else {
+                    if (first < sec) 
+                        i++;
+                    else j++;
+                }
+                union++;
+            }
+        }
+        
+        while (i < m) {
+            if (i > 0) {
+                if ( j > 0) {
+                    if (a[i] !== a[i -1] && a[i] !== b[j-1])
+                        union++;
+                    i++;
+                }
+                else {
+                    if (a[i] !== a[i-1]) 
+                        union++;
+                    i++;
+                }
+            }else {
+                if (j > 0) {
+                    if (a[i] !== b[j-1]) 
+                        union++;
+                    i++;
+                }else {
+                    union++;
+                    i++;
+                }    
+            }
+        }
+        
+        while (j < n) {
+            if (j > 0) {
+                if ( i > 0) {
+                    if (b[j] !== b[j -1] && b[j] !== a[i-1])
+                        union++;
+                    j++;
+                }
+                else {
+                    if (b[j] !== b[j-1]) 
+                        union++;
+                    j++;
+                }
+            }else {
+                if (i > 0) {
+                    if (b[j] !== a[i-1]) 
+                        union++;
+                    j++;
+                }else {
+                    union++;
+                    j++;
+                }    
+            }
+        }
+        
+        return union;
+    }
+}
+
+TC  --->>>O(mlogm) + O(nlogn) + O(m + n)
+SC --->>> O(1)
+
+                                              ----------------------------------------------------
+
+class Solution {
+    // Function to return the count of number of elements in the union of two arrays.
+    findUnion(a, b) {
+        const m = a.length;
+        const n = b.length;
+        const hashSet = new Set();
+        let i = 0, j = 0;
+        
+        while (i < m && j < n) {
+            const first = a[i];
+            const sec = b[j];
+            
+            if (first <= sec) {
+                if (!hashSet.has(first)) {
+                    hashSet.add(first);
+                }
+                i++;
+            }else {
+                if (!hashSet.has(sec))
+                    hashSet.add(sec);
+                
+                j++;
+            }
+        }
+        
+        while (i < m ){
+            if (!hashSet.has(a[i])) {
+                hashSet.add(a[i]);
+            }
+            i++;
+        }
+        
+        while (j < n ){
+            if (!hashSet.has(b[j])) {
+                hashSet.add(b[j]);
+            }
+            j++;
+        }
+        
+        
+        return hashSet.size;
+    }
+}
+TC  --->>>O(m + n)
+SC --->>> O(m + n)
+
+                                              ----------------------------------------------------
+
