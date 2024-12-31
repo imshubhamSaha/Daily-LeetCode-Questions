@@ -1,0 +1,62 @@
+/**
+ * @param {number[]} arr
+ * @returns {number}
+ */
+class Solution {
+    // Function to return length of longest subsequence of consecutive integers.
+    longestConsecutive(arr) {
+        const n = arr.length;
+        arr.sort((a,b) => a-b);
+      
+        let maxConsecutive = 0;
+        let consecute = 1;
+        
+        for (let i = 0; i < n; i++) {
+            if (arr[i] === (arr[i-1] + 1)) {
+                consecute++;
+            }else if (arr[i] === arr[i-1])
+                continue;
+            else {
+                maxConsecutive = Math.max(maxConsecutive,consecute);
+                consecute = 1;
+            }
+        }
+        maxConsecutive = Math.max(maxConsecutive,consecute);
+        
+        return maxConsecutive;
+        
+    }
+}
+
+                                                  ---------------------------------------------
+
+class Solution {
+    // Function to return length of longest subsequence of consecutive integers.
+    longestConsecutive(arr) {
+        const n = arr.length;
+        
+        const max = Math.max(...arr);
+        
+        const hash = new Array(max + 1).fill(0);
+        
+        for (let i = 0; i < n; i++) {
+            hash[arr[i]]++;
+        }
+        
+        let maxConsecutive = 0;
+        let consecute = 0;
+        
+        for (let i = 0; i <= max; i++) {
+            if (hash[i]) {
+                consecute++;
+            }else {
+                maxConsecutive = Math.max(maxConsecutive,consecute);
+                consecute = 0;
+            }
+        }
+        maxConsecutive = Math.max(maxConsecutive,consecute);
+        
+        return maxConsecutive;
+        
+    }
+}
