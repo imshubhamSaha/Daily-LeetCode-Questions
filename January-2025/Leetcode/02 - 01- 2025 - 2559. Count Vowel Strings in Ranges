@@ -1,0 +1,61 @@
+/**
+ * @param {string[]} words
+ * @param {number[][]} queries
+ * @return {number[]}
+ */
+var isVowel = function(character) {
+    const vowels = new Set(["a","e" , "i", "o", "u"]);
+    return vowels.has(character);
+}
+
+var vowelStrings = function(words, queries) {
+    const n = words.length;
+    const m = queries.length;
+    const res = new Array(m).fill(0);
+
+    for (let i = 0; i < m; i++) {
+        const [start , end] = queries[i];
+        let vowels = 0;
+        for (let j = start; j <= end; j++) {
+            if (isVowel(words[j][0]) && isVowel(words[j][words[j].length-1])) 
+                vowels++;
+        }
+
+        res[i] = vowels;
+    }
+
+    return res;
+};
+                                                                --------------------------------------            
+/**
+ * @param {string[]} words
+ * @param {number[][]} queries
+ * @return {number[]}
+ */
+var isVowel = function (character) {
+    const vowels = new Set(["a", "e", "i", "o", "u"]);
+    return vowels.has(character);
+}
+
+var vowelStrings = function (words, queries) {
+    const n = words.length;
+    const m = queries.length;
+    const res = new Array(m).fill(0);
+    const cnt = new Array(n).fill(0);
+    cnt[0] = isVowel(words[0][0]) && isVowel(words[0][words[0].length - 1]) ? 1 : 0;
+
+    for (let j = 1; j < n; j++) {
+        if (isVowel(words[j][0]) && isVowel(words[j][words[j].length - 1]))
+            cnt[j] += cnt[j - 1] + 1;
+        else cnt[j] = cnt[j-1];
+    }
+
+    for (let i = 0; i < m; i++) {
+        const [start, end] = queries[i];
+        if (start > 0) {
+            res[i] = cnt[end] - cnt[start-1];
+        }else res[i] = cnt[end];
+    }
+
+    return res;
+};
