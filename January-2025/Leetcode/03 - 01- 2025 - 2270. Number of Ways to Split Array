@@ -1,0 +1,21 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var waysToSplitArray = function(nums) {
+    const n = nums.length;
+
+    let prefixSum = nums.reduce((sum, curr) => curr + sum, 0);
+    let runningSum = 0;
+    let validSplit = 0;
+
+    for (let i = 0; i < n - 1; i++) {
+        runningSum += nums[i];
+        prefixSum -= nums[i];
+
+        if (runningSum >= prefixSum)
+            validSplit++;
+    }
+
+    return validSplit;
+};
