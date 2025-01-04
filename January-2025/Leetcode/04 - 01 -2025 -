@@ -1,0 +1,31 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var countPalindromicSubsequence = function(s) {
+    const n = s.length;
+    const mp = new Map();
+
+    for (let i = 0; i < n; i++) {
+        if (!mp.has(s[i])) {
+            mp.set(s[i],[i,i]);
+        }
+        mp.get(s[i])[1] = i;
+    }
+    let res = 0;
+    for (const [ch,[l,r]] of mp.entries()) {
+        if ((r -l) > 1) {
+            const unique = new Set();
+            for (let i = l+1; i < r; i++) {
+                unique.add(s[i]);
+            }
+            res += unique.size;
+        }
+    }
+
+    return res;
+};
+
+                                                              ------------------------------------------
+
+
