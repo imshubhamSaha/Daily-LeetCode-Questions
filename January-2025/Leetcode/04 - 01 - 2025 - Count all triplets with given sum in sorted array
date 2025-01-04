@@ -1,0 +1,87 @@
+
+
+
+/**
+ * @param {number[]} arr
+ * @param {number} target
+ * @returns {number}
+ */
+
+class Solution {
+    countTriplets(arr, target) {
+        const mp = new Map();
+        const n = arr.length;
+        
+        for (let i = 0; i < n ; i++) {
+            if (!mp.has(arr[i]))
+                mp.set(arr[i], []);
+            mp.get(arr[i]).push(i);
+        }
+        
+        let valid = 0;
+        
+        for (let i = 0; i <= n - 3; i++) {
+            for (let j = i + 1; j < n - 1; j++) {
+                let req = (arr[i] + arr[j] - target) * -1
+                if (mp.has(req)) {
+                    for (const val of mp.get(req)) {
+                        if (val > i && val > j)
+                            valid++;
+                    }
+                }
+            }
+        }
+        
+        return valid;
+    }
+}
+
+                                                                ------------------------------------
+
+
+
+
+
+/**
+ * @param {number[]} arr
+ * @param {number} target
+ * @returns {number}
+ */
+
+class Solution {
+    countTriplets(arr, target) {
+        const n = arr.length;
+        
+        let cnt = 0;
+        
+        for (let i = 0; i <= (n - 3); i++) {
+            let l = i + 1;
+            let r = n - 1;
+            
+            while (l < r) {
+                let sum = arr[i] + arr[l] + arr[r];
+                
+                if (sum === target) {
+                    cnt++;
+                    let k = r - 1;
+                    let p = l + 1;
+                    while (p < r && arr[p] === arr[l]) {
+                        cnt++;
+                        p++;
+                    } 
+                    while (k > l && arr[k]===arr[r]) {
+                        cnt++;
+                        k--;
+                    }
+                    l++;
+                    r--;
+                }else if (sum > target)
+                    r--;
+                else
+                    l++;
+            }
+        }
+        
+        return cnt;
+    }
+}
