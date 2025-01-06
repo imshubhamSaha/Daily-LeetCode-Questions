@@ -1,0 +1,34 @@
+class Solution {
+    sumClosest(arr, target) {
+        arr.sort((a,b) => a-b);
+        const n = arr.length;
+        let i = 0, j = n - 1;
+        let mindiff = Number.MAX_SAFE_INTEGER;
+        const ans = [];
+        while(i<j)
+        {
+            const diff = Math.abs(target - (arr[i] + arr[j]));
+            if(diff<mindiff)
+            {
+                mindiff = diff;
+                if(!ans.length){
+                    ans.push(arr[i]);
+                    ans.push(arr[j]);
+                }else {
+                    ans[0] = arr[i];
+                    ans[1] = arr[j];
+                }    
+            }
+            
+            if(arr[i]+ arr[j] <= target)
+            {
+                i++;
+            }
+            else
+            {
+                j--;
+            }
+        }
+       return ans;
+    }
+}
