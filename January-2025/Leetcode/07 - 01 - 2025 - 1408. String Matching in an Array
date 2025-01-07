@@ -1,0 +1,19 @@
+/**
+ * @param {string[]} words
+ * @return {string[]}
+ */
+var stringMatching = function(words) {
+    const n = words.length;
+    const res = [];
+
+    for (const word of words) {
+        for (const w of words) {
+            if (w !== word && w.includes(word)) {
+                res.push (word);
+                break;
+            }    
+        }
+    }
+
+    return res;
+};
