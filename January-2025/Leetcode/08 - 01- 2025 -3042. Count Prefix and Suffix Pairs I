@@ -1,0 +1,33 @@
+/**
+ * @param {string[]} words
+ * @return {number}
+ */
+var countPrefixSuffixPairs = function(words) {
+    const n = words.length;
+    let pairs = 0;
+
+    for (let i = 0; i < n -1; i++) {
+        const w1 = words[i];
+        const l = w1.length
+        for (let j = i + 1; j < n; j++) {
+            const w2 = words[j];
+            let s = w2.length;
+            if (l > s) 
+                continue;
+            let p = 0; 
+            let matched = true;
+            while (p < l  && s >= 0) {
+                if (w1[p] !== w2[p] || w1[l-1-p] !== w2[s-1]) {
+                    matched = false;
+                    break;
+                }
+                p++;
+                s--;
+            }
+
+            if (matched) pairs++;
+        }
+    }
+
+    return pairs;
+};
