@@ -1,0 +1,29 @@
+/**
+ * @param {string[]} words
+ * @param {string} pref
+ * @return {number}
+ */
+var prefixCount = function(words, pref) {
+    const n = words.length;
+    const m = pref.length;
+    let num = 0;
+    for (let i = 0; i < n; i++) {
+        const l = words[i].length;
+        if (l < m) continue;
+        let idx = 0;
+        for (let j = 0; j < l; j++) {
+            const ch = words[i][j];
+
+            if (ch !== pref[idx]) {
+                break;
+            }
+            idx++;
+            if (idx === m){
+                num++;
+                break;
+            }
+        }
+    }
+
+    return num;
+};
