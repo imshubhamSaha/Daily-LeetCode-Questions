@@ -1,0 +1,76 @@
+
+class Solution {
+    countDistinct(arr, k) {
+        const n = arr.length;
+        const distinct = [];
+
+        for (let i = 0; i <= (n-k);i++){
+            let unique = 0;
+            for (let j = i; j < (i+k); j++) {
+                if (unique === 0) {
+                    unique++;
+                    continue;
+                }
+                let vis = false;
+                for (let k = j-1; k >= i; k--) {
+                    if (arr[j] === arr[k]) {
+                        vis = true;
+                        break;
+                    }
+                }
+                if (!vis) unique++;
+
+            }
+
+            distinct.push(unique);
+        }
+
+        return distinct;
+    }
+}
+
+                                                                    --------------------------------------
+
+
+class Solution {
+    countDistinct(arr, k) {
+        const n = arr.length;
+        const distinct = [];
+
+        for (let i = 0; i <= (n-k);i++){
+            const unique = new Set();
+            for (let j = i; j < (i+k); j++) {
+                 unique.add(arr[j]);
+            }
+
+            distinct.push(unique.size);
+        }
+
+        return distinct;
+    }
+}
+
+
+                                                                      --------------------------------
+
+class Solution {
+    countDistinct(arr, k) {
+        const n = arr.length;
+        const distinct = [];
+        const unique = new Map();
+        let idx = 0
+        for (let i = 0; i < n;i++){
+            unique.set(arr[i], (unique.get(arr[i]) || 0) + 1);
+            if ((i - idx) === (k-1)) {
+                distinct.push(unique.size);
+                unique.set(arr[idx], (unique.get(arr[idx]) - 1));
+                
+                if (unique.get(arr[idx]) === 0) 
+                    unique.delete(arr[idx]);
+                idx++;
+            }
+        }
+
+        return distinct;
+    }
+}
