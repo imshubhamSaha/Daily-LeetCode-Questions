@@ -1,0 +1,22 @@
+class Solution {
+    longestUniqueSubstr(s) {
+        const n = s.length;
+        const hashTable = new Array(26).fill(0);
+        let longestDistinct = 0;
+        let maxDistinct = -1;
+        let idx = 0;
+        for (let i = 0; i < n; i++) {
+            const char = s[i];
+            const pnt = char.charCodeAt(0) - 97;
+            while (idx < i && (hashTable[pnt] !== 0)) {
+                hashTable[s[idx++].charCodeAt(0) - 97]--;
+                longestDistinct--;
+            }
+            hashTable[pnt] += 1;
+            longestDistinct++;
+            maxDistinct = Math.max(maxDistinct,longestDistinct);
+        }
+        
+        return maxDistinct;
+    }
+}
