@@ -1,0 +1,128 @@
+/**
+ * @param {string[]} words1
+ * @param {string[]} words2
+ * @return {string[]}
+ */
+var wordSubsets = function(words1, words2) {
+    const n = words1.length;
+    const m = words2.length;
+    const universal = [];
+    for (const word of words1) {
+        const mp = new Map();
+        for (let j = 0; j < word.length; j++) {
+            mp.set(word[j], (mp.get(word[j]) ||0) + 1);
+        }
+        let isUniversal = true;
+        for (const w of words2) {
+            const ch = {};
+            for (let k = 0; k < w.length; k++) {
+                ch[w[k]] = (ch[w[k]] || 0) + 1;
+            }
+
+            for (const [k, v] of Object.entries(ch)) {
+                if (!mp.has(k) || v > mp.get(k) ) {
+                    isUniversal = false;
+                    break;
+                }
+            }
+            if (!isUniversal) break;
+        }
+        if (isUniversal) universal.push(word)
+    }
+    return universal;
+};
+
+TC --->.. O(n⋅(L1 + m⋅(L2+U)))
+n -->> words1 length, l! --> each word in words1 , m -->> words2 length, l2-->> each word in words2, U --> unique characters in mp = 26)
+
+SC -->> O(26) + O(26)
+
+                                                ------------------------------------------
+
+/**
+ * @param {string[]} words1
+ * @param {string[]} words2
+ * @return {string[]}
+ */
+var wordSubsets = function(words1, words2) {
+    const n = words1.length;
+    const m = words2.length;
+    const universal = [];
+    const maxFreq = {};
+    for (const word of words2) {
+        const ch = {};
+        for (const w of word) {
+            ch[w] = (ch[w] || 0) + 1;
+            maxFreq[w] = Math.max((maxFreq[w] || 0), ch[w]);
+        }
+    }
+
+    for (const word of words1) {
+        const ch = {};
+        for (const w of word) {
+            ch[w] = (ch[w] || 0) + 1;
+        }
+        let isUniversal = true;
+        for (const [k, v] of Object.entries(maxFreq)) {
+            if ((ch[k] || 0) < v) {
+                isUniversal = false;
+                break;
+            }
+        }
+
+        if (isUniversal) universal.push(word);
+    }
+    return universal;
+};
+
+TC --->.. O(m * L2) + O(n * (L1 + U))
+n -->> words1 length, l! --> each word in words1 , m -->> words2 length, l2-->> each word in words2, U --> unique characters in mp = 26)
+
+SC -->> O(26) + O(26)
+
+                                                ------------------------------------------
+var count = function (str, maxFrq) {
+    const cnt = new Array(26).fill(0);
+
+    for (const s of str) {
+        cnt[s.charCodeAt(0) - 97]++;
+        if (maxFrq) {
+            maxFrq[s.charCodeAt(0) - 97] = Math.max(maxFrq[s.charCodeAt(0) - 97], cnt[s.charCodeAt(0) - 97])
+        }
+    }
+
+    return cnt;
+}
+var wordSubsets = function (words1, words2) {
+    const n = words1.length;
+    const m = words2.length;
+    const universal = [];
+
+    const maxAllowed = count("");
+
+    for (const word of words2) {
+        count(word, maxAllowed);
+    }
+
+
+    for (const word of words1) {
+        const char = count(word);
+        let isSubset = true;
+        for (let i = 0; i < 26; i++) {
+            if (char[i] < maxAllowed[i]) {
+                isSubset = false;
+                break;
+            }
+        }
+
+        if (isSubset) universal.push(word);
+    }
+
+    return universal;
+};
+TC --->.. O(m * L2) + O(n * (L1 + U))
+n -->> words1 length, l! --> each word in words1 , m -->> words2 length, l2-->> each word in words2, U --> unique characters in mp = 26)
+
+SC -->> O(26) + O(26)
+
+                                                ------------------------------------------
