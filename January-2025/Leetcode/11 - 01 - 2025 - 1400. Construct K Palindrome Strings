@@ -1,0 +1,89 @@
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {boolean}
+ */
+var canConstruct = function(s, k) {
+    const n = s.length;
+    if (k === n) return true;
+    if (n < k) return false;
+
+    const str = s.split("").sort();
+
+    let i = 0;
+    let oddCnt = 0;
+    while (i < n) {
+        const currChar = str[i];
+        let cnt = 0;
+        while (i < n && str[i] === currChar) {
+            cnt++;
+            i++;
+        } 
+
+        if (cnt % 2 === 1) oddCnt++;
+    }
+
+    return oddCnt <= k;
+};
+
+TC -->> O(nlogn) + O(n)
+SC -->> O(n)
+
+                                                              ------------------------------------------
+
+
+
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {boolean}
+ */
+var canConstruct = function(s, k) {
+    const n = s.length;
+    if (k === n) return true;
+    if (n < k) return false;
+
+    const hashTable = new Array(26).fill(0);
+    for (let i = 0; i < n; i++) {
+        hashTable[s[i].charCodeAt(0) - 97]++;
+    }
+    
+    let i = 0;  
+    let oddCnt = 0;
+    while (i < 26) {
+        if (hashTable[i] % 2 === 1) oddCnt++;
+        i++;
+    }
+
+    return oddCnt <= k;
+};
+
+TC -->> O(n)
+SC -->> O(1)
+
+                                                              ------------------------------------------
+
+
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {boolean}
+ */
+var canConstruct = function(s, k) {
+    const n = s.length;
+    if (k === n) return true;
+    if (n < k) return false;
+
+    let mask = 0;
+    for (let i = 0; i < n; i++) {
+        mask ^= (1 << (s[i].charCodeAt(0) - 97));
+    }
+    const oddCnt = mask.toString(2).split("1").length - 1;
+
+    return (oddCnt) <= k;
+};
+
+TC -->> O(n)
+SC -->> O(1)
+
+                                                              ------------------------------------------
