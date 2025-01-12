@@ -1,0 +1,89 @@
+class Solution {
+    // Function to find the trapped water between the blocks.
+    maxWater(arr) {
+        const n = arr.length;
+        let totalWater = 0;
+        let maxSoFar = arr[0];
+        for (let i = 1; i < n; i++) {
+            let waterStored = arr[i];
+            maxSoFar = Math.max(maxSoFar, arr[i]);
+            for (let j = i+1; j < n; j++) {
+                waterStored = Math.max(waterStored, arr[j]);
+            }
+            totalWater += Math.min(waterStored, maxSoFar) - arr[i];
+        }
+        
+        return totalWater;
+    }
+}
+
+TC  -->>> O(n * n)
+SC -->> O(1)
+
+                                                                  ----------------------------
+
+
+class Solution {
+    // Function to find the trapped water between the blocks.
+    maxWater(arr) {
+        const n = arr.length;
+        let totalWater = 0;
+        const prefixMax = new Array(n).fill(0);
+        const suffixMax = new Array(n).fill(0);
+        prefixMax[0] = arr[0];
+        suffixMax[n-1] = arr[n-1];
+        
+        for (let i = 1; i < n; i++) {
+            prefixMax[i] = Math.max(arr[i], prefixMax[i-1]);
+            suffixMax[n-1-i] = Math.max(arr[n-1-i], suffixMax[n-i]);
+        }
+        
+        for (let i = 0; i < n; i++) {
+            totalWater += (Math.min(prefixMax[i], suffixMax[i])) - arr[i];
+        }
+        
+        return totalWater;
+    }
+}
+TC  -->>> O(n)
+SC -->> O(n)
+
+                                                                  ----------------------------
+
+class Solution {
+    // Function to find the trapped water between the blocks.
+    maxWater(arr) {
+        const n = arr.length;
+        let totalWater = 0;
+        let left = 0, right = n-1;
+        
+        let prefixMax = 0, suffixMax = 0;
+        
+        while (left < right) {
+            if (arr[left] <= arr[right]) {
+                if (arr[left] > prefixMax) {
+                    prefixMax = arr[left];
+                }    
+                else {
+                    totalWater += prefixMax - arr[left];
+                }    
+                left++;
+            }else {
+                if (arr[right] > suffixMax) {
+                    suffixMax = arr[right];
+                }    
+                else {
+                    totalWater += suffixMax - arr[right];
+                }    
+                right--;
+            }
+        }
+        
+        return totalWater;
+    }
+}
+
+TC  -->>> O(n)
+SC -->> O(1)
+
+                                                                  ----------------------------
