@@ -1,0 +1,77 @@
+/**
+ * @param {string} s
+ * @param {string} locked
+ * @return {boolean}
+ */
+var canBeValid = function(s, locked) {
+    const n = s.length;
+    const open = [];
+    const unlocked = [];
+
+    for (let i = 0; i < n; i++) {
+        if (locked[i] === "0") {
+            unlocked.push(i);
+        }else if (s[i] === "(") {
+            open.push(i);
+        }else {
+            if (open.length) 
+                open.pop();
+            else if (unlocked.length) 
+                unlocked.pop();
+            else return false;
+        }
+    }
+
+    while (open.length && unlocked.length && open[open.length-1] < unlocked[unlocked.length-1]) {
+        open.pop();
+        unlocked.pop();
+    }
+
+    return open.length === 0 && unlocked.length % 2 === 0;
+};
+
+TC -->> O(n)
+SC -->> O(n)
+
+                                                            -----------------------------------          
+
+/**
+ * @param {string} s
+ * @param {string} locked
+ * @return {boolean}
+ */
+var canBeValid = function(s, locked) {
+    const n = s.length;
+
+    if (n % 2 === 1) 
+        return false;
+        
+    let open = 0;
+    let close = 0;
+
+    for (let i = 0; i < n; i++) {
+        if (s[i] === "(" || locked[i] === "0") {
+            open++;
+        }
+        else {
+            open--;
+        } 
+        if (open < 0) 
+            return false;
+    }
+
+    for (let i = n - 1; i >= 0; i--) {
+        if (s[i] === ")" || locked[i] === "0")
+            close++;
+        else close--;
+
+        if (close < 0) 
+            return false;
+    }
+
+    return true;
+};
+TC -->> O(n)
+SC -->> O(1)
+
+                                                            -----------------------------------          
