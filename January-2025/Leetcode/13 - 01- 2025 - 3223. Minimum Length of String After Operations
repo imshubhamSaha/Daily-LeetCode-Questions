@@ -1,0 +1,119 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var minimumLength = function(s) {
+    const n = s.length;
+    let len = n;
+    const str = [...s];
+
+    for (let i = 0; i < n; i++) {
+        if (str[i] === -1) continue;
+        let left = -1;
+        let right = -1;
+
+        for (let j = i - 1; j >= 0; j--) {
+            if (str[j] === str[i]) {
+                left = j;
+                break;
+            }
+        }
+        if (left === -1) continue;
+
+        for (let j = i + 1; j < n; j++) {
+            if (str[j] === str[i]) {
+                right = j;
+                break;
+            }
+        }
+
+        if (left !== -1 && right !== -1) {
+            len -= 2;
+            str[left] = -1;
+            str[right] = -1;
+        }
+    }
+
+    return len;
+};
+TC  -->> O(n*n)
+SC -->> O(n)
+                                                              -----------------------------------
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var minimumLength = function(s) {
+    const n = s.length;
+    let len = n;
+    const hash = new Array(26).fill(0);
+
+    for (let i = 0; i < n; i++) {
+        hash[s[i].charCodeAt(0) - 97]++;
+    }
+
+    for (let i = 0 ; i < n; i++) {
+        const code = s[i].charCodeAt(0) - 97;
+        if (hash[code] < 3) continue;
+
+        hash[code] -= 2;
+        len -= 2; 
+    }
+
+    return len;
+};
+
+TC  -->> O(n)
+SC -->> O(1)
+                                                              -----------------------------------
+
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var minimumLength = function(s) {
+    const n = s.length;
+    let len = 0;
+    const hash = {};
+
+    for (let i = 0; i < n; i++) {
+        hash[s[i]] = (hash[s[i]] || 0) + 1;
+    }
+
+    for (const val of Object.values(hash)) {
+        len += val % 2 === 1 ? 1 : 2;
+    }
+    return len;
+};
+TC  -->> O(n)
+SC -->> O(1)
+                                                              -----------------------------------
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var minimumLength = function(s) {
+    const n = s.length;
+    let len = n;
+    const hash = new Array(26).fill(0);
+
+    for (let i = 0; i < n; i++) {
+        const code = s[i].charCodeAt(0) - 97;
+        hash[code]++;
+
+        if (!(hash[code] % 3)) {
+            hash[code] -= 2;
+            len -= 2;
+        }
+    }
+
+    return len;
+};
+
+TC  -->> O(n)
+SC -->> O(1)
+                                                              -----------------------------------
+
