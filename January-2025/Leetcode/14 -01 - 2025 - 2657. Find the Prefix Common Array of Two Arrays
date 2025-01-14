@@ -1,0 +1,100 @@
+/**
+ * @param {number[]} A
+ * @param {number[]} B
+ * @return {number[]}
+ */
+var findThePrefixCommonArray = function(a, b) {
+    const n = a.length;
+    const freq = new Array(n+1).fill(0);
+    const res = [];
+
+    for (let i = 0; i < n; i++) {
+        freq[a[i]]++;
+        freq[b[i]]++;
+        let cnt = 0;
+        for (let j = i; j >= 0; j--) {
+            if (freq[a[j]] === 2) 
+                cnt++;
+        }
+
+        res.push(cnt);
+    }
+
+    return res;
+};
+TC -->> O(n *n )
+SC -->> O(n)
+                                                      ----------------------------------------
+
+/**
+ * @param {number[]} A
+ * @param {number[]} B
+ * @return {number[]}
+ */
+var findThePrefixCommonArray = function(a, b) {
+    const n = a.length;
+    const freq = new Array(n+1).fill(0);
+    const res = [];
+    let check = 0;
+    for (let i = 0; i < n; i++) {
+        freq[a[i]]++;
+        freq[b[i]]++;
+        if (a[i]  === b[i]) {
+            check++;
+        }    
+        else if (freq[b[i]] === 2 && freq[a[i]] === 2) {
+            check += 2;
+        }    
+        else if (freq[a[i]] === 2 || freq[b[i]] === 2) {
+            check++;
+        } 
+        res.push(check);
+    }
+
+    return res;
+};
+TC -->> O(n)
+SC -->> O(n)
+
+                                                      ----------------------------------------
+
+var findThePrefixCommonArray = function (A, B) {
+    const n = A.length;
+    const res = [];
+    let mask1 = 0;
+    let mask2 = 0;
+    let common = 0;
+
+    var checkSetBit = function (num) {
+        if (num <= 32) {
+            const bit = 1 << (num - 1);
+            if ((mask1 & bit) === 0) {
+                mask1 |= bit;
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            const bit = 1 << (num - 33);
+            if ((mask2 & bit) === 0) {
+                mask2 |= bit;
+                return false;
+            } else {
+                return true;
+            }    
+        }
+    }
+
+    for (let i = 0; i < n; i++) {
+        if (checkSetBit(A[i])) common++;
+        if (checkSetBit(B[i])) common++;
+        res.push(common);
+    }
+
+    return res;
+
+};
+TC -->> O(n)
+SC -->> O(1)
+
+                                                      ----------------------------------------
