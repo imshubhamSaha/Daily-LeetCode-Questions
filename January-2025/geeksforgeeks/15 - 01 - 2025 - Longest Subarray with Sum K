@@ -1,0 +1,24 @@
+class Solution {
+    longestSubarray(arr, k) {
+        const n = arr.length;
+        const sumMap = new Map();
+        sumMap.set(0, -1);
+        
+        let longest = 0;
+        let runningSum = 0;
+        
+        for (let i = 0; i < n; i++) {
+            runningSum += arr[i];
+            
+            if (sumMap.has(runningSum - k)) {
+                longest = Math.max(longest, (i - sumMap.get(runningSum - k)));
+            }
+            
+            if (!sumMap.has(runningSum)) {
+                sumMap.set(runningSum , i);
+            }
+        }
+        
+        return longest;
+    }
+}
