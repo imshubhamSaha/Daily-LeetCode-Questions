@@ -1,0 +1,56 @@
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number}
+ */
+var xorAllNums = function(nums1, nums2) {
+    const n = nums1.length;
+    const m = nums2.length;
+    const mp = new Map();
+
+    for (const num of nums1) {
+        mp.set(num, (mp.get(num) || 0) + m);
+    }
+
+    for (const num of nums2) {
+        mp.set(num, (mp.get(num) || 0) + n);
+    }
+    console.log(mp)
+    let xor = 0;
+    for (const [key,val] of mp) {
+        if ((val % 2)) 
+            xor ^= key;
+    }
+    return xor;
+    
+};
+
+TC -->. O(n + m)
+SC -->> O(n + m)
+                                                        -----------------------------------------
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number}
+ */
+var xorAllNums = function(nums1, nums2) {
+    const n = nums1.length;
+    const m = nums2.length;
+    if ((n % 2 === 0) && (m % 2 === 0))
+        return 0;
+    let xor1 = 0;
+    let xor2 = 0;
+    if (n % 2) {
+        xor1 = nums2.reduce((xor, curr) => xor ^ curr, 0);
+    }
+    if (m % 2) {
+        xor2 = nums1.reduce((xor, curr) => xor ^ curr, 0);
+    }
+
+    return xor1 ^ xor2;
+};
+
+TC -->. O(n + m)
+SC -->> O(1)
+                                                        -----------------------------------------
+                                                        
