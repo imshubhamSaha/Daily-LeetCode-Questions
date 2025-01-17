@@ -1,0 +1,56 @@
+/**
+ * @param {number[]} derived
+ * @return {boolean}
+ */
+var doesValidArrayExist = function(derived) {
+    const n = derived.length;
+    const original = new Array(n + 1).fill(0);
+    original[0] = 0;
+
+    for (let i = 0; i < n; i++) {
+        original[i+1] = derived[i] ^ original[i];
+    }
+    const zero = (original[0] ^ original[n-1]) === derived[n-1];
+    original[0] = 1
+    for (let i = 0; i < n; i++) {
+        original[i+1] = derived[i] ^ original[i];
+    }
+    
+    const one = (original[0] ^ original[n-1]) === derived[n-1];
+
+    return zero || one;
+};
+TC  --->> O(n)
+SC --- >> O(n)
+                                                    -----------------------------------------------------------
+
+/**
+ * @param {number[]} derived
+ * @return {boolean}
+ */
+var doesValidArrayExist = function(derived) {
+    const n = derived.length;
+    const xor = derived.reduce((xor, curr) => curr ^ xor, 0);
+
+    return xor === 0;
+};
+
+TC  --->> O(n)
+SC --- >> O(1)
+                                                    -----------------------------------------------------------
+
+/**
+ * @param {number[]} derived
+ * @return {boolean}
+ */
+var doesValidArrayExist = function(derived) {
+    const n = derived.length;
+    const sum = derived.reduce((sum, curr) => curr + sum, 0);
+
+    return sum % 2 === 0;
+};
+TC  --->> O(n)
+SC --- >> O(1)
+                                                    -----------------------------------------------------------
+
+
