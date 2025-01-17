@@ -1,0 +1,15 @@
+class Solution {
+    reverseList(head) {
+        let curr = head;
+        let prev = null;
+        
+        while (curr) {
+            const nextNode = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nextNode;
+        }
+        
+        return prev;
+    }
+}
