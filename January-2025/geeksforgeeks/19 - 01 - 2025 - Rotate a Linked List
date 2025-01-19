@@ -1,0 +1,51 @@
+
+
+// User function Template for javascript
+
+/**
+ * @param {Node} head
+ * @param {number} k
+ * @returns {Node}
+ */
+
+/*
+class Node{
+    constructor(data){
+        this.data = data;
+        this.next = null;
+    }
+}
+*/
+
+class Solution {
+    // Function to rotate a linked list.
+    rotate(head, k) {
+        let total = 0;
+        let curr = head;
+        
+        while (curr.next) {
+            curr = curr.next;
+            total++;
+        }
+        total++;
+        k = k % total++;
+        
+        let temp = head;
+        
+        while (temp && k) {
+            let nextNode = temp.next;
+            head = nextNode;
+            temp.next = null;
+            curr.next = temp;
+            curr = temp;
+            temp = nextNode;
+            k--;
+        }
+        
+        return head;
+    }
+}
+TC -->> O(n)
+SC -->. O(1)
+                                                              ---------------------------------------
+
