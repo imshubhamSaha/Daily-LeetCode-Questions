@@ -1,0 +1,23 @@
+class Solution {
+    reverseKGroup(head, k) {
+        let cnt = 0;
+        let prev = null;
+        let cur = head;
+        let nextNode = null
+        
+        while(cur !== null && cnt <k) {
+            nextNode = cur.next
+            cur.next = prev;
+            prev = cur;
+            cur = nextNode;
+            cnt++;
+        }
+        
+        
+        if(nextNode !== null) {
+            head.next = this.reverseKGroup(nextNode, k)
+        }
+        
+        return prev;
+    }
+}
