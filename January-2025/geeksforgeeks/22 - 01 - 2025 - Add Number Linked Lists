@@ -1,0 +1,85 @@
+class Solution {
+    reverse(head) {
+        let prev = null;
+        let curr = head;
+        let next = null;
+
+        while (curr !== null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+  
+    addTwoLists(num1, num2) {
+        while (num1 !== null && num1.data === 0) {
+            num1 = num1.next;
+        }
+        while (num2 !== null && num2.data === 0) {
+            num2 = num2.next;
+        }
+
+        let n1 = this.reverse(num1);
+        let n2 = this.reverse(num2);
+        let temp = new Node(-1);
+        let sum = temp;
+        let carry = 0;
+
+        while (n1 !== null && n2 !== null) {
+            let a = n1.data;
+            let b = n2.data;
+            let digit = a + b + carry;
+            carry = Math.floor(digit / 10);
+            let value = digit % 10;
+
+            let newNode = new Node(value);
+            temp.next = newNode;
+            temp = newNode;
+
+            n1 = n1.next;
+            n2 = n2.next;
+        }
+
+        while (n1 !== null) {
+            let a = n1.data;
+            let digit = a + carry;
+            carry = Math.floor(digit / 10);
+            let value = digit % 10;
+
+            let newNode = new Node(value);
+            temp.next = newNode;
+            temp = newNode;
+
+            n1 = n1.next;
+        }
+
+        while (n2 !== null) {
+            let b = n2.data;
+            let digit = b + carry;
+            carry = Math.floor(digit / 10);
+            let value = digit % 10;
+
+            let newNode = new Node(value);
+            temp.next = newNode;
+            temp = newNode;
+
+            n2 = n2.next;
+        }
+
+        while (carry !== 0) {
+            let digit = carry % 10;
+            if (digit === 0) {
+                break;
+            }
+            carry = Math.floor(carry / 10);
+            let newNode = new Node(digit);
+            temp.next = newNode;
+            temp = newNode;
+        }
+
+        return this.reverse(sum.next);
+        
+    }
+}
