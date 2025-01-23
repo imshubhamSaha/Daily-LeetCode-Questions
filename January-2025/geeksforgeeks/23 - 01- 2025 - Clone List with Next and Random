@@ -1,0 +1,37 @@
+class Solution {
+    cloneLinkedList(head) {
+        let h = head;
+        let temp = new Node(head.data);
+        let ans=temp;
+        while(h.next){
+            temp.next = new Node(h.next.data);
+            temp = temp.next;
+            h = h.next;
+        }
+        temp = ans;
+        h=head;
+        while (h) {
+            let t1 = h.next;
+            h.next = temp;
+            let t2 = temp.next;
+            temp.next = t1;
+            temp = t2;
+            h = t1;
+        }
+        h = head;
+        while(h) {
+            if (h.random) h.next.random = h.random.next;
+            h = h.next.next;
+        }
+        temp = ans;
+        h=head;
+        while(temp.next){
+            h.next = h.next.next;
+            h = h.next;
+            temp.next = temp.next.next;
+            temp = temp.next;
+        }
+        h.next = null;
+        return ans;
+    }
+}
