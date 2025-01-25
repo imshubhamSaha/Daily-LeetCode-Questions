@@ -1,0 +1,27 @@
+class Solution {
+    findFirstNode(head) {
+        if(!head) return -1;
+        let slow = head;
+        let fast = head;
+        
+        while(fast  && fast.next){
+            slow = slow.next;
+            fast = fast.next;
+            if(fast.next){
+                fast = fast.next;
+            }
+            if(slow === fast) break;
+        }
+        
+        if(slow != fast) 
+            return new Node(-1);
+            
+        slow = head;
+        while(slow != fast){
+            slow = slow.next;
+            fast = fast.next;
+        }
+        
+        return fast ? fast : -1;
+    }
+}
