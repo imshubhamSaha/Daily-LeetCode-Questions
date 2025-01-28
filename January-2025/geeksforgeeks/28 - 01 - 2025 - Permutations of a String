@@ -1,0 +1,24 @@
+class Solution {
+    backtrack(s, result, index) {
+        if (index === s.length) {
+            result.push(s.join(''));
+            return;
+        }
+
+        const seen = new Set();
+        for (let i = index; i < s.length; i++) {
+            if (seen.has(s[i])) {
+                continue;
+            }
+            seen.add(s[i]);
+            [s[i], s[index]] = [s[index], s[i]]; 
+            this.backtrack(s, result, index + 1);
+            [s[i], s[index]] = [s[index], s[i]]; 
+        }
+    }
+    findPermutation(s) {
+        const result = [];
+        this.backtrack([...s], result, 0);
+        return result;
+    }
+}
