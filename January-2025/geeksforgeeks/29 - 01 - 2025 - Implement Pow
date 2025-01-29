@@ -1,0 +1,29 @@
+// User function Template for javascript
+class Solution {
+    /**
+     * Computes b raised to the power e recursively.
+     * @param {number} b - The base.
+     * @param {number} e - The exponent.
+     * @returns {number} - The result of b^e.
+     */
+    power(b, e) {
+        let result = 1;
+        let base = b;
+        let exponent = e;
+    
+        if (exponent < 0) {
+            base = 1 / base;
+            exponent = -exponent;
+        }
+    
+        while (exponent > 0) {
+            if (exponent % 2 === 1) {
+                result *= base;
+            }
+            base *= base;
+            exponent = Math.floor(exponent / 2);
+        }
+    
+        return result;
+    }
+}
