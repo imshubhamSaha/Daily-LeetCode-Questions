@@ -1,0 +1,47 @@
+class Solution {
+
+    isValid(mat, row, col, num) {
+        for (let i = 0; i < 9; i++) {
+            if (mat[row][i] === num || mat[i][col] === num) {
+                return false;
+            }
+        }
+
+        let startRow = Math.floor(row / 3) * 3;
+        let startCol = Math.floor(col / 3) * 3;
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (mat[startRow + i][startCol + j] === num) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+     solve(mat) {
+        for (let row = 0; row < 9; row++) {
+            for (let col = 0; col < 9; col++) {
+                if (mat[row][col] === 0) {
+                    for (let num = 1; num <= 9; num++) {
+                        if (this.isValid(mat, row, col, num)) {
+                            mat[row][col] = num;
+
+                            if (this.solve(mat)) {
+                                return true;
+                            }
+                            mat[row][col] = 0; 
+                        }
+                    }
+                    return false; 
+                }
+            }
+        }
+        return true; 
+    }
+
+    solveSudoku(mat) {
+        this.solve(mat);
+    }
+}
