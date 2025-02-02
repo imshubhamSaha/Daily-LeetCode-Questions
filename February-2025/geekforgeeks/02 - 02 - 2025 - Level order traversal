@@ -1,0 +1,26 @@
+class Solution {
+    /**
+     * @param {Node} node
+     * @returns {number[][]}
+     */
+    levelOrder(root) {
+        const q = [];
+        const ans = [];
+        q.push(root);
+        
+        while(q.length > 0){
+            let size=q.length;
+            while(size--) {
+                const node = q.shift();
+                ans.push([node.data]);
+            
+                if(node.left)
+                    q.push(node.left);
+            
+                if(node.right)
+                q.push(node.right);
+            }
+        }
+        return ans;
+    }
+}
