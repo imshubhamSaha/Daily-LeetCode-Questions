@@ -1,0 +1,13 @@
+class Solution {
+    /**
+     * @param {Node} node
+     * @returns {number}
+     */
+
+    height(node) {
+        if (node === null) 
+            return -1;
+        
+        return Math.max(this.height(node.left), this.height(node.right)) + 1;
+    }
+}
