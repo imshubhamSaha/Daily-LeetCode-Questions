@@ -1,0 +1,24 @@
+class Solution {
+    constructor() {
+        this.ans = Number.MIN_SAFE_INTEGER;
+    }
+
+    dia(root) {
+        if (!root) return 0;
+        let d1 = this.dia(root.left) + 1;
+        let d2 = this.dia(root.right) + 1;
+        
+        this.ans = Math.max(this.ans, d1 + d2);
+        return Math.max(d1, d2);
+    }
+    
+    /**
+     * @param {Node} root
+     * @returns {number}
+     */
+    diameter(root) {
+        this.dia(root);
+        return this.ans - 2;
+    }
+    
+}
