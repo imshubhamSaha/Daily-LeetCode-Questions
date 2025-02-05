@@ -1,0 +1,47 @@
+/**
+ * @param {string} s1
+ * @param {string} s2
+ * @return {boolean}
+ */
+var areAlmostEqual = function(s1, s2) {
+    const n = s2.length;
+    if (s1 === s2) return true;
+    let misMatch = 0;
+    const char1 = new Array(26).fill(0);
+    const char2 = new Array(26).fill(0);
+    for (let i = 0; i < n; i++){
+        char1[s1[i].charCodeAt(0) - 97]++;
+        char2[s2[i].charCodeAt(0) - 97]++;
+        if (s1[i] !== s2[i])
+            misMatch++;
+        if (misMatch > 2) return false;    
+    }
+    for (let i = 0; i < 26; i++){
+        if (char1[i] !== char2[i]) return false;
+    }
+    return misMatch === 2;
+};
+
+/**
+ * @param {string} s1
+ * @param {string} s2
+ * @return {boolean}
+ */
+var areAlmostEqual = function(s1, s2) {
+    const n = s2.length;
+    if (s1 === s2) return true;
+    let misMatch = 0;
+    let mis1 = 0;
+    let mis2 = 0;
+    for (let i = 0; i < n; i++){
+        if (s1[i] !== s2[i]) {
+            misMatch++;
+            if (misMatch > 2)
+                return false;
+            else if (misMatch === 1)
+                mis1 = i;
+            else mis2 = i;
+        }    
+    }
+    return (s1[mis1] === s2[mis2]) && (s1[mis2] === s2[mis1]);
+};
