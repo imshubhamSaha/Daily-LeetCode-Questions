@@ -1,0 +1,53 @@
+class Solution {
+    rootInInorder(i, j, value, inorder) {
+        for (let k = i; k <= j; k++) {
+            if (inorder[k] === value) return k;
+        }
+        return i;
+    }
+
+    constructBinaryTree(inorder, preorder, i1, j1, i2, j2) {
+        if (i2 > j2) return null;
+        let root = new Node(preorder[i2]);
+        let index = this.rootInInorder(i1, j1, preorder[i2], inorder);
+        root.left = this.constructBinaryTree(inorder, preorder, i1, index - 1, i2 + 1, i2 + index - i1);
+        root.right = this.constructBinaryTree(inorder, preorder, index + 1, j1, i2 + index - i1 + 1, j2);
+        return root;
+    }
+    buildTree(inorder, preorder) {
+        const n = inorder.length;
+        return this.constructBinaryTree(inorder, preorder, 0, n - 1, 0, n - 1);
+    }
+}
+TC -->> O(n * n)
+SC -->> O(n)
+
+class Solution {
+    constructor() {
+        this.inorderIndexMap = new Map();
+    }
+
+    buildIndexMap(inorder) {
+        for (let i = 0; i < inorder.length; i++) {
+            this.inorderIndexMap.set(inorder[i], i);
+        }
+    }
+
+    constructBinaryTree(inorder, preorder, i1, j1, i2, j2) {
+        if (i2 > j2) return null;
+        let root = new Node(preorder[i2]);
+        let index = this.inorderIndexMap.get(preorder[i2]);
+        root.left = this.constructBinaryTree(inorder, preorder, i1, index - 1, i2 + 1, i2 + index - i1);
+        root.right = this.constructBinaryTree(inorder, preorder, index + 1, j1, i2 + index - i1 + 1, j2);
+        return root;
+    }
+
+    buildTree(inorder, preorder) {
+        this.buildIndexMap(inorder);
+        const n = inorder.length;
+        return this.constructBinaryTree(inorder, preorder, 0, n - 1, 0, n - 1);
+    }
+}
+
+TC -->> O(n)
+SC -->> O(n)
