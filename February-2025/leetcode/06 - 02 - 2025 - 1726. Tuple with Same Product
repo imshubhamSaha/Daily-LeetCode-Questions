@@ -1,0 +1,61 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var tupleSameProduct = function (nums) {
+    const n = nums.length;
+    nums.sort((a, b) => a - b);
+
+    let total = 0;
+
+    for (let i = 0; i < n; i++) {
+        for (let j = n - 1; j >= i + 1; j--) {
+            const product = nums[i] * nums[j];
+
+            const unique = new Set();
+
+            for (let k = i + 1; k < j; k++) {
+                if (product % nums[k] == 0) {
+                    const dValue = product / nums[k];
+                    if (unique.has(dValue)) {
+                        total += 8;
+                    }
+                    unique.add(nums[k]);
+                }
+            }
+        }
+    }
+
+    return total;
+};
+TC -->> O(n^3)
+SC -->> O(n)
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var tupleSameProduct = function (nums) {
+    const numsLength = nums.length;
+
+    const freqPair = new Map();
+
+    let total = 0;
+
+    for (let i = 0; i < numsLength; i++) {
+        for (let j = i + 1; j < numsLength;j++) {
+            freqPair.set((nums[i] * nums[j]) , (freqPair.get((nums[i] * nums[j])) || 0) + 1);
+        }
+    }
+
+    for (const [val, freq] of freqPair) {
+        const pairs = (freq - 1) * freq / 2;
+
+        total += 8 * pairs;
+    }
+
+    return total;
+};
+
+TC -->> O(n^2)
+SC -->> O(n ^ 2)
