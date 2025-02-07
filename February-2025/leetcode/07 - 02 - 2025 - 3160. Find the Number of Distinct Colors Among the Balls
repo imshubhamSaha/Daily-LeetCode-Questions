@@ -1,0 +1,60 @@
+/**
+ * @param {number} limit
+ * @param {number[][]} queries
+ * @return {number[]}
+ */
+var queryResults = function(limit, queries) {
+    const n = queries.length;
+    const result = new Array(n).fill(0);
+    const colorMap = new Map();
+    for (let i = 0; i < n; i++) {
+        colorMap.set(queries[i][0], queries[i][1]);
+        const distinct = new Set(colorMap.values());
+        result[i] = distinct.size;
+    }
+
+    return result;
+};
+TC -->> O(n^2)
+SC -->> O(n)
+
+                                        --------------------------------------------------------------------
+
+
+/**
+ * @param {number} limit
+ * @param {number[][]} queries
+ * @return {number[]}
+ */
+var queryResults = function(limit, queries) {
+    const n = queries.length;
+    const result = new Array(n).fill(0);
+    const colorMap = new Map();
+    const colorFreq = new Map();
+    let distinct = 0;
+    for (let i = 0; i < n; i++) {
+        const [ball , color] = queries[i];
+
+        if (colorMap.has(ball)) {
+            const prev = colorMap.get(ball);
+            colorFreq.set(prev , colorFreq.get(prev) - 1);
+
+            if (colorFreq.get(prev) === 0) {
+                colorFreq.delete(prev);
+                distinct--;
+            }
+        }
+        colorMap.set(ball, color);
+        if (!colorFreq.has(color)) {
+            colorFreq.set(color, 0);
+            distinct++;
+        }
+        colorFreq.set(color, colorFreq.get(color) + 1);
+        result[i] = distinct; 
+    }
+
+    return result;
+};
+
+TC -->> O(n)
+SC -->> O(n)
