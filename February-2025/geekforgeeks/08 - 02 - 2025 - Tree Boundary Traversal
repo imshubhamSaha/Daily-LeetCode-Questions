@@ -1,0 +1,51 @@
+class Solution {
+    solveleft(root,ans){
+        if(!root|| !root.left && !root.right) return ; 
+        
+        ans.push(root.data); 
+        
+        if(root.left){
+            this.solveleft(root.left,ans) ; 
+        }else{
+            this.solveleft(root.right,ans); 
+        }
+    }
+  
+    solveleaf(root, ans){
+        if(!root) return; 
+        
+        if(!root.left && !root.right) {
+            ans.push(root.data); 
+            return  ; 
+        }
+        
+        this.solveleaf(root.left,ans); 
+        this.solveleaf(root.right,ans); 
+    }
+    
+    solveright(root,ans){
+        if(!root|| !root.left &&!root.right) return ;
+        if(root.right){
+            this.solveright(root.right,ans); 
+        }else{
+            this.solveright(root.left,ans); 
+        }
+        ans.push(root.data); 
+    }
+    boundaryTraversal(root) {
+        const ans = [];
+        
+        if(!root) return ans;
+        
+        ans.push(root.data);
+        
+        if(!root.left && !root.right) {
+            return ans ; 
+        }
+        this.solveleft(root.left,ans); 
+        this.solveleaf(root,ans); 
+        this.solveright(root.right,ans); 
+         
+        return ans; 
+    }
+}
