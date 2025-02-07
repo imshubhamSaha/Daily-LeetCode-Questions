@@ -1,0 +1,52 @@
+class Solution {
+    solve(root, res) {
+        if (!root) 
+            return;
+        
+        this.solve(root.left, res);
+        res.push(root.data);
+        this.solve(root.right, res);
+    }
+    inOrder(root) {
+        const res = [];
+        this.solve(root, res);
+        return res;
+    }
+}
+
+TC -->> O(n)
+SC -->. O(H)
+                                                          -----------------------------------------------
+
+class Solution {
+    
+    inOrder(root) {
+        const res = [];
+        let curr = root;
+        
+        while (curr) {
+            if (!curr.left) {
+                res.push(curr.data); 
+                curr = curr.right; 
+            } else {
+                let predessor = curr.left;
+                while (predessor.right && predessor.right !== curr) {
+                    predessor = predessor.right;
+                }
+                
+                if (!predessor.right) {
+                    predessor.right = curr;
+                    curr = curr.left;
+                } else {
+                    predessor.right = null;
+                    res.push(curr.data);
+                    curr = curr.right;
+                }
+            }
+        }
+        
+        return res;
+    }
+}
+TC -->> O(n)
+SC -->> O(1)
