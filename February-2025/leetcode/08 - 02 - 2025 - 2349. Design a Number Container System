@@ -1,0 +1,103 @@
+class MinHeap {
+    constructor() {
+        this.data = [];
+    }
+    
+    push(val) {
+        this.data.push(val);
+        this._heapifyUp();
+    }
+    
+    pop() {
+        if (this.isEmpty()) return null;
+        this._swap(0, this.data.length - 1);
+        const removed = this.data.pop();
+        this._heapifyDown();
+        return removed;
+    }
+    
+    top() {
+        return this.isEmpty() ? null : this.data[0];
+    }
+    
+    isEmpty() {
+        return this.data.length === 0;
+    }
+    
+    _heapifyUp() {
+        let idx = this.data.length - 1;
+        while (idx > 0) {
+            let parentIdx = Math.floor((idx - 1) / 2);
+            if (this.data[parentIdx] <= this.data[idx]) break;
+            this._swap(idx, parentIdx);
+            idx = parentIdx;
+        }
+    }
+    
+    _heapifyDown() {
+        let idx = 0;
+        while (2 * idx + 1 < this.data.length) {
+            let left = 2 * idx + 1;
+            let right = 2 * idx + 2;
+            let smallest = left;
+            if (right < this.data.length && this.data[right] < this.data[left]) {
+                smallest = right;
+            }
+            if (this.data[idx] <= this.data[smallest]) break;
+            this._swap(idx, smallest);
+            idx = smallest;
+        }
+    }
+    
+    _swap(i, j) {
+        [this.data[i], this.data[j]] = [this.data[j], this.data[i]];
+    }
+}
+
+var NumberContainers = function () {
+    this.indexToNumbers = new Map();   
+    this.numberToIndices = new Map();  
+    this.validIndices = new Map();     
+};
+
+/** 
+ * @param {number} index 
+ * @param {number} number
+ * @return {void}
+ */
+NumberContainers.prototype.change = function (index, number) {
+    if (this.indexToNumbers.has(index)) {
+        let prevNumber = this.indexToNumbers.get(index);
+        if (prevNumber !== number) {
+            this.validIndices.get(prevNumber).delete(index); 
+        }
+    }
+    
+    this.indexToNumbers.set(index, number);
+    
+    if (!this.numberToIndices.has(number)) {
+        this.numberToIndices.set(number, new MinHeap());
+        this.validIndices.set(number, new Set());
+    }
+    
+    this.numberToIndices.get(number).push(index);
+    this.validIndices.get(number).add(index);
+};
+
+/** 
+ * @param {number} number
+ * @return {number}
+ */
+NumberContainers.prototype.find = function (number) {
+    if (!this.numberToIndices.has(number) || this.validIndices.get(number).size === 0) {
+        return -1;
+    }
+    
+    let heap = this.numberToIndices.get(number);
+    
+    while (!heap.isEmpty() && !this.validIndices.get(number).has(heap.top())) {
+        heap.pop();
+    }
+    
+    return heap.isEmpty() ? -1 : heap.top();
+};
