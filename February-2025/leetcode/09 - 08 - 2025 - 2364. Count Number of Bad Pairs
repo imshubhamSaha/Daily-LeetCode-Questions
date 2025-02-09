@@ -1,0 +1,21 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var countBadPairs = function(nums) {
+    const n = nums.length;
+    const tP = (n * (n - 1)) / 2; 
+    let gP = 0;
+    const map = new Map();
+
+    for (let i = 0; i < n; i++) {
+        const key = nums[i] - i;
+        if (map.has(key)) {
+            gP += map.get(key);
+            map.set(key, map.get(key) + 1);
+        } else 
+            map.set(key, 1);
+    }
+
+    return tP - gP;
+};
