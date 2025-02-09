@@ -1,0 +1,18 @@
+class Solution {
+    solve(root, ans) {
+        if (root === null) return 0;
+    
+        const left = this.solve(root.left, ans);
+        const right = this.solve(root.right, ans);
+    
+        const temp = Math.max(0, Math.max(left, right));
+        ans.max = Math.max(ans.max, Math.max(root.data + left + right, root.data + temp));
+    
+        return root.data + temp;
+}
+    findMaxSum(root) {
+        const ans = { max: Number.MIN_SAFE_INTEGER };
+        this.solve(root, ans);
+        return ans.max;
+    }
+}
