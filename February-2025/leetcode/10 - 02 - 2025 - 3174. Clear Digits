@@ -1,0 +1,21 @@
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var clearDigits = function(s) {
+    const n = s.length;
+    const stack = [];
+
+    for (let i = 0; i < n; i++) {
+        const charcode = s[i].charCodeAt(0);
+
+        if (charcode >= 48 && charcode <= 57) {
+            if (stack.length) 
+                stack.pop();
+        }else {
+            stack.push(s[i]);
+        } 
+    }
+
+    return stack.join("");
+};
