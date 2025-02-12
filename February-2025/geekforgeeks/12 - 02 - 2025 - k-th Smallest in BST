@@ -1,0 +1,22 @@
+/**
+ * @param {Node} root
+ * @param {number} k
+ * @return {number}
+ */
+class Solution {
+    solve(root,res) {
+        if (!root) 
+            return;
+        this.solve(root.left,res);
+        res.k--;
+        
+        if (res.k === 0) 
+            res.ans= root.data;
+        this.solve(root.right, res);
+    }
+    kthSmallest(root, k) {
+        const res = {ans: -1,k};
+        this.solve(root,res);
+        return res.ans;
+    }
+}
