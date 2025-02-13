@@ -1,0 +1,21 @@
+/**
+ * @param {Node} root
+ * @param {number} target
+ * @return {boolean}
+ */
+class Solution {
+    hasPairWithSum(root, target, hashSet) {
+        if (root == null) return false;
+
+        if (this.hasPairWithSum(root.left, target, hashSet)) return true;
+
+        if (hashSet.has(target - root.data)) return true;
+
+        hashSet.add(root.data);
+
+        return this.hasPairWithSum(root.right, target, hashSet);
+    }
+    findTarget(root, target) {
+        return this.hasPairWithSum(root, target, new Set());
+    }
+}
