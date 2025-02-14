@@ -1,0 +1,42 @@
+
+var ProductOfNumbers = function() {
+    this.lastNumbers = [];
+    this.prefixProd = 1;
+    this.len = 0
+};
+
+/** 
+ * @param {number} num
+ * @return {void}
+ */
+ProductOfNumbers.prototype.add = function(num) {
+    if (num) {
+        this.prefixProd *= num;
+        this.lastNumbers.push(this.prefixProd);
+        this.len++;
+        return;
+    }
+    this.prefixProd = 1;
+    this.lastNumbers = [];
+    this.len = 0;
+};
+
+/** 
+ * @param {number} k
+ * @return {number}
+ */
+ProductOfNumbers.prototype.getProduct = function(k) {
+    if (this.len < k) 
+        return 0;
+    else if (this.len === k) 
+        return this.lastNumbers[this.len - 1];
+    
+    return this.lastNumbers[this.len - 1] / this.lastNumbers[this.len - k - 1];
+};
+
+/** 
+ * Your ProductOfNumbers object will be instantiated and called as such:
+ * var obj = new ProductOfNumbers()
+ * obj.add(num)
+ * var param_2 = obj.getProduct(k)
+ */
