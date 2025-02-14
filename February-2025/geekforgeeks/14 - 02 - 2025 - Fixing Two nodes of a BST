@@ -1,0 +1,32 @@
+
+/**
+ * @param {Node} root
+ * @returns {void}
+ */
+
+class Solution {
+    inOrder(root, res) {
+        if (root) {
+            this.inOrder(root.left, res);
+            res.push(root);
+            this.inOrder(root.right, res);
+        }
+    }
+    correctBST(root) {
+        let res = [];
+        this.inOrder(root, res);
+        
+        let first = null, second = null;
+        
+        for (let i = 0; i < res.length - 1; i++) {
+            if (res[i].data > res[i + 1].data) {
+                if (!first) first = res[i];
+                second = res[i + 1];
+            }
+        }
+        
+        if (first && second) {
+            [first.data, second.data] = [second.data, first.data];
+        }
+    }
+}
