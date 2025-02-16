@@ -1,0 +1,36 @@
+var solve = function(res, utilised, n, idx) {
+    while (idx < res.length && res[idx] !== 0) {
+        idx++;
+    }
+    if (idx === res.length) {
+        return true;
+    }
+
+    for (let i = n; i >= 1; i--) {
+        if (utilised[i]) continue;
+
+        if (i === 1) {
+            res[idx] = 1;
+            utilised[1] = true;
+            if (solve(res, utilised, n, idx + 1)) return true;
+            res[idx] = 0;
+            utilised[1] = false;
+        } else if (idx + i < res.length && res[idx + i] === 0) {
+            res[idx] = i;
+            res[idx + i] = i;
+            utilised[i] = true;
+            if (solve(res, utilised, n, idx + 1)) return true;
+            res[idx] = 0;
+            res[idx + i] = 0;
+            utilised[i] = false;
+        }
+    }
+    return false;
+}
+
+var constructDistancedSequence = function(n) {
+    const res = new Array(2 * n - 1).fill(0);
+    const utilised = new Array(n + 1).fill(false);
+    solve(res, utilised, n, 0);
+    return res;
+};
