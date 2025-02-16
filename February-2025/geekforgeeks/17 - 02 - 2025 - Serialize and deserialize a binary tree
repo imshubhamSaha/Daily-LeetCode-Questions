@@ -1,0 +1,46 @@
+class Solution {
+    /**
+     * @param {Node} root
+     * @returns {number[]}
+     */
+
+    // Function to serialize a tree and return a list containing nodes of tree.
+    serialize(root) {
+        const ans = [];
+        this.serializeHelper(root, ans);
+        return ans;
+    }
+    serializeHelper(root, ans) {
+        if (root === null) {
+            ans.push(null);
+            return;
+        }
+        
+        ans.push(root.data);
+        this.serializeHelper(root.left, ans);
+        this.serializeHelper(root.right, ans);
+    }
+    /**
+     * @param {number[]} arr
+     * @returns {Node}
+     */
+
+    // Function to deserialize a list and construct the tree
+    deSerialize(arr) {
+        const index = [0];
+        return this.deserializeHelper(arr, index);
+    }
+    deserializeHelper(arr, index) {
+        if (index[0] >= arr.length || arr[index[0]] === null) {
+            index[0]++;
+            return null;
+        }
+        
+        const root = new Node(arr[index[0]]);
+        index[0]++;
+        root.left = this.deserializeHelper(arr, index);
+        root.right = this.deserializeHelper(arr, index);
+        return root;
+    }
+
+}
