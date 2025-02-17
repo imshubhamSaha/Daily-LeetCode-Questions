@@ -1,0 +1,32 @@
+/**
+ * @param {string} tiles
+ * @return {number}
+ */
+var numTilePossibilities = function(tiles) {
+    const n = tiles.length;
+    const char = new Array(26).fill(0);
+    const factorial = new Array(n + 1).fill(1);
+    for (let i = 1; i <= n; i++) {
+        factorial[i] = i * factorial[i - 1];
+    }
+    for (let c of tiles) {
+        char[c.charCodeAt(0) - 65]++;
+    }
+    const counts = new Array(n + 1).fill(0);
+    counts[0] = 1;
+    for (let i = 0; i < 26; i++) {
+        if (char[i] > 0) {
+            const temp = new Array(n + 1).fill(0);
+            for (let j = 0; j <= tiles.length && counts[j] > 0; j++) {
+                for (let k = 1; k <= char[i]; k++) {
+                    let totallength = j + k;
+                    temp[totallength] += counts[j] * factorial[totallength] / (factorial[k] * factorial[j]);
+                }
+            }
+            for (let j = 0; j <= tiles.length; j++) {
+                counts[j] += temp[j];
+            }
+        }
+    }
+    return counts.reduce((acc, val, idx) => acc + (idx > 0 ? val : 0), 0);
+};
