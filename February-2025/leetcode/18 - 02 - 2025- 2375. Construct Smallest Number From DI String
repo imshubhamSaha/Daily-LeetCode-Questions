@@ -1,0 +1,21 @@
+/**
+ * @param {string} pattern
+ * @return {string}
+ */
+var smallestNumber = function(pattern) {
+    const n = pattern.length;
+    let res = "";
+    const stk = [];
+
+    for (let i = 0; i <= n; i++) {
+        stk.push(i + 1);
+
+        if (i === n || pattern[i] === 'I') {
+            while (stk.length > 0) {
+                res += stk.pop();
+            }
+        }
+    }
+
+    return res;
+};
