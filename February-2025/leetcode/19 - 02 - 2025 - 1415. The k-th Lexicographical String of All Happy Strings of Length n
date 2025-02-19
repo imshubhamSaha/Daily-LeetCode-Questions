@@ -1,0 +1,29 @@
+
+var getHappyString = function (n, k) {
+    let happyStringsCount = 0,
+        characters = ['a', 'b', 'c'],
+        happyString = "";
+
+    const backtrack = function (str) {
+        if (str.length == n) {
+            if (happyStringsCount == k - 1) {
+                happyString = str;
+                return true;
+            }
+            happyStringsCount++;
+            return false;
+        }
+
+        const prevChar = str.at(-1);
+        for (const char of characters) {
+            if (char == prevChar) continue;
+
+            if (backtrack(str + char)) return true;
+        }
+        return false;
+    }
+
+    backtrack("");
+
+    return happyString || "";
+};
