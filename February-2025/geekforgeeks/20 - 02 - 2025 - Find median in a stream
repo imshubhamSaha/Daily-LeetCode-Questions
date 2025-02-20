@@ -1,0 +1,79 @@
+class Heap {
+    constructor(compare) {
+        this.data = [];
+        this.compare = compare; // Custom comparator for MinHeap or MaxHeap
+    }
+
+    size() {
+        return this.data.length;
+    }
+
+    peek() {
+        return this.data[0]; // Root of the heap
+    }
+
+    push(val) {
+        this.data.push(val);
+        this._heapifyUp();
+    }
+
+    pop() {
+        if (this.size() === 0) return null;
+        const top = this.data[0];
+        const last = this.data.pop();
+        if (this.size() > 0) {
+            this.data[0] = last;
+            this._heapifyDown();
+        }
+        return top;
+    }
+
+    _heapifyUp() {
+        let index = this.size() - 1;
+        while (index > 0) {
+            let parentIndex = Math.floor((index - 1) / 2);
+            if (this.compare(this.data[parentIndex], this.data[index]) <= 0) break;
+            [this.data[parentIndex], this.data[index]] = [this.data[index], this.data[parentIndex]];
+            index = parentIndex;
+        }
+    }
+
+    _heapifyDown() {
+        let index = 0;
+        const length = this.size();
+        while (2 * index + 1 < length) {
+            let left = 2 * index + 1;
+            let right = 2 * index + 2;
+            let smallest = left;
+            if (right < length && this.compare(this.data[right], this.data[left]) < 0) {
+                smallest = right;
+            }
+            if (this.compare(this.data[index], this.data[smallest]) <= 0) break;
+            [this.data[index], this.data[smallest]] = [this.data[smallest], this.data[index]];
+            index = smallest;
+        }
+    }
+}
+
+
+class Solution {
+    getMedian(arr) {
+        this.maxHeap = new Heap((a, b) => b - a);
+        this.minHeap = new Heap((a, b) => a - b);
+        this.ans = [];
+
+        for (let num of arr) {
+            if (this.maxHeap.size() === this.minHeap.size()) {
+                this.minHeap.push(num);
+                this.maxHeap.push(this.minHeap.pop());
+                this.ans.push(this.maxHeap.peek());
+            } else {
+                this.maxHeap.push(num);
+                this.minHeap.push(this.maxHeap.pop());
+                this.ans.push((this.maxHeap.peek() + this.minHeap.peek()) / 2.0);
+            }
+        }
+
+        return this.ans;
+    }
+}
