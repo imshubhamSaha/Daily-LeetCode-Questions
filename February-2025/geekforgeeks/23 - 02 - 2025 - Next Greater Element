@@ -1,0 +1,22 @@
+class Solution {
+    // Function to find the next greater element for each element of the array.
+    nextLargerElement(arr) {
+        const n = arr.length;
+        const stack = [];
+        stack.push(arr[n-1]);
+        const res =[-1];
+        
+        for (let i = n - 2; i >= 0; i--) {
+            while (stack.length && arr[i] >= stack[stack.length-1]) {
+                stack.pop();
+            }
+            if (stack.length) {
+                res.push(stack[stack.length-1]);
+            }else res.push(-1);
+            
+            stack.push(arr[i]);
+        }
+        
+        return res.reverse();
+    }
+}
