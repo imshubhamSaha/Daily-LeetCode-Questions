@@ -1,0 +1,53 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxAbsoluteSum = function(nums) {
+    const n = nums.length;
+    let maxSum = 0;
+    let minSum = 0;
+    let maxRunningSum = 0;
+    let minRunningSum = 0;
+
+    for (let i = 0; i < n; i++) {
+        maxRunningSum += nums[i];
+        minRunningSum += nums[i];
+
+        maxSum = Math.max(maxSum, maxRunningSum);
+        minSum = Math.min(minSum, minRunningSum);
+
+        if (maxRunningSum < 0) maxRunningSum = 0;
+        if (minRunningSum > 0) minRunningSum = 0;
+    }
+
+    return Math.max(maxSum, Math.abs(minSum));
+};  
+
+Kadanes Algorithm 
+
+                                                -------------------------------------------------------------------
+
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxAbsoluteSum = function(nums) {
+    const n = nums.length;
+    let prefixSum = 0;
+    let minPrefixSum = 0;
+    let maxPrefixSum = 0;
+
+    for (let i = 0; i < n; i++) {
+        prefixSum += nums[i];
+
+        if (prefixSum > maxPrefixSum) {
+            maxPrefixSum = prefixSum;
+        }else if (prefixSum < minPrefixSum) {
+            minPrefixSum = prefixSum;
+        }
+    }
+
+    return Math.abs(maxPrefixSum - minPrefixSum);
+}; 
+PrefiSum with min/max tracking
