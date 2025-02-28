@@ -1,0 +1,78 @@
+class Solution {
+    change(first,scnd,sign) {
+        if (sign === "+") {
+            return first + scnd;
+        }else if (sign === "*") {#
+            return first * scnd;
+        }else if (sign === "/") {
+            return Math.trunc(scnd/first);
+        }else {
+            return scnd - first;
+        }
+    }
+    isNumber(num) {
+        return (num != "+" && num != "/" && num != "-" && num != "*")
+    }
+    evaluate(arr) {
+        const n = arr.length;
+        const stack = [];
+        
+        for (let i = 0; i < n; i++) {
+            const ch = arr[i];
+            if (this.isNumber(ch)) {
+                stack.push(ch * 1);
+            }else {
+                const first = stack.pop();
+                const scnd = stack.pop();
+                const res = this.change(first,scnd,ch);
+                stack.push(res);
+            }
+        }
+        
+        return stack.pop();
+    }
+}
+Stack based
+TC -->> O(n) 
+SC -->> O(n)
+                                                  ----------------------------------------------------------
+
+class Solution {
+    change(first,scnd,sign) {
+        if (sign === "+") {
+            return first + scnd;
+        }else if (sign === "*") {
+            return first * scnd;
+        }else if (sign === "/") {
+            return Math.trunc(first/scnd);
+        }else {
+            return first - scnd;
+        }
+    }
+    isNumber(num) {
+        return (num != "+" && num != "/" && num != "-" && num != "*")
+    }
+    evaluate(arr) {
+        const n = arr.length;
+        let j = 0;
+        
+        for (let i = 0; i < n; i++) {
+            const ch = arr[i];
+            if (this.isNumber(ch)) {
+                arr[j++] = ch * 1;
+            }else {
+                const scnd = arr[--j];
+                const first = arr[--j];
+                const res = this.change(first,scnd,ch);
+                arr[j++] = res;
+            }
+        }
+        
+        return arr[0];
+    }
+}
+
+In place change approach 
+TC -->> O(n) 
+SC -->> O(1)
+                                                  ----------------------------------------------------------
