@@ -1,0 +1,25 @@
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var applyOperations = function (nums) {
+    const n = nums.length;
+    const c = new Array(n).fill(0);
+    let idx = 0;
+
+    for (let i = 0; i < n - 1; i++) {
+        if (nums[i] !== 0) {
+            if (nums[i] === nums[i + 1]) {
+                c[idx] = nums[i] * 2;
+                nums[i + 1] = 0;
+                i++;
+            } else {
+                c[idx] = nums[i];
+            }
+            idx++;
+        }
+    }
+    if (nums[n - 1] !== 0)
+        c[idx++] = nums[n - 1];
+    return c;
+};
