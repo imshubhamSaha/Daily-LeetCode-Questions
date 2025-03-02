@@ -1,0 +1,36 @@
+/**
+ * @param {number[][]} nums1
+ * @param {number[][]} nums2
+ * @return {number[][]}
+ */
+var mergeArrays = function(nums1, nums2) {
+    const n = nums1.length;
+    const m = nums2.length;
+    const res = [];
+
+    let i = 0; 
+    let j = 0;
+
+    while (i < n && j < m) {
+        if (nums1[i][0] === nums2[j][0]) {
+            res.push ([nums1[i][0], (nums1[i][1] + nums2[j][1])]);
+            i++;
+            j++;
+        }else if (nums1[i][0] < nums2[j][0]) {
+            res.push(nums1[i++]);
+        }else {
+            res.push(nums2[j++]);
+        }
+    }
+
+    while ( i < n) {
+        res.push(nums1[i++]);
+    }
+
+    while (j < m) {
+        res.push(nums2[j++]);
+    }
+
+    return res;
+    
+};
