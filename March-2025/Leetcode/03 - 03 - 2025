@@ -1,0 +1,32 @@
+/**
+ * @param {number[]} nums
+ * @param {number} pivot
+ * @return {number[]}
+ */
+var pivotArray = function(nums, pivot) {
+    const n = nums.length;
+    let pivotCnt = 0;
+    const res = [];
+
+    for (let i = 0; i < n; i++) {
+        if (nums[i] === pivot)
+            pivotCnt++;
+        else if (nums[i] < pivot)
+            res.push(nums[i]);
+    }
+
+    for (let i = 0; i < pivotCnt; i++) {
+        res.push(pivot);
+    }
+
+    for(let i = 0; i < n; i++) {
+        if (nums[i] > pivot) res.push(nums[i]);
+    }
+
+    return res;
+};
+Three way partitioning
+TC -->> O(n)
+SC -->> O(n)
+                                                ---------------------------------------------------------
+
