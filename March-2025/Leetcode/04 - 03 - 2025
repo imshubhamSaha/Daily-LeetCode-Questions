@@ -1,0 +1,14 @@
+/**
+ * @param {number} n
+ * @return {boolean}
+ */
+var checkPowersOfThree = function(n) {
+    if (n === 1) return true;
+    if (n === 2 || n <= 0) return false;
+    while (n > 0) {
+        let r = n % 3;
+        if (r === 2) return false;
+        n = Math.floor(n / 3);
+    }
+    return true;
+};
