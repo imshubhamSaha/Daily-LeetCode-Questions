@@ -1,0 +1,21 @@
+class Solution {
+    lcs(s1, s2) {
+        const n = s1.length;
+        const m =s2.length;
+        const LCS = Array.from({length : n+1} , () => new Array(m+1).fill(0));
+        for(let i=0; i<=n; i++){
+            for(let j=0; j<=m; j++){
+                if(i==0 || j==0){
+                    LCS[i][j]=0;
+                    continue;
+                }
+                
+                if(s1[i-1] === s2[j-1])
+                    LCS[i][j] = LCS[i-1][j-1]+1;
+                else
+                    LCS[i][j] = Math.max(LCS[i-1][j], LCS[i][j-1]);
+            }
+        }
+         return LCS[n][m];
+    }
+}
