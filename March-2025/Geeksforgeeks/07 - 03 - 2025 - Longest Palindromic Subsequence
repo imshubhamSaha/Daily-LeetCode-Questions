@@ -1,0 +1,25 @@
+class Solution {
+    solve(s, str, i, j, dp) {
+    if (i >= s.length || j >= str.length) return 0;
+
+    if (dp[i][j] !== -1) return dp[i][j];
+
+    let ans = 0;
+    if (s[i] === str[j]) {
+      ans = Math.max(ans, 1 + this.solve(s, str, i + 1, j + 1, dp));
+    } else {
+      ans = Math.max(
+        this.solve(s, str, i + 1, j, dp),
+        this.solve(s, str, i, j + 1, dp)
+      );
+    }
+    return (dp[i][j] = ans);
+  }
+
+    longestPalinSubseq(s) {
+        const str = s.split("").reverse().join("");
+    const n = s.length;
+    const dp = Array.from({ length: n }, () => Array(n).fill(-1));
+    return this.solve(s, str, 0, 0, dp);
+    }
+}
