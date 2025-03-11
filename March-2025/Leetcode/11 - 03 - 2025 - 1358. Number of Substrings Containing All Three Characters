@@ -1,0 +1,38 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var numberOfSubstrings = function (s) {
+    const n = s.length;
+    const hash = [0, 0, 0];
+    let occurence = 0;
+    let idx = 0;
+    for (let i = 0; i < n; i++) {
+        hash[s[i].charCodeAt(0) - 97]++;
+        while (hash[0] && hash[1] && hash[2]) {
+            occurence += n - i;
+            hash[s[idx++].charCodeAt(0) - 97]--;
+        }
+    }
+
+    return occurence;
+};
+
+------------------
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var numberOfSubstrings = function (s) {
+    const n = s.length;
+    const lastOccr = [-1, -1, -1];
+    let occurence = 0;
+    for (let i = 0; i < n; i++) {
+        lastOccr[s[i].charCodeAt(0) - 97] = i;
+        occurence += 1 + Math.min(lastOccr[0], lastOccr[1], lastOccr[2]);
+    }
+
+    return occurence;
+};
+
