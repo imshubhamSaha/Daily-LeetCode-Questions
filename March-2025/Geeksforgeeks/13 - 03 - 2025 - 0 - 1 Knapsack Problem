@@ -1,0 +1,25 @@
+
+
+/**
+ * @param {number} W
+ * @param {number[]} val
+ * @param {number[]} wt
+ * @returns {number}
+ */
+
+class Solution {
+    knapsack(W, val, wt) {
+        const n = val.length;
+    
+        const dp = Array(W + 1).fill(0);
+
+        for (let i = 0; i < n; i++) {
+            for (let w = W; w >= wt[i]; w--) { 
+                dp[w] = Math.max(dp[w], val[i] + dp[w - wt[i]]);
+            }
+        }
+
+        return dp[W];
+        
+    }
+}
