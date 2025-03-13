@@ -1,0 +1,92 @@
+/**
+ * @param {number[]} nums
+ * @param {number[][]} queries
+ * @return {number}
+ */
+var minZeroArray = function(nums, queries) {
+    const n = nums.length;
+    const m = queries.length;
+    let allZero = nums.every(num => num === 0);
+    if (allZero) return 0;
+    for (let i = 0; i < m; i++) {
+        const [left, right, value] = queries[i];
+        for (let j = left; j <= right; j++) {
+            nums[j] = Math.max(0, nums[j] - value);
+        }       
+        allZero = nums.every(num => num === 0);
+        if (allZero) return i + 1;
+    }
+
+    return -1;
+};
+TC -->> O(n * m)
+SC -->> O(1)
+-------------------------------
+
+var checkIdx = function(nums, queries, k) {
+    const n = nums.length;
+    const diffArr = new Array(n + 1).fill(0);
+    for (let i = 0; i < k; i++) {
+        let [left, right, val] = queries[i];
+        diffArr[left] += val;
+        if (right + 1 < n) diffArr[right + 1] -= val;
+    }
+
+    let sum = 0;
+    for (let i = 0; i < n; i++) {
+        sum += diffArr[i]; 
+        if (sum < nums[i]) return false; 
+    }
+
+    return true;
+}
+
+var minZeroArray = function(nums, queries) {
+    let n = nums.length;
+    let low = 0, high = queries.length;
+
+    if (!checkIdx(nums, queries, high)) return -1;
+
+    while (low <= high) {
+        let mid = (low + high) >> 1;
+        if (checkIdx(nums, queries, mid)) {
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+
+    return low;
+};
+TC -->> O(log(M)⋅(N+M))
+SC -->> O(n)
+
+----------------------------
+
+/**
+ * @param {number[]} nums
+ * @param {number[][]} queries
+ * @return {number}
+ */
+var minZeroArray = function(nums, queries) {
+    const n = nums.length;
+    let sum = 0, k = 0;
+    const diffArr = new Array(n + 1).fill(0);
+
+    for (let i = 0; i < n; i++) {
+        while (sum + diffArr[i] < nums[i]) {
+            k++;
+            if (k > queries.length) return -1;
+            let [left, right, val] = queries[k - 1];
+            if (right >= i) {
+                diffArr[Math.max(left, i)] += val;
+                if (right + 1 < n) diffArr[right + 1] -= val;
+            }
+        }
+        sum += diffArr[i];
+    }
+
+    return k;
+};
+TC -->> O(n +m)
+SC -->> O(n)
