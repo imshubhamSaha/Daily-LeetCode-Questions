@@ -1,0 +1,24 @@
+var canAllocate = function(candies, size, children) {
+    const n = candies.length;
+    let maxChildren = 0;
+    for (let i = 0; i < n; i++) {
+        maxChildren += Math.floor(candies[i]/size);
+    }
+
+    return maxChildren >= children;
+}
+var maximumCandies = function(candies, k) {
+    const n = candies.length;
+    let low = 0;
+    let high = candies.reduce((num,acc) => Math.max(acc,num),0);
+
+    while (low <= high) {
+        let mid = (low + high) >> 1;
+
+        if (canAllocate(candies, mid, k)) {
+            low = mid + 1;
+        }else high = mid - 1;
+    }
+
+    return high;
+};
