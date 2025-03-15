@@ -1,0 +1,17 @@
+class Solution {
+    minCoins(coins, sum) {
+        // your code here
+        const dp = new Array(sum + 1).fill(Number.MAX_SAFE_INTEGER);
+        dp[0] = 0; 
+
+        for (let i = 1; i <= sum; i++) {
+            for (let coin of coins) {
+                if (i >= coin && dp[i - coin] !== Number.MAX_SAFE_INTEGER) {
+                    dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+                }
+            }
+        }
+
+        return dp[sum] === Number.MAX_SAFE_INTEGER ? -1 : dp[sum];
+    }
+}
