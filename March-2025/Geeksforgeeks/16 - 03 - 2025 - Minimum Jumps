@@ -1,0 +1,19 @@
+class Solution {
+    minJumps(arr) {
+        const n = arr.length;
+        let jumpTaken = 0;
+        let maxJump = 0, maxRange = 0;
+        
+        for (let i = 0; i < n; i++) {
+            maxRange = Math.max(maxRange, i + arr[i]);
+            
+            if (maxJump === i) {
+                jumpTaken++;
+                maxJump = maxRange;
+                if (maxJump >= n - 1) 
+                    return jumpTaken;
+            }
+            else if (maxJump < i) return -1;
+        }
+    }
+}
