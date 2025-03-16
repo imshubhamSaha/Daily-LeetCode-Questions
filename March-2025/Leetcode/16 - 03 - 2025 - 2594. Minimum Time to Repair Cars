@@ -1,0 +1,22 @@
+/**
+ * @param {number[]} ranks
+ * @param {number} cars
+ * @return {number}
+ */
+var repairCars = function(ranks, cars) {
+    let low = 1;
+    let high = cars * cars * Math.min(...ranks);
+    
+    while (low < high) {
+        let mid = Math.floor((low + high) / 2);
+        let carsRepaired = ranks.reduce((sum, rank) => sum + Math.floor(Math.sqrt(mid / rank)), 0);
+        
+        if (carsRepaired < cars) {
+            low = mid + 1;
+        } else {
+            high = mid;
+        }
+    }
+    
+    return low;
+};
