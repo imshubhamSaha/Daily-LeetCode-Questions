@@ -1,0 +1,39 @@
+BruteForce
+
+class Solution {
+    subsetHelper(arr, n, sum){
+        if (sum == 0)
+            return true
+        if (n == 0)
+            return false
+        
+        if (arr[n - 1] > sum)
+            return this.subsetHelper(arr,n - 1, sum)
+        
+        return (this.subsetHelper(arr,n - 1, sum) || 
+                this.subsetHelper(arr,n - 1, sum - arr[n - 1]))
+    }
+    
+    isSubsetSum(arr, sum) {
+        const n = arr.length;
+        return this.subsetHelper(arr,n, sum)
+        
+    }
+}
+TC -->> O(2 ^ n)
+SC -->> O(n)
+
+class Solution {
+    isSubsetSum(arr, sum) {
+        const n = arr.length
+        const dp = new Array(sum+1).fill(false);
+        dp[0] = true;
+
+        for (const num of arr) {
+            for (let j = sum; j >= num; j--) { 
+                dp[j] = dp[j] || dp[j - num];
+            }
+        }
+        return dp[sum];
+    }
+}
