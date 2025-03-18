@@ -1,0 +1,20 @@
+class Solution {
+    equalPartition(arr) {
+        const n = arr.length
+        const target = arr.reduce((sum, num) => sum + num, 0) / 2;
+        
+        if ((target * 2) % 2 !== 0) 
+            return false;
+            
+        const dp = new Array(target + 1).fill(false);
+        dp[0] = true;
+
+        for (const num of arr) {
+            for (let j = target; j >= num; j--) {
+                dp[j] = dp[j] || dp[j - num];
+            }
+        }
+
+        return dp[target];
+    }
+}
