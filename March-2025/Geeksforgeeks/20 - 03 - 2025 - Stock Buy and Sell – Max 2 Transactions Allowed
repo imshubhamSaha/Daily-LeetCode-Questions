@@ -1,0 +1,42 @@
+class Solution {
+    maxProfit(prices) {
+        // code here
+        const n = prices.length;
+        if (n < 2) return 0;
+        
+        const profit1 = new Array(n).fill(0);
+        const profit2 = new Array(n).fill(0);
+        let minPrice = prices[0];
+        let maxPrice = prices[n-1];
+        for (let i = 1; i < n; i++) {
+            minPrice = Math.min(minPrice, prices[i]);
+            profit1[i] = Math.max(profit1[i-1], prices[i] - minPrice); 
+            maxPrice = Math.max(maxPrice, prices[n-1-i]);
+            profit2[n-i-1] = Math.max(profit2[n-i], maxPrice - prices[n-i-1]);
+        }
+        const profits = profit1.reduce((profit,price,idx) => Math.max(profit, (price + profit2[idx])), 0);
+        return profits;
+    }
+}
+
+-------------------------
+
+class Solution {
+    maxProfit(prices) {
+        // code here
+        const n = prices.length;
+        let b1 = Infinity;
+        let b2 = Infinity;
+        let mp1 = 0;
+        let mp2 = 0;
+        
+        for (const price of prices) {
+            b1 = Math.min(b1, price);
+            mp1 = Math.max(mp1, price - b1);
+            b2 = Math.min(b2, price - mp1);
+            mp2 = Math.max(mp2, price - b2);
+        }
+        
+        return mp2;
+    }
+}
