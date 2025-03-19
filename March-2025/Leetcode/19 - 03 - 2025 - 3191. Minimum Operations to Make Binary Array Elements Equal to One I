@@ -1,0 +1,56 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minOperations = function(nums) {
+    const n = nums.length;
+    let flip = 0;
+    let left = 0;
+    for (let right = 0; right < n; right++) {
+        if (left === right && nums[right] === 1) {
+            left++;
+            continue;
+        }
+        if ((right - left + 1) === 3) {
+            let firtOne = left;
+            let flag = false;
+            while (left <= right) {
+                if (!flag && nums[left] === 1) {
+                    flag = true;
+                    firstOne = left;
+                }
+                nums[left] = nums[left] === 0 ? 1 : 0;
+                left++;
+            }
+            if (!flag) {
+                left = right+1;
+            }else left = firstOne;
+            flip++;
+        }
+    }
+
+    return left >= n ? flip : -1;
+};
+
+------------------------------------
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minOperations = function(nums) {
+    const n = nums.length;
+    let flip = 0;
+    for (let right = 0; right <= n - 3; right++) {
+        if (nums[right] === 0) {
+            nums[right] = 1;
+            nums[right+1] = nums[right+1] ? 0 : 1
+            nums[right+2] = nums[right+2] ? 0 : 1
+            flip++;
+        }
+    }
+
+    if (nums[n-2] === 0 || nums[n-1] === 0) return -1;
+
+    return flip;
+};
