@@ -1,0 +1,35 @@
+class Solution:
+    def findAllRecipes(self, recipes: List[str], ingredients: List[List[str]], supplies: List[str]) -> List[str]:
+        avalaible = set(supplies)
+        
+        ing_to_rec = {}
+        in_deg = {}
+        rec_to_ing = {}
+        
+        for i, recipe in enumerate(recipes):
+            recipe_ingredients = ingredients[i]
+            rec_to_ing[recipe] = recipe_ingredients
+            in_deg[recipe] = len(recipe_ingredients)
+            
+            for ingredient in recipe_ingredients:
+                if ingredient not in ing_to_rec:
+                    ing_to_rec[ingredient] = []
+                ing_to_rec[ingredient].append(recipe)
+        
+        queue = list(avalaible)
+        result = []
+        
+        while queue:
+            current = queue.pop(0)
+            
+            if current in rec_to_ing:
+                result.append(current)
+            
+            if current in ing_to_rec:
+                for dependent_recipe in ing_to_rec[current]:
+                    in_deg[dependent_recipe] -= 1
+                    
+                    if in_deg[dependent_recipe] == 0:
+                        queue.append(dependent_recipe)
+        
+        return result
