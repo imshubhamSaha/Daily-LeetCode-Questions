@@ -1,0 +1,12 @@
+class Solution:  
+    def findMaxSum(self,arr):
+        n = len(arr)
+        money1, money2 = arr[0], 0
+        
+        for i in range(1, n) :
+            temp_money = money2+arr[i]
+            max_money = max(money1, money2)
+            money1 = temp_money
+            money2 = max_money
+        
+        return max(money1, money2)
