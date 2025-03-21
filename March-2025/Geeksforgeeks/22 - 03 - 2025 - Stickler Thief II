@@ -1,0 +1,17 @@
+class Solution:
+    def getMax(self, arr, start, end) :
+        prev1, prev2, curr = 0, 0, 0
+        
+        for i in range (start, end+1) : 
+            curr = max(prev1, prev2 + arr[i])
+            prev2 = prev1
+            prev1 = curr
+            
+        return curr
+        
+    def maxValue(self, arr) :
+        n = len(arr)
+        max1 = self.getMax(arr, 0, n - 2)
+        max2 = self.getMax(arr,1, n -1)
+        
+        return max(max1, max2) 
