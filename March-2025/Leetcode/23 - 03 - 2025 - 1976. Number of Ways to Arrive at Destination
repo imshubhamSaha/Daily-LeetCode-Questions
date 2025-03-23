@@ -1,0 +1,34 @@
+class Solution:
+    def countPaths(self, n: int, roads: List[List[int]]) -> int:
+        MOD = 1_000_000_007
+        graph = [[] for _ in range(n)]
+        for start, end, time in roads:
+            graph[start].append((end, time))
+            graph[end].append((start, time))
+
+        heap = [(0, 0)] 
+        shortest_time = [float("inf")] * n
+        path = [0] * n
+
+        shortest_time[0] = 0  
+        path[0] = 1  
+
+        while heap:
+            current_time, current_node = heapq.heappop(heap)
+            if current_time > shortest_time[current_node]:
+                continue
+
+            for neighbor_node, road_time in graph[current_node]:
+                if current_time + road_time < shortest_time[neighbor_node]:
+                    shortest_time[neighbor_node] = current_time + road_time
+                    path[neighbor_node] = path[current_node]
+                    heapq.heappush(
+                        heap, (shortest_time[neighbor_node], neighbor_node)
+                    )
+
+                elif current_time + road_time == shortest_time[neighbor_node]:
+                    path[neighbor_node] = (
+                        path[neighbor_node] + path[current_node]
+                    ) % MOD
+
+        return path[n - 1]
