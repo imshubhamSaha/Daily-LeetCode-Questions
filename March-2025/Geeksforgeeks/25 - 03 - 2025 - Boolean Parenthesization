@@ -1,0 +1,31 @@
+class Solution:
+    def countWays(self, s):
+        n = len(s)
+        true = [[0] * n for _ in range(n)]
+        false = [[0] * n for _ in range(n)]
+
+        for i in range(n):
+            if s[i] == 'T':
+                true[i][i] = 1
+            elif s[i] == 'F':
+                false[i][i] = 1
+
+        for size in range(3, n + 1, 2):  
+            for i in range(0, n - size + 1, 2):
+                j = i + size - 1
+                for k in range(i + 1, j, 2):  
+                    prev_true = true[i][k - 1]
+                    prev_false = false[i][k - 1]
+                    next_true = true[k + 1][j]
+                    next_false = false[k + 1][j]
+                    if s[k] == '&':
+                        true[i][j] += prev_true * next_true
+                        false[i][j] += prev_false * next_true + prev_true * next_false + prev_false * next_false
+                    elif s[k] == '|':
+                        true[i][j] += prev_true * next_true + prev_false * next_true + prev_true * next_false
+                        false[i][j] += prev_false * next_false
+                    elif s[k] == '^':
+                        true[i][j] += prev_true * next_false + prev_false * next_true
+                        false[i][j] += prev_true * next_true + prev_false * next_false
+
+        return true[0][n - 1]
