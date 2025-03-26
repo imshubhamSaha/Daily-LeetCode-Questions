@@ -1,0 +1,17 @@
+class Solution:
+    def minOperations(self, grid: List[List[int]], x: int) -> int:
+        nums = [num for row in grid for num in row]
+        n = len(nums)
+        remainder = nums[0] % x
+
+        for num in nums:
+            if num % x != remainder:
+                return -1  
+
+        nums.sort()
+    
+        median = nums[n // 2]
+
+        operations_done = sum(abs(num - median) // x for num in nums)
+
+        return operations_done
