@@ -1,0 +1,31 @@
+class Solution:
+    def findMajority(self, arr : List[int], n : int):
+        candidate, votes = -1 , 0 
+        for num in arr :
+            if votes == 0:
+                candidate = num
+            votes += (1 if num == candidate else -1)
+
+        count = sum(1 for num in arr if num == candidate)
+        if (count > n // 2):
+            return {"candidate" : candidate, "count":count}
+        else:
+            return {"candidate" : -1, "count":0}
+
+    def minimumIndex(self, nums: List[int]) -> int:
+        n = len(nums)
+        data = self.findMajority(nums, n)
+        majority, majority_max = data["candidate"], data["count"]
+
+        if majority == -1 :
+            return -1
+
+        majority_so_far = 0
+        for i in range(n):
+            if nums[i] == majority:
+                majority_so_far += 1
+        
+            if (majority_so_far * 2 > (i + 1) and (majority_max - majority_so_far) * 2 > (n - 1 - i)):
+                return i
+    
+        return -1
