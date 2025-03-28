@@ -1,0 +1,30 @@
+import heapq
+class Solution:
+    def maxPoints(self, grid: List[List[int]], queries: List[int]) -> List[int]:
+        m, n , q = len(grid), len(grid[0]), len(queries)
+
+        #sort the queries in ascending order along with preserve the original idx
+        sorted_queries = sorted(enumerate(queries), key=lambda x: x[1])  
+        
+        result = [0] * q
+    
+        min_heap = [(grid[0][0], 0, 0)]
+        seen = set([(0, 0)])
+        direction = [(0,1), (0,-1), (1,0), (-1,0)]
+        points_collected = 0
+        prev_query = 0
+
+        for idx, query in sorted_queries:
+            while min_heap and min_heap[0][0] < query:
+                value, x, y = heapq.heappop(min_heap)
+                points_collected += 1  
+
+                for dx, dy in direction:
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < m and 0 <= ny < n and (nx, ny) not in seen:
+                        heapq.heappush(min_heap, (grid[nx][ny], nx, ny))
+                        seen.add((nx, ny))
+        
+            result[idx] = points_collected  
+    
+        return result   
