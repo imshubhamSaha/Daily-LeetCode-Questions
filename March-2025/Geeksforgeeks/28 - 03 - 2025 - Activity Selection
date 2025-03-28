@@ -1,0 +1,18 @@
+class Solution:
+    def activitySelection(self, start, finish):
+        n = len(start)
+        if not start or not finish:
+            return 0  
+        
+        activities = sorted(zip(finish, start))
+        
+        result = 1  
+        prev_finish = activities[0][0]  
+        
+        for i in range(1, n):
+            start_time, finish_time = activities[i][1], activities[i][0]
+            if start_time > prev_finish:  
+                result += 1
+                prev_finish = finish_time 
+        
+        return result
