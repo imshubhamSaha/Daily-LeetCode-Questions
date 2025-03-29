@@ -1,0 +1,53 @@
+class Solution:
+    def jobSequencing(self, deadline, profit):
+        n = len(profit);
+        jobs = sorted(zip(deadline, profit) , key = lambda x:x[1], reverse = True)
+        
+        max_deadline = -1
+        
+        for dead, pro in jobs :
+            max_deadline = max(max_deadline, dead)
+        
+        jobs_done = [False] * max_deadline
+        jobs_completed = 0
+        max_profit = 0
+        
+        for i in range(n) :
+            if jobs_done[jobs[i][0] - 1] == False :
+                jobs_done[jobs[i][0] - 1] = True
+                max_profit += jobs[i][1]
+                jobs_completed += 1
+            else :
+                idx = jobs[i][0] -  2
+                while idx >= 0 and jobs_done[idx] == True:
+                    idx -= 1
+    
+                if idx >= 0 :
+                    jobs_done[idx] = True
+                    jobs_completed += 1
+                    max_profit += jobs[i][1];
+                    
+            if jobs_completed == max_deadline:
+                break
+        
+        
+        return [jobs_completed, max_profit]
+
+                                                ---------------------------------------------
+
+
+import heapq
+class Solution:
+    def jobSequencing(self, deadline, profit):
+        n = len(profit)
+        jobs = sorted(zip(deadline, profit), key=lambda x: x[0]) 
+
+        min_heap = []  
+    
+        for dead, prof in jobs:
+            if len(min_heap) < dead: 
+                heapq.heappush(min_heap, prof)
+            elif min_heap and min_heap[0] < prof:  
+                heapq.heappushpop(min_heap, prof)  
+
+        return [len(min_heap), sum(min_heap)] 
