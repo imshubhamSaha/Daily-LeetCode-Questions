@@ -1,0 +1,22 @@
+class Solution:
+    def partitionLabels(self, s: str) -> List[int]:
+        n = len(s)
+        last_appeared = [-1] * 26
+    
+        for i in range(n):
+            idx = ord(s[i]) - ord('a')
+            last_appeared[idx] = i
+    
+        partitions = []
+        strt, end = 0, 0
+        i = 0
+        while i < n:
+            idx = ord(s[i]) - ord('a')
+            last = last_appeared[idx]
+            end = max(last, end)
+            if (i == end) :
+                partitions.append(i - strt + 1)
+                strt = i + 1
+            i += 1
+    
+        return partitions
