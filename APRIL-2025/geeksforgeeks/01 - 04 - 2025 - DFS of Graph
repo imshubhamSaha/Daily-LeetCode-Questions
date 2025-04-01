@@ -1,0 +1,15 @@
+class Solution:
+    
+    def _solve_dfs(self, node, adj,seen,result):
+        seen.add(node)
+        result.append(node)
+        for neighbor in adj[node]:
+            if neighbor not in seen:
+                self._solve_dfs(neighbor, adj,seen,result)
+    
+    #Function to return a list containing the DFS traversal of the graph.
+    def dfs(self, adj):
+        seen = set()
+        result = []
+        self._solve_dfs(0, adj,seen, result)
+        return result
