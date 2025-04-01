@@ -1,0 +1,14 @@
+class Solution:
+    def mostPoints(self, questions: List[List[int]]) -> int:
+        n = len(questions)
+        max_point_collected = [0] * n
+
+        for i in range (n - 1, -1, -1) :
+            target_index = i + questions[i][1] + 1
+            if target_index < n :
+                max_point_collected[i] = max_point_collected[target_index] + questions[i][0]
+            else :
+                max_point_collected[i] = questions[i][0]
+            if i < n - 1 :
+                max_point_collected[i] = max(max_point_collected[i+1], max_point_collected[i])
+        return max_point_collected[0]
