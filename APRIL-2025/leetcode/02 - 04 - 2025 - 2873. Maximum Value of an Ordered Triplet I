@@ -1,0 +1,65 @@
+class Solution:
+    def maximumTripletValue(self, nums: List[int]) -> int:
+        n = len(nums)
+        maximum_value = 0
+
+        for i in range(n-2) :
+            for j in range (i+1, n - 1) :
+                for k in range(j+1, n) :
+                    calculation = (nums[i] - nums[j]) * nums[k]
+                    maximum_value = max(calculation, maximum_value)
+                
+        return maximum_value
+
+                                                            ----------------------------------
+
+class Solution:
+    def maximumTripletValue(self, nums: List[int]) -> int:
+        n = len(nums)
+        maximum_value = 0
+        i = 0
+        for j in range (1, n - 1) :
+            for k in range(j+1, n) :
+                calculation = (nums[i] - nums[j]) * nums[k]
+                maximum_value = max(calculation, maximum_value)
+            if nums[j] > nums[i] :
+                i = j 
+        return maximum_value
+
+                                                            ------------------------------------
+
+class Solution:
+    def maximumTripletValue(self, nums: List[int]) -> int:
+        n = len(nums)
+        prefix = [0] * n
+        suffix = [0] * n
+
+        for i in range (1, n-1) :
+            prefix[i] = max(prefix[i-1], nums[i-1])
+            suffix[n-1-i] = max(suffix[n-i], nums[n-i])
+        
+        maximum_value = 0
+
+        for i in range(1, n-1) :
+            maximum_value = max(maximum_value, (prefix[i] - nums[i]) * suffix[i])
+
+        return maximum_value
+
+                                                            ------------------------------
+
+class Solution:
+    def maximumTripletValue(self, nums: List[int]) -> int:
+        n = len(nums)
+        # Value is maximize when we fix nums[k] as scnd highest and diffence betwwen 
+        # nums[i] - nums[j] is maximum , so we can solve it using greedy , just to bypass
+        # the use of prefix and suffix array
+        maximum_value = 0
+        maximum_difference = 0
+        maximum = 0
+
+        for i in range (n) :
+            maximum_value = max(maximum_value, maximum_difference * nums[i])
+            maximum_difference = max(maximum_difference , maximum - nums[i])
+            maximum = max(maximum, nums[i])
+            
+        return maximum_value
