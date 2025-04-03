@@ -1,0 +1,19 @@
+class Solution:
+    def maximumTripletValue(self, nums: List[int]) -> int:
+        '''
+        Yesterday's follow up basically with increased n length
+            1. We can easily solved it with greedy method and prefix and suffix maximum array 
+               basically tracking highest num before lowest and highest after lowest
+
+            2. Another method to solve this in O(1) time is we fix num[k] and track 
+               maximum differnce between num[i] - nums[j]
+        '''
+        n = len(nums)
+        maximum_value = maximum_difference = maximum = 0
+
+        for i in range(n) :
+            maximum_value = max(maximum_value, maximum_difference * nums[i])
+            maximum_difference = max(maximum_difference, (maximum - nums[i]))
+            maximum = max(maximum, nums[i])
+
+        return maximum_value
