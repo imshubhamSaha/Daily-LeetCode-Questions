@@ -1,0 +1,30 @@
+class Solution:
+    def largestDivisibleSubset(self, nums: List[int]) -> List[int]:
+        if not nums:
+            return []
+
+        n = len(nums)
+        nums.sort()
+        dp = [1] * n            
+        prev = [-1] * n  
+
+        maximum_size = 1
+        maximum_index = 0
+
+        for i in range(n):
+            for j in range(i):
+                if nums[i] % nums[j] == 0:
+                    if dp[j] + 1 > dp[i]:
+                        dp[i] = dp[j] + 1
+                        prev[i] = j
+            if dp[i] > maximum_size:
+                maximum_size = dp[i]
+                maximum_index = i
+
+
+        longest_subset = []
+        while maximum_index != -1:
+            longest_subset.append(nums[maximum_index])
+            maximum_index = prev[maximum_index]
+
+        return longest_subset[::-1]
