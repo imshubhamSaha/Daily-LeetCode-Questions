@@ -1,0 +1,17 @@
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        n = len(nums)
+        sum_total = sum(nums)
+        if sum_total % 2 != 0 :
+            return False
+
+        required_sum = sum_total // 2
+        dp = [False] * (required_sum + 1)
+        
+        dp[0] = True
+
+        for i in range(n) :
+            for j in range(required_sum, nums[i] - 1, - 1) :
+                dp[j] = dp[j] or dp[j - nums[i]]
+            
+        return dp[required_sum]
