@@ -1,0 +1,22 @@
+from collections import defaultdict, deque
+class Solution:
+    def isBridge(self, V, edges, c, d):
+        graph = defaultdict(list)
+        for u, v in edges:
+            if (u == c and v == d) or (u == d and v == c):
+                continue  
+            graph[u].append(v)
+            graph[v].append(u)
+
+        visited = [False] * V
+        queue = deque([c])
+        visited[c] = True
+
+        while queue:
+            node = queue.popleft()
+            for neighbor in graph[node]:
+                if not visited[neighbor]:
+                    visited[neighbor] = True
+                    queue.append(neighbor)
+
+        return not visited[d] 
