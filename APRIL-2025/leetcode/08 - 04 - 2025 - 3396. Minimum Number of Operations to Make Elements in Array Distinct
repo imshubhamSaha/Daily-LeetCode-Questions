@@ -1,0 +1,35 @@
+class Solution:
+    def check_unique(self, nums:List[int], start : int) -> bool:
+        unique = set()
+        for i in range(start, len(nums)) :
+            if nums[i] in unique :
+                return False
+            unique.add(nums[i])
+
+        return True
+
+    def minimumOperations(self, nums: List[int]) -> int:
+        n = len(nums)
+        maximum_operations = 0
+        i = 0
+
+        while i < n :
+            if self.check_unique(nums, i) :
+                return maximum_operations
+            maximum_operations += 1
+            i += 3
+            
+        return maximum_operations
+
+------------
+class Solution:
+    def minimumOperations(self, nums: List[int]) -> int:
+        n = len(nums)
+        seen = set()
+        
+        for i in range(n - 1, -1, -1) :
+            if nums[i] in seen :
+                return (i + 3) // 3
+            seen.add(nums[i])
+
+        return 0
