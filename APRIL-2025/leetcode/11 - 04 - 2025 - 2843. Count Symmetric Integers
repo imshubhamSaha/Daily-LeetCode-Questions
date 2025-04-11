@@ -1,0 +1,49 @@
+/**
+ * @param {number} low
+ * @param {number} high
+ * @return {number}
+ */
+var countSymmetricIntegers = function(low, high) {
+    
+    let symmetric = 0;
+
+    while (low <= high) {
+        const num = low + ""
+        const n = num.length
+        if (n % 2 === 1) {
+            low++;
+            continue;
+        }
+        let sum_first = 0;
+        let sum_second = 0
+
+        for (let i = 0; i < n/2; i++) {
+            sum_first += num[i] * 1
+            sum_second += num[n - 1- i] * 1
+        }
+
+        if (sum_first === sum_second) 
+            symmetric++;
+        low++;
+    }
+
+    return symmetric;
+};
+
+                                                              ---------------------------
+
+class Solution:
+    def countSymmetricIntegers(self, low: int, high: int) -> int:
+        symmetric = 0
+
+        for num in range(low , high + 1) :
+            if num < 100 and num % 11 == 0 :
+                symmetric += 1
+            elif num >= 1000 and num < 10000:
+                left_sum = num // 1000 + (num % 1000) // 100
+                right_sum = (num % 100) // 10 + num % 10
+
+                if left_sum == right_sum :
+                    symmetric += 1
+
+        return symmetric
