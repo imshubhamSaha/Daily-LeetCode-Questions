@@ -1,0 +1,27 @@
+import heapq
+from collections import defaultdict
+class Solution:
+    # Returns shortest distances from src to all other vertices
+    def dijkstra(self, V, edges, src):
+        graph = defaultdict(list)
+        for u, v, w in edges:
+            graph[u].append((v, w))
+            graph[v].append((u, w)) 
+
+        dist = [float('inf')] * V
+        dist[src] = 0
+
+        min_heap = [(0, src)]  
+
+        while min_heap:
+            curr_dist, u = heapq.heappop(min_heap)
+
+            if curr_dist > dist[u]:
+                continue  
+
+            for v, weight in graph[u]:
+                if dist[u] + weight < dist[v]:
+                    dist[v] = dist[u] + weight
+                    heapq.heappush(min_heap, (dist[v], v))
+
+        return dist
