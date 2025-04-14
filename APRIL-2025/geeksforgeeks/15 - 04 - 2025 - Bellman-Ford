@@ -1,0 +1,19 @@
+class Solution:
+    def bellmanFord(self, V, edges, src):
+        shortest_distance = [float('inf')] * V
+        shortest_distance[src] = 0
+
+        for _ in range(V - 1):
+            for u, v, w in edges:
+                if shortest_distance[u] != float('inf') and shortest_distance[u] + w < shortest_distance[v]:
+                    shortest_distance[v] = shortest_distance[u] + w
+
+        for u, v, w in edges:
+            if shortest_distance[u] != float('inf') and shortest_distance[u] + w < shortest_distance[v]:
+                return [-1]  
+
+        for i in range(V):
+            if shortest_distance[i] == float('inf'):
+                shortest_distance[i] = 10**8
+
+        return shortest_distance
