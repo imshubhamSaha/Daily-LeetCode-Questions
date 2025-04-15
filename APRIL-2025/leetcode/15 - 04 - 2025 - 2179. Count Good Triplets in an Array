@@ -1,0 +1,44 @@
+class FenwickTree:
+    def __init__(self, size):
+        self.n = size
+        self.tree = [0] * (self.n + 1)
+        
+    def update(self, i, delta):
+        i += 1
+        while i <= self.n:
+            self.tree[i] += delta
+            i += i & -i
+            
+    def query(self, i):
+        i += 1
+        res = 0
+        while i:
+            res += self.tree[i]
+            i -= i & -i
+        return res
+
+class Solution:
+    def goodTriplets(self, nums1: List[int], nums2: List[int]) -> int:
+        n = len(nums1)
+        nums2_idx = [0] * n
+        for i, val in enumerate(nums2):
+            nums2_idx[val] = i
+
+        changed = [nums2_idx[val] for val in nums1]
+
+        left_tree = FenwickTree(n)
+        right_tree = FenwickTree(n)
+
+        for val in changed:
+            right_tree.update(val, 1)
+
+        good_triplets = 0
+        for j in range(n):
+            mid = changed[j]
+            right_tree.update(mid, -1)
+            left_count = left_tree.query(mid - 1)
+            right_count = right_tree.query(n - 1) - right_tree.query(mid)
+            good_triplets += left_count * right_count
+            left_tree.update(mid, 1)
+
+        return good_triplets
