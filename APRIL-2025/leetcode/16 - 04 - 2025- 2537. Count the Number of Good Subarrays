@@ -1,0 +1,23 @@
+class Solution:
+    def countGood(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        hm = {} 
+        good_pairs = 0
+        left_pointer = 0
+        pairs = 0
+
+        for right_pointer in range(n):
+            val = nums[right_pointer]
+            if val in hm:
+                pairs += hm[val]
+            hm[val] = hm.get(val, 0) + 1
+
+            while left_pointer < right_pointer and pairs >= k:
+                good_pairs += n - right_pointer
+                left_val = nums[left_pointer]
+                hm[left_val] -= 1
+                if hm[left_val] + 1 >= 2:
+                    pairs -= hm[left_val]
+                left_pointer += 1
+
+        return good_pairs
