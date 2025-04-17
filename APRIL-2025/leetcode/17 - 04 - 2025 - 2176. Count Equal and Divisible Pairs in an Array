@@ -1,0 +1,27 @@
+class Solution:
+    def countPairs(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        total_pairs = 0
+        mp = defaultdict(list)
+        for i, val in enumerate(nums):
+            for j in mp[val]:
+                if (i * j) % k == 0:
+                    total_pairs += 1
+            mp[val].append(i)
+
+        return total_pairs
+
+
+class Solution:
+    def countPairs(self, nums: List[int], k: int) -> int:
+        total_pairs = 0
+        mp = defaultdict(lambda: defaultdict(int))  
+
+        for i, val in enumerate(nums):
+            g1 = gcd(i, k)
+            for g2 in mp[val]:
+                if (g1 * g2) % k == 0:
+                    total_pairs += mp[val][g2]
+            mp[val][g1] += 1
+
+        return total_pairs
