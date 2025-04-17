@@ -1,0 +1,36 @@
+import heapq
+from collections import defaultdict
+class Solution:
+    def findMinCycle(self, V, edges):
+        adjacency = defaultdict(list)
+        
+        for u, v, w in edges:
+            adjacency[u].append((v, w))
+
+        min_cycle = float('inf')
+
+        for u, v, w in edges:
+            adjacency[u].remove((v, w))
+            adjacency[v].remove((u, w))
+
+            distnce = [float('inf')] * V
+            distnce[u] = 0
+            pq = [(0, u)]
+
+            while pq:
+                d, node = heapq.heappop(pq)
+                if d > distnce[node]:
+                    continue
+                
+                for ngh, wt in adjacency[node]:
+                    if distnce[ngh] > distnce[node] + wt:
+                        distnce[ngh] = distnce[node] + wt
+                        heapq.heappush(pq, (distnce[ngh], ngh))
+
+            if distnce[v] != float('inf'):
+                min_cycle = min(min_cycle, distnce[v] + w)
+
+            adjacency[u].append((v, w))
+            adjacency[v].append((u, w))
+
+        return min_cycle if min_cycle != float('inf') else -1
