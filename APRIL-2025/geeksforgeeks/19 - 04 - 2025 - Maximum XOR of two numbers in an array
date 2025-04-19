@@ -1,0 +1,33 @@
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        
+class Solution:
+    def insert(self, root, num):
+        curr_node = root
+        for i in range(31, -1, -1): 
+            bit = (num >> i) & 1
+            if bit not in curr_node.children:
+                curr_node.children[bit] = TrieNode()
+            curr_node = curr_node.children[bit]
+
+    def maxXor(self, arr):
+        root = TrieNode()
+        max_xor = 0
+        self.insert(root, arr[0])
+
+        for num in arr[1:]:
+            node = root
+            curr_xor = 0
+            for i in range(31, -1, -1):
+                bit = (num >> i) & 1
+                toggled_bit = 1 - bit
+                if toggled_bit in node.children:
+                    curr_xor |= (1 << i)
+                    node = node.children[toggled_bit]
+                else:
+                    node = node.children[bit]
+            max_xor = max(max_xor, curr_xor)
+            self.insert(root, num)
+
+        return max_xor
